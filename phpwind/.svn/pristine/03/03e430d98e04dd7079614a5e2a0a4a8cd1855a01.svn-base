@@ -1,0 +1,58 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+    <div class="row">
+        <div class="col-sm-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    订单列表
+                    <span class="tools pull-right">
+                        <a href="javascript:;" class="fa fa-chevron-down"></a>
+                    </span>
+                </header>
+                <div class="panel-body">
+                    <div class="adv-table">
+                        <table  class="display table table-bordered table-striped" id="dynamic-table">
+                            <thead>
+                                <tr>
+                                    <th width='6%'>编号</th>
+                                    <th width='5%'>地址</th>
+                                    <th width="15%">车型</th>
+                                    <th width="8%">服务</th>
+                                    <th width="6%">价格</th>
+                                    <th width="5%">预约时间</th>
+                                    <th width="6%">vin码</th>
+                                    <th width="6%">状态</th>
+                                    <th width="6%">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <foreach name="orders" item="order">
+                                    <tr class="gradeX">
+                                        <td width="6%">{$order['count']}</td>
+                                        <td width="5%"><a href="__APP__/Address/index/id/1">地址</a></td>
+                                        <td width="15%">
+                                            ({$order['brand']}){$order['series']}{$order['types']}
+                                        </td>
+                                        <td width="8%">{$order['combo']}</td>
+                                        <td width="6%">{$order['lastPrice']}</td>
+                                        <td width="5%">
+                                            {$order['orderDate']|date="Y/m/d",###}&nbsp;{$order['orderTime']}
+                                        </td>
+                                        <td width="6%">{$order['vin']}</td>
+                                        <td width="6%">
+                                            <font color='red'>已取消</font>
+                                        </td>
+                                        <td width="6%">
+                                                <a href="__CONTROLLER__/pass/id/{$order['id']}" title="审核" alt="审核"><i class="fa fa-smile-o"></i></a>
+                                            <a href="__CONTROLLER__/del/id/{$order['id']}" title="删除" alt="删除"><i class="fa fa-trash-o"></i></a>
+                                        </td>
+                                    </tr>
+                                </foreach>
+                            </tbody>             
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</block>

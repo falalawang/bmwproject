@@ -1,0 +1,104 @@
+<extend name="Layout:layout"/>
+<block name="main-content">
+            	 <div class="mws-panel grid_8">
+                	<div class="mws-panel-header">
+                    	<span>修改价格：{$prices.series}   &nbsp;&nbsp;&nbsp;&nbsp;{$prices.models}</span>
+                    </div>
+                    <div class="mws-panel-body no-padding">
+                    	<form class="mws-form" action="__CONTROLLER__/update" method="post" enctype="multipart/form-data">
+
+                    		<div class="mws-form-inline">
+                    			<div class="mws-form-row">
+                    				<label class="mws-form-label">机油机滤</label>
+                    				<div class="mws-form-item">
+                    					<input type="text" class="small" name='a' value='{$prices.a}'>
+                    				</div>
+                    			</div>
+								<div class="mws-form-row">
+                    				<label class="mws-form-label">制动液</label>
+                    				<div class="mws-form-item">
+                    					<input type="text" class="small" name='b' value='{$prices.b}'>
+                    				</div>
+                    			</div>
+								<div class="mws-form-row">
+                    				<label class="mws-form-label">微尘滤清器</label>
+                    				<div class="mws-form-item">
+                    					<input type="text" class="small" name='c' value='{$prices.c}'>
+                    				</div>
+                    			</div>
+                                <div class="mws-form-row">
+                                    <label class="mws-form-label">后部制动片</label>
+                                    <div class="mws-form-item">
+                                        <input type="text" class="small" name='d' value='{$prices.d}'>
+                                    </div>
+                                </div>
+                                <div class="mws-form-row">
+                                    <label class="mws-form-label">后部制动盘及制动片</label>
+                                    <div class="mws-form-item">
+                                        <input type="text" class="small" name='e' value='{$prices.e}'>
+                                    </div>
+                                </div>
+                                <div class="mws-form-row">
+                                    <label class="mws-form-label">前部制动片</label>
+                                    <div class="mws-form-item">
+                                        <input type="text" class="small" name='f' value='{$prices.f}'>
+                                    </div>
+                                </div>
+                                <div class="mws-form-row">
+                                    <label class="mws-form-label">前部制动盘及制动片</label>
+                                    <div class="mws-form-item">
+                                        <input type="text" class="small" name='g' value='{$prices.g}'>
+                                    </div>
+                                </div>
+                                <div class="mws-form-row">
+                                    <label class="mws-form-label">火花塞</label>
+                                    <div class="mws-form-item">
+                                        <input type="text" class="small" name='h' value='{$prices.h}'>
+                                    </div>
+                                </div>
+                                <div class="mws-form-row">
+                                    <label class="mws-form-label">车辆检查</label>
+                                    <div class="mws-form-item">
+                                        <input type="text" class="small" name='i' value='{$prices.i}'>
+                                    </div>
+                                </div>
+                                <div class="mws-form-row">
+                                    <label class="mws-form-label">空气滤清器</label>
+                                    <div class="mws-form-item">
+                                        <input type="text" class="small" name='j' value='{$prices.j}'>
+                                    </div>
+                                </div>
+                                <div class="mws-form-row">
+                                    <label class="mws-form-label">燃油滤清器</label>
+                                    <div class="mws-form-item">
+                                        <input type="text" class="small" name='k' value='{$prices.k}'>
+                                    </div>
+                                </div>
+                                <div class="mws-form-row">
+                                    <label class="mws-form-label">雨刮片</label>
+                                    <div class="mws-form-item">
+                                        <input type="text" class="small" name='l' value='{$prices.l}'>
+                                    </div>
+                                </div>
+                                <div class="mws-form-row">
+                                    <label class="mws-form-label">机油机滤及微尘滤清器</label>
+                                    <div class="mws-form-item">
+                                        <input type="text" class="small" name='m' value='{$prices.m}'>
+                                    </div>
+                                </div>                         
+                       		</div>
+                    		<div class="mws-button-row">
+                    			<input type="submit" value="确认修改" class="btn btn-danger">
+                    			<input type="reset" value="重置" class="btn ">
+                    		</div>
+                    	</form>
+                    </div>    	
+                </div>
+				<!--
+				<form action="__CONTROLLER__/update" method='post'>
+					
+					<input type='text' name='b' value='2'>
+					<input type='text' name='c' value='3'>
+					<input type='submit' value='修改'>
+				</form>-->
+</block>

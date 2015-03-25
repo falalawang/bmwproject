@@ -1,0 +1,38 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+
+	<div class="mws-panel grid_8">
+                	<div class="mws-panel-header">
+                    	<span><i class="icon-table"></i> 客服列表 </span>
+                    </div>
+                    <div class="mws-panel-body no-padding">
+						
+                    <div class="mws-panel-body no-padding" style="text-align:center">
+                        <form class="mws-form" action="__APP__/user/authupdate" method="post">
+                           
+                                            <p><div class="mws-form-col-2-8">
+                                                用&nbsp;&nbsp;户&nbsp;&nbsp;名：<input readonly="true" type="text" value="{$admin['username']}">
+                                                <input type="hidden"name="uid" value="{$admin['id']}">
+                                            </div></p>
+                                            
+                                            <p><div class="mws-form-row bordered">
+                                            选择权限：
+                                                <select name="group_id">
+                                                    <option value="2" selected>客服人员权限</option>
+                                                    <option value="1">管理员权限</option>
+                                                </select>
+                                            </div></p>
+
+
+                            <div class="mws-button-row" style="text-align:center">
+                                <input type="submit" value="修改" class="btn btn-danger">
+                            
+                            </div>
+                        </form>
+                    </div>
+                    </div>
+                </div>
+				
+
+                
+</block>

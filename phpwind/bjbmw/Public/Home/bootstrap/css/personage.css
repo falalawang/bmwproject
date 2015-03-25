@@ -1,0 +1,64 @@
+ .finish{
+    float: left;
+    /*border:1px solid #a1a1a1;*/
+    padding: 5px;
+    /*border-radius:5px;*/
+}
+.modal-footer{
+
+	clear: both;
+ 
+}
+
+#one li{
+	/*color:#428BCA;*/
+	
+	width:32%;
+	 font-size:13px;
+}
+#left,#left>div,#left>div>div{
+	background: #D9EDF7;
+ 	float:left;
+   padding:2px;
+
+}
+#left>div>div:first-child{
+	color: #337AB7;
+}
+#left>div>div:last-child{
+	font-size:13.2spx;
+}
+body{
+	 padding-top:50px;
+}
+.pcolor{
+	color: #CF8242;
+
+
+}
+
+.z ul{
+	list-style:none;
+
+	margin-left:34%;
+	margin-top: 20px
+}
+.sub{
+
+	margin-left: 42px;
+}
+.button{
+	margin-left: 85%;
+	margin-top: 15%;
+	font-size: 12px;
+
+}
+.blue{
+	color:#428BCA;
+}
+
+
+.navbar {
+min-height: 40px;
+font-weight:500;
+}

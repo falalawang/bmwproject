@@ -1,0 +1,49 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+<script src="__PUBLIC__/admin/js/jquery.js"></script>
+	<div class="wrapper">
+		<div class="row">
+        <div class="col-sm-12">
+        <section class="panel">
+        <header class="panel-heading">
+            车型列表
+        </header>
+        <div class="panel-body">
+        <div class="adv-table">
+        <table  class="display table table-bordered table-striped" id="dynamic-table">
+        <thead>
+        <tr>
+            <th class="hidden-sm">ID</th>
+            <th>品牌</th>
+            <th>车系</th>
+            <th>车型</th>
+            <if condition="$Think.session.auth neq '2'">
+                <th class="hidden-sm">操作</th>
+            </if>
+        </tr>
+        </thead>
+        <tbody>
+		<foreach name="list" item="list">
+        <tr class="gradeX">
+            <td class="hidden-sm">{$list['id']}</td>
+            <td>{$list['brand']}</td>
+            <td>{$list['series']}</td>
+            <td>{$list['types']}</td>
+            <if condition="$Think.session.auth neq '2'">
+                <td class="center hidden-sm"><a href="__CONTROLLER__/update/id/{$list['id']}">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="__CONTROLLER__/delete/id/{$list['id']}" onclick="return confirm('你确定要删除吗？')">删除</a></td>
+            </if>
+        </tr>
+		</foreach>
+        </tbody>
+        </table>
+        </div>
+		
+        </div>
+        </section>
+        </div>
+        </div>
+	</div>
+    <script type="text/javascript">
+
+    </script>
+</block>

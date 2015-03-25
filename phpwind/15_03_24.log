@@ -1,0 +1,15 @@
+[ 2015-03-24T17:06:38+08:00 ] 49.4.178.66 /favicon.ico
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000016s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000260s ]
+
+[ 2015-03-24T22:32:23+08:00 ] 182.247.168.159 /favicon.ico
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000018s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000268s ]
+
+[ 2015-03-24T22:34:24+08:00 ] 182.247.168.159 /favicon.ico
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000015s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000261s ]
+

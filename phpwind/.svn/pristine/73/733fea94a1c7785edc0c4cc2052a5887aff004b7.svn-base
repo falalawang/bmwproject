@@ -1,0 +1,53 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+	<div class="wrapper">
+		<div class="row">
+        <div class="col-sm-12">
+        <section class="panel">
+        <header class="panel-heading">
+            车型列表
+            <span class="tools pull-right">
+                <a href="javascript:;" class="fa fa-chevron-down"></a>
+             </span>
+        </header>
+        <div class="panel-body">
+        <div class="adv-table">
+        <table  class="display table table-bordered table-striped" id="dynamic-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>品牌</th>
+            <th>车系</th>
+            <th class="hidden-phone">车型</th>
+            <th class="hidden-phone">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+		<foreach name="list" item="list">
+        <tr class="gradeX">
+            <td>{$list['id']}</td>
+            <td>{$list['brand']}</td>
+            <td>{$list['series']}</td>
+            <td class="center hidden-phone">{$list['types']}</td>
+            <td class="center hidden-phone">修改</td>
+        </tr>
+		</foreach>
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>Rendering engine</th>
+            <th>Browser</th>
+            <th>Platform(s)</th>
+            <th class="hidden-phone">Engine version</th>
+            <th class="hidden-phone">CSS grade</th>
+        </tr>
+        </tfoot>
+        </table>
+        </div>
+		
+        </div>
+        </section>
+        </div>
+        </div>
+	</div>
+</block>

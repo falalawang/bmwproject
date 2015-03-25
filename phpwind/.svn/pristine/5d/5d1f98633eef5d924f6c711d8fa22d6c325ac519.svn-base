@@ -1,0 +1,119 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+  <div class="row">
+        <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading">
+                修改订单
+            </header>
+            <div class="panel-body">
+                <form action="__CONTROLLER__/updateOrder" class="form-horizontal adminex-form" method="post">
+                    <input type="hidden" name="id" value="{$order[0]['id']}" />
+                    <div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">联&nbsp;&nbsp;系&nbsp;&nbsp;人</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" name="name" value="{$order[0]['name']}" />
+                        </div>
+                        <div class="col-sm-5"></div>
+                    </div>
+					<div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">联系电话</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" name="telephone" value="{$order[0]['telephone']}" />
+                        </div>
+                        <div class="col-sm-5"></div>
+                    </div>
+					<div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">联系地址</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" name="address" value="{$order[0]['address']}" />
+                        </div>
+                        <div class="col-sm-5"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;牌</label>
+                        <div class="col-sm-1">
+                            <select name="brand" id="brand">
+                                <foreach name="order" item="p">
+                                    <foreach name='brands' item="brand">
+                                        <if condition="$p['brand'] eq $brand['brand']">
+                                            <option value="{$brand['brand']}" selected>{$brand['brand']}</option>
+                                        <else />
+                                            <option value="{$brand['brand']}">{$brand['brand']}</option>
+                                        </if>
+                                    </foreach>
+                                </foreach>
+                            </select>
+                        </div>
+                        <label class="col-sm-1 col-sm-1 control-label">车&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;系</label>
+                        <div class="col-sm-1">
+                            <select name="series" id="series">
+                                <foreach name="order" item="s">
+                                    <foreach name='series' item="serie">
+                                        <if condition="$s['series'] eq $serie['series']">
+                                            <option value="{$serie['series']}" selected>{$serie['series']}</option>
+                                        <else />
+                                            <option value="{$serie['series']}">{$serie['series']}</option>
+                                        </if>
+                                    </foreach>
+                                </foreach>
+                            </select>
+                        </div>
+                         <label class="col-sm-1 col-sm-1 control-label">车&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型</label>
+                        <div class="col-sm-1">
+                            <select name="types" id="types">
+                                <foreach name="order" item="t">
+                                    <foreach name='types' item="type">
+                                        <if condition="$t['types'] eq $type['types']">
+                                            <option value="{$type['types']}" selected>{$type['types']}</option>
+                                        <else />
+                                            <option value="{$type['types']}">{$type['types']}</option>
+                                        </if>
+                                    </foreach>
+                                </foreach>
+                            </select>
+                        </div>
+                        <div class="col-sm-5"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">服&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;务</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" name="combo" value="{$order[0]['combo']}" />
+                        </div>
+                        <div class="col-sm-5"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">预约日期</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" name="orderDate" value="{$order[0]['orderDate']|date='Y-m-d',###}" />
+                        </div>
+                        <label class="col-sm-2 col-sm-2 control-label">预约时间</label>
+                        <div class="col-sm-5">
+                            <select name="orderTime">
+                                <if condition="$order[0]['orderTime'] eq '8:00-10:00'">
+                                    <option value="0" selected>8:00-10:00</option>
+                                    <option value="0">10:00-12:00</option>
+                                    <option value="0">12:00-14:00</option>
+                                    <option value="0">14:00-16:00</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-5"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">预约时间</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" name="orderTime" value="{$order[0]['orderTime']}" />
+                        </div>
+                        <div class="col-sm-5"></div>
+                    </div>
+					<div class="panel-body">
+						<button type="submit" class="btn btn-primary">确认添加</button>
+                    </div>
+                   </form>
+            </div>
+		</section>
+
+		</div>
+        </div>
+        </div>
+</block>

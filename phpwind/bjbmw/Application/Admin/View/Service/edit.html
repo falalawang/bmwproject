@@ -1,0 +1,42 @@
+<extend name='Layout:layout'/>
+<block name='mws-container'>
+<div id="mws-container" class="clearfix">
+        
+            <!-- Inner Container Start -->
+            <div class="container">
+                <div class="mws-panel grid_9">
+                    <div class="mws-panel-header">
+                        <span>修改服务项</span>
+                    </div>
+                    <div class="mws-panel-body no-padding">
+                        <form class="mws-form" method='post' action="__CONTROLLER__/update" >
+                            <fieldset class="mws-form-inline">
+                                <legend></legend>
+                                <div class="mws-form-row bordered" >
+                                    服务编号：
+                                        <input type="text" name='serid' readonly class="large" size='35' value='{$sercode['id']}' placeholder='请输入服务项目名'>
+                                        
+                                </div>
+                                <div class="mws-form-row bordered" >
+                                    服务项目：
+                                        <input type="text" name='service'  class="large" size='35' value='{$sercode['service']}' placeholder='请输入服务项目名'>
+                                </div>
+                                <div class="mws-form-row bordered">
+                                    项目代码：
+                                        <input type="text" name='sercode' readonly class="large" size='35' value='{$sercode['sercode']}'placeholder='请输入项目代码'>
+                                </div>
+                                
+                                
+                            </fieldset>
+                            
+                            <div class="mws-button-row">
+                                <input type="submit" value="确认" class="btn btn-danger">
+                                <input type="reset" value="重置" class="btn ">
+                            </div>
+                        </form>
+                    </div>      
+                </div>
+                </div>
+                </div>
+            
+</block>                

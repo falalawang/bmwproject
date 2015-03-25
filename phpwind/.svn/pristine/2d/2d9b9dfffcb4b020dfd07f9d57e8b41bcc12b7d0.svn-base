@@ -1,0 +1,44 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+<div class="wrapper">
+	<div class="row">
+            <div class="col-sm-12">
+                <section class="panel">
+                    <header class="panel-heading">
+                        服务车列表
+                    </header>
+                    <div class="panel-body">
+                        <div class="adv-table">
+                            <table  class="display table table-bordered table-striped" id="editable-sample">
+                            <tr>
+                                <th class="col-sm-4">4S店名称</th>
+                                <th class="col-sm-2">服务车编号</th>
+                                <th class="col-sm-2">技师姓名</th>
+                            </tr>
+                    	        <tbody>
+                    				<foreach name="data" item="data">
+                    		        	<tr class="gradeX">
+                    			            <td>{$data['storeName']}</td>
+                                            <td>{$data['mark']}</td>
+                                            <td>
+                                            <foreach name="data['servicemanId']" item="rid">
+                                             
+                                                <foreach name="serviceman" item="arr">
+                                                    <if condition="$arr['id'] eq $rid['servicemanId']">
+                                                        {$arr['name']}&nbsp;&nbsp;
+                                                    </if>   
+                                                </foreach>
+                                            </foreach>
+                                            
+                                            </td>
+                    		      	  	</tr>
+                    				</foreach>
+                    	        </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>	
+</div>
+</block>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <title>订单信息-{$config.webname}</title>
+    <meta name="description" content="{$config.description}">
+    <meta name="keywords" content="{$config.keywords}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="seawolfyx">
+    <link href="__PUBLIC__/Home/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="__PUBLIC__/Home/bootstrap/css/bootstrap-theme.css" rel="stylesheet"> 
+	<script src="__PUBLIC__/Home/bs/1.11.2.jquery.min.js"></script>
+
+	<style type="text/css">
+		body{
+			background-color:E8E8FF;
+			color:black;
+		}
+	</style>
+  </head>
+
+<body role="document">
+<nav class="navbar navbar-inverse ">
+    <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="__CONTROLLER__/logout">退出</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="__CONTROLLER__/serviceperson">个人信息</a></li>
+            <li><a href="__CONTROLLER__/servicecar">我的服务车</a></li>
+            <li><a href="__CONTROLLER__/serviceorder">我的订单</a></li>
+            <!--<li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"></a>
+              <ul class="dropdown-menu" role="menu">
+              </ul>
+            </li>-->
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+<div class="container theme-showcase" role="main">
+		<div class="page-header"> </div>
+		<div class="page-header">
+		
+		<div class="row">
+        <div class="col-md-4"><h1>订单列表</h1>  		</div> 
+		<div class="col-md-5">
+		<form action="__CONTROLLER__/serviceorder" method="get">
+			<div class="right block" style="margin-top:25px">
+				
+					<input type="text" placeholder="请输入查询条件"  name='value' id='value'>&nbsp;&nbsp;
+					<select id='condition' name='condition' style="height:26px;">
+						<option value="o.ordernumber">订单号</option>
+						<option value="u.clientname">客户姓名</option>
+						<option value="u.tel">客户电话</option>
+						<!--<option value="o.address">客户地址</option>-->
+						<option value="o.hopedata">客户期望日期</option>
+					</select>&nbsp;
+						<input type="submit" class="btn btn-sm" value="查询">
+				
+			</div>
+		</form>
+		</div>
+		</div>
+		</div>
+      <div class="row">
+        <div class="col-md-8">
+		<div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+            
+				<th>订单号</th><th>客户电话</th><th>客户姓名</th><th>客户车型</th><th>服务时间</th><th>服务地址</th><th>订单状态</th><th>订单详情</th><th>修改状态</th>
+			<!--    <th>订单号</th><th>客户电话</th><th>服务城市</th><th>VIN码</th><th>订单状态</th><th>服务车</th><th>最终价格</th><th>期望日期</th><th>期望时间</th><th>客户留言</th><th>客户车类型</th><th>服务地址</th><th>服务类型</th>
+                <!--<th>First Name</th>
+                <th>Last Name</th>
+                <th>Username</th>-->
+              </tr>
+            </thead>
+            <tbody>
+			<volist name='order' id='order'>
+				<tr>
+					<td>{$order.ordernumber}</td><td>{$order.tel}</td><td>{$order.clientname}</td><td>{$order.carmodel}</td><td>{$order.hopedata}<br/>{$order.hopetime}</td><td>{$order.city}<br/>{$order.address}</td><td><font style='color:red'>
+					<if condition="$order.status eq 0">已取消
+					<elseif condition="$order.status eq 1"/>已提交
+					<elseif condition="$order.status eq 2"/>已确定
+					<elseif condition="$order.status eq 3"/>已出发
+					<elseif condition="$order.status eq 4"/>已接车
+					<elseif condition="$order.status eq 5"/>已完成
+					<elseif condition="$order.status eq 6"/>已付款
+					<elseif condition="$order.status eq 7"/>已评论
+					</if> 
+					</font></td><td>
+					<a href="__CONTROLLER__/detail/id/{$order.ordernumber}" class="btn">详情</a>
+					</td><td><eq name="time" value="$order.hopedata">
+								<a href="__CONTROLLER__/modify/id/{$order.ordernumber}"> 修改状态</a>
+							<else/>
+								技师只可修改当天订单
+							</eq>
+					</td>
+				</tr>
+			</volist>
+            </tbody>
+          </table>
+		  <table>{$page}</table>
+		</div>
+        </div>
+    </div> <!-- /container -->    
+    <script src="__PUBLIC__/Home/bs/bootstrap.js"></script>
+  </body>
+</html>

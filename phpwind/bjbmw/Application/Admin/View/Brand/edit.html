@@ -1,0 +1,29 @@
+<extend name="Layout:layout"/>
+ <block name="mws-container">
+<div id="mws-container" class="clearfix">
+            <div class="container">
+                <div class="mws-panel grid_9 ">
+                    <div class="mws-panel-header">
+                        <span> 修改品牌</span>
+                    </div>
+                    <div class="mws-panel-body no-padding">
+                        <form class="mws-form" id="mws-validate" novalidate="novalidate" action="__CONTROLLER__/updates" method="post">
+                            <div class="mws-form-inline">
+                                 <div class="mws-form-row bordered">
+                                    <label class="mws-form-label">品牌</label>
+                                    <div class="mws-form-item">
+                                         <input  name="brand" value="{$brand['brand']}" type="text" class="required large">
+                                         <input name="id" type="hidden" value="{$brand['id']}" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mws-button-row">
+                                <button type="submit"class="btn btn-danger">提交</button>
+                                <button type="reset"class="btn ">重置 </button>
+                            </div>
+                        </form>
+                    </div>      
+                </div>
+            </div>
+        </div>
+ </block>

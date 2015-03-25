@@ -1,0 +1,36 @@
+<extend name="Layout:layout" />
+<block name="layoutBack">
+      <a class="navbar-brand " href="__APP__/Index/index"><span class="glyphicon glyphicon-menu-left"></span> 个人中心</a>
+</block>
+<block name="layoutJum">
+  <div class="jumbotron">
+    <div class="container">
+      <h3>你好, {$_SESSION['telephone']}</h3>
+      <p>欢迎使用预约保养服务!</p>
+    </div>
+  </div>
+</block>
+<block name="layoutMain">
+  <div class="container">
+    <div><a class="text-muted center-block" href="__APP__/Center/order"><span class="glyphicon glyphicon-list-alt"></span> 我的订单<span class="glyphicon glyphicon-chevron-right pull-right"></span></a></div>
+    <hr>
+    <div><a class="text-muted center-block" href="__APP__/Center/userCar"><span class="glyphicon glyphicon-plane"></span> 我的爱车<span class="glyphicon glyphicon-chevron-right pull-right"></span></a></div>
+    <hr>
+    <div><a class="text-muted center-block" href="__APP__/Center/address"><span class="glyphicon glyphicon-home"></span> 我的地址<span class="glyphicon glyphicon-chevron-right pull-right"></span></a></div>
+    <hr>
+  </div>
+</block>
+<block name="layoutFoot">
+  <br>
+  <br>
+  <br>
+  <nav class="navbar-inverse navbar-fixed-bottom">
+    <div class="container">
+      <ul class="nav navbar-nav row" style="float:none; margin:0;">
+        <li class="col-xs-4 text-center"><a href="__APP__/Index/index" target="_self" style="padding:15px 0;">品牌介绍</a></li>
+        <li class="col-xs-4 text-center"><a href="__APP__/Order/inputInfo" target="_self" style="padding:15px 0;">立即预约</a></li>
+        <li class="col-xs-4 text-center"><a href="__APP__/Center/index" target="_self" style="padding:15px 0;">个人中心</a></li>
+      </ul>
+    </div>
+  </nav>
+</block>

@@ -1,0 +1,33 @@
+<?php
+namespace Tech\Controller;
+use Think\Controller;
+class LoginController extends Controller {
+
+    public function login(){
+        $this ->display();
+    }
+
+    public function doLogin(){
+        $tel = $_POST['telephone'];
+        $pwd = md5($_POST['password']);
+        $tech = M("manager");
+        $res = $tech ->where("telephone = '$tel' and password = '$pwd' and auth = '3'")-> find();
+        if($res){
+            echo 1;
+            session('tech_isLogin','1');
+            session('tech_id',$res['id']);
+            session('tech_telephone',$tel);
+        }else{
+            echo 0;
+        }
+    }
+
+    public function logout(){
+        session(null);
+        session_destroy();
+        if(isset($_COOKIE[session_name()])){
+            setcookie(session_name(),'',time()-1,'/');
+        }
+        $this -> success('退出成功',U('Index/index'));
+    }
+}

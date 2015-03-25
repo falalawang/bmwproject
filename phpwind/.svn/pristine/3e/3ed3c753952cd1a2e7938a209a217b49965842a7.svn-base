@@ -1,0 +1,111 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+<script src="__PUBLIC__/admin/js/jquery.js"></script>
+<div class="wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading">
+                修改后台人员信息
+            </header>
+            <div class="panel-body">
+                <form action="__CONTROLLER__/doMod/id/{$manager[0]['id']}" id="myform" class="form-horizontal adminex-form" method="post">
+                    <div class="form-group">
+                        <div class="col-sm-2"></div>
+                        <label class="col-sm-2 col-sm-2 control-label">用户名</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="name" id="name" value="{$manager[0]['name']}" /><span id="nameMsg"></span>
+                        </div>
+
+                    </div>
+					<div class="form-group">
+                        <div class="col-sm-2"></div>
+                        <label class="col-sm-2 col-sm-2 control-label">密码</label>
+                        <div class="col-sm-4">
+                            <input type="password" class="form-control" name="password" id="pwd1" /><span id="pwdMsg1"></span>
+                        </div>
+                        
+                    </div>
+					<div class="form-group">
+                        <div class="col-sm-2"></div>
+                        <label class="col-sm-2 col-sm-2 control-label">重复密码</label>
+                        <div class="col-sm-4">
+                            <input type="password" class="form-control" name="password2" id="pwd2"><span id="pwdMsg2"></span>
+                        </div>
+                    </div>
+
+					<div class="panel-body">
+                        <div class="col-sm-5"></div>
+						<button type="submit" class="btn btn-info">确认修改</button>
+                    </div>
+
+                </form>
+            </div>
+		</section>
+		</div>
+    </div>
+</div>
+        <script type="text/javascript">
+            var isUserName = false;
+            var isPwd = false;
+            var isRePwd = false;
+
+            $('#name').blur(function(){
+                checkUserName();
+            });
+            function checkUserName(){
+                if($('#name').val() == ''){
+                    $('#nameMsg').html('用户名不能为空').css({'color':'red'});
+                }else if($('#name').val().length < 2){
+                    $('#nameMsg').html('用户名位数不能小于2').css({'color':'red'});
+                }else if($('#name').val().length > 6){
+                    $('#nameMsg').html('用户名位数不能大于6').css({'color':'red'});
+                }else{
+                    isUserName = true;
+                    $('#nameMsg').html('用户名可用').css({'color':'green'});
+                }
+            }
+
+            $('#pwd1').blur(function(){
+                checkPwd();
+            });
+            function checkPwd(){
+                if($('#pwd1').val() == ''){
+                    $('#pwdMsg1').html('密码不能为空').css({'color':'red'});
+                }else if($('#pwd1').val().length < 5){
+                    $('#pwdMsg1').html('密码位数不能小于5').css({'color':'red'});
+                }else if($('#pwd1').val().length > 16){
+                    $('#pwdMsg1').html('密码位数不能大于16').css({'color':'red'});
+                }else{
+                    isPwd = true;
+                    $('#pwdMsg1').html('密码可用').css({'color':'green'});
+                }
+            }
+
+            $('#pwd2').blur(function(){
+                checkRePwd();
+            });
+            function checkRePwd(){
+                 if($('#pwd2').val() == ''){
+                    $('#pwdMsg2').html('确认密码不能为空').css({'color':'red'});
+                }else if($('#pwd1').val() == $('#pwd2').val()){
+                    isRePwd = true;
+                    $('#pwdMsg2').html('密码可用').css({'color':'green'});
+                }else{
+                    $('#pwdMsg2').html('两次输入的密码不一致').css({'color':'red'});
+                }
+            }
+            $('#myform').submit(function(){
+                checkUserName();
+                checkPwd();
+                checkRePwd();
+                if(isUserName && isPwd && isRePwd){
+                    return true;
+                }else{
+                    return false;
+                }
+            });
+
+        </script>
+
+</block>

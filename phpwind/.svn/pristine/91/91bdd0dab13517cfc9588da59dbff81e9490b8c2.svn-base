@@ -1,0 +1,39 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+  <div class="row">
+        <div class="col-sm-12">
+        <section class="panel">
+        <header class="panel-heading">
+            所有用户
+            <span class="tools pull-right">
+                <a href="javascript:;" class="fa fa-chevron-down"></a>
+             </span>
+        </header>
+        <div class="panel-body">
+        <div class="adv-table">
+        <table  class="display table table-bordered table-striped" id="dynamic-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>姓名</th>
+            <th>手机号</th>
+
+        </tr>
+        </thead>
+        <tbody>
+            <foreach name="users" item="users">
+                <tr class="gradeX">
+                    <td>{$users['id']}</td>
+                    <td>{$users['name']}</td>
+                    <td>{$users['telephone']}</td>
+                </tr>
+            </foreach>
+		</tbody>
+		
+        </table>
+        </div>
+        </div>
+        </section>
+        </div>
+        </div>
+</block>

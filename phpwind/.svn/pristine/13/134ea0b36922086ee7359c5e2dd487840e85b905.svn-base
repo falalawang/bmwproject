@@ -1,0 +1,61 @@
+<?php
+namespace Admin\Controller;
+use Think\Controller;
+class IndexController extends Controller{
+	
+	//登录页面显示
+	public function index(){
+        $this -> display();
+    }
+
+	//处理登录，进行判断用户名和密码是否正确
+	public function doLogin(){
+        $name = I('post.name');
+        $password = md5(I('post.password'));
+		$manager = M('manager');
+        $result = $manager -> field("id,name,auth") -> where("name='$name' and password='$password'")->select();
+        if(!empty($result)){
+        	//登录成功后将用户名和密码存进session中
+        	$_SESSION['hname'] = $name;
+        	$_SESSION['auth'] = $result[0]['auth'];
+        	//登录成功后跳转到后台首页
+            $this -> success('登录成功','main');
+        }else{
+        	//登录失败后，重新返回登录页
+            $this -> error('登录失败','index');
+        }
+	}
+
+	//退出方法
+	public function logout(){
+		session('[destroy]');
+		session_destroy();
+		$this -> redirect('index');
+	}
+	
+	//后台首页
+	public function main(){
+
+		$order = M('order');
+		//未审核的订单
+		$orderNum = $order -> where("orderStatus='0'") -> count();
+		//订单总数
+		$orders = $order -> count();
+		//关注人数
+		$user = M('wechat_user');
+		$users = $user -> count();
+		//总评价数
+		$eva = M('evaluate');
+		$evas = $eva -> count();
+		//获得当前的时间戳
+		$time = time();
+		$this -> assign('order',$orderNum);
+		$this -> assign('orders',$orders);
+		$this -> assign('users',$users);
+		$this -> assign('evas',$evas);
+		$this -> assign('time',$time);
+		$this -> display();
+	}
+	
+	
+}

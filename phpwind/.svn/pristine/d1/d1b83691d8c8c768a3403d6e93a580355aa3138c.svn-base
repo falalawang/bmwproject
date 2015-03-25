@@ -1,0 +1,68 @@
+<extend name="Layout:layout" />
+<block name="layoutBack">
+  <a class="navbar-brand">宇瑞安</a>
+</block>
+<block name="layoutJum">
+<div class="jumbotron">
+  <div class="container text-center">
+  <h3>你好,{$telephone}!</h3>
+  <p>{$day} 共有 <kbd>{$count}</kbd> 条订单</p>
+  </div>
+  <a class="left carousel-control" href="__CONTROLLER__/index/date/{$prevDay}" role="button">
+    <span class="glyphicon glyphicon-chevron-left"></span>
+  </a>
+  <a class="right carousel-control" href="__CONTROLLER__/index/date/{$nextDay}" role="button">
+    <span class="glyphicon glyphicon-chevron-right"></span>
+  </a>
+</div>
+</block>
+<block name="layoutMain">
+<div class="container">
+  <div class="orderList text-muted">
+    <br>
+<foreach name="orders" item="order">
+    <div class="orderLi">
+      <div class="row">
+        <a href="__CONTROLLER__/order/id/{$order['id']}" class="text-muted">
+        <div class="col-xs-10">
+          <div class="row"><strong class="text-right col-xs-4" style="padding-right:0;">保养时间</strong><span class="col-xs-8">{$order['orderTime']}</span></div>
+          <div class="row"><strong class="text-right col-xs-4" style="padding-right:0;">订单状态</strong>
+          <span  class="col-xs-8">
+          <switch name="order.orderStatus">
+            <case value="0">已取消</case>
+            <case value="1">未审核</case>
+            <case value="2">审核通过</case>
+            <case value="3">技师已出发</case>
+            <case value="4">已付款</case>
+            <case value="5">已完成,待评价</case>
+            <case value="6">已评价</case>
+          </switch>
+          </span>
+          </div>
+          <div class="row"><strong class="text-right col-xs-4" style="padding-right:0;">车型</strong><span  class="col-xs-8">{$order['carType']}</span></div>
+        </div>
+        <div class="col-xs-2">
+            <span class="glyphicon glyphicon-chevron-right" style="line-height:60px;" aria-hidden="true"></span>
+        </div>
+        </a>
+      </div>
+      <hr>
+    </div>
+</foreach>
+  </div>
+
+</div>
+<br>
+<br>
+<br>
+<!-- 底部导航 -->
+<nav class="navbar-inverse navbar-fixed-bottom">
+  <div class="container">
+    <ul class="nav navbar-nav row" style="float:none; margin:0;">
+      <li class="col-xs-4 text-center"><a href="__CONTROLLER__/index/date/{$prevDay}" target="_self" style="padding:15px 0;"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+      <li class="col-xs-4 text-center"><a href="__CONTROLLER__/index" target="_self" style="padding:15px 0;">今天</a></li>
+      <li class="col-xs-4 text-center"><a href="__CONTROLLER__/index/date/{$nextDay}" target="_self" style="padding:15px 0;"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+    </ul>
+  </div>
+</nav>
+</block>

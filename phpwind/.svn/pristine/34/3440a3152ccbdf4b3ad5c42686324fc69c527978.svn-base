@@ -1,0 +1,118 @@
+<?php
+namespace Admin\Controller;
+use Think\Controller;
+class ManageController extends CommonController{
+
+
+	public function onOff(){
+
+		$this -> display();
+	}
+
+	//显示后台人员列表
+	public function myList(){
+		
+		$manager = M('manager');
+		$managers = $manager -> select();
+		$this -> assign('manager',$managers);
+		$this -> display();
+	}
+
+	//显示超级管理员增添后台管理员和客服界面
+	public function add(){
+
+		$this -> display();
+	}
+	
+	//把后台人员信息插入数据库
+	public function insert(){
+
+		$manager = M('manager');
+		//把接收的密码进行md5加密
+		$_POST['password'] = md5($_POST['password']);
+		$data = $_POST;
+		//创建数据对象
+		if($manager -> create($data)){
+			$managers = $manager -> add();
+			if($managers){
+				$this -> success('OK','myList');
+			}else{
+				$this -> error('添加失败');
+			}
+		}else{
+			$this -> error('创建失败');
+		}
+	}
+
+	//删除功能
+	public function delete(){
+
+		//获取要删除用户的ID
+		$id = $_GET['id'];
+		$manager = M('manager');
+		if($manager -> delete($id)){
+			$this -> success('OK');
+		}else{
+			$this -> error('删除失败');
+		}
+	}
+
+	//修改管理员信息
+	public function mod(){
+
+		$id = $_GET['id'];
+		$manager = M('manager');
+		$managers = $manager -> where("id={$id}") -> select();
+		$this -> assign('manager',$managers);
+		$this -> display();
+
+	}
+
+	//修改后台管理人员密码
+	public function doMod(){
+		
+		$_POST['password'] = md5($_POST['password']);
+		$data = $_POST;
+		$data['id'] = $_GET['id'];
+		$manager = M('manager');
+		if($manager -> create($data)){
+			if($manager -> save()){
+				$this -> success('OK',U('Manage/myList'));
+			}else{
+				$this -> error('修改失败');
+			}
+		}else{
+			$this -> error('创建失败');
+		}
+	}
+
+	//修改权限
+	public function auth(){
+
+		$id = $_GET['id'];
+		$manager = M('manager');
+		$data = $manager -> where("id={$id}") -> select();
+		$this -> assign('manager',$data);
+		$this -> display();
+	}
+
+	public function authMod(){
+
+		$data = $_POST;
+		$data['id'] = $_GET['id'];
+		$manager = M('manager');
+		if($manager -> create($data)){
+			if($manager -> save()){
+				$this -> success('OK',U('Manage/myList'));
+			}else{
+				$this -> error('修改失败');
+			}
+		}else{
+			$this -> error('创建失败');
+		}
+	}
+
+
+
+}
+?>

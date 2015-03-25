@@ -1,0 +1,48 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+<script src="__PUBLIC__/admin/js/jquery.js"></script>
+	<div class="wrapper">
+		<div class="row">
+        <div class="col-sm-12">
+        <section class="panel">
+        <header class="panel-heading">
+            车型列表
+            <span class="tools pull-right">
+                <a href="javascript:;" class="fa fa-chevron-down"></a>
+             </span>
+        </header>
+        <div class="panel-body">
+        <div class="adv-table">
+        <table  class="display table table-bordered table-striped" id="dynamic-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>品牌</th>
+            <th>车系</th>
+            <th class="hidden-phone">车型</th>
+            <th class="hidden-phone">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+		<foreach name="list" item="list">
+        <tr class="gradeX">
+            <td>{$list['id']}</td>
+            <td>{$list['brand']}</td>
+            <td>{$list['series']}</td>
+            <td class="center hidden-phone">{$list['types']}</td>
+            <td class="center hidden-phone"><a href="__CONTROLLER__/update/id/{$list['id']}">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="__CONTROLLER__/delete/id/{$list['id']}" onclick="return confirm('你确定要删除吗？')">删除</a></td>
+        </tr>
+		</foreach>
+        </tbody>
+        </table>
+        </div>
+		
+        </div>
+        </section>
+        </div>
+        </div>
+	</div>
+    <script type="text/javascript">
+
+    </script>
+</block>

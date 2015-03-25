@@ -1,0 +1,46 @@
+<extend name="Layout:layout" />
+<block name="layoutBack">
+  <a class="navbar-brand">宇瑞安</a>
+</block>
+<block name="layoutTechInfo">
+欢迎登录,{$telephone};
+<br>
+当前共有<code>3</code>条订单需要处理！
+</block>
+<block name="layoutMain">
+<div class="container">
+  <div class="orderList text-muted">
+    <br>
+<foreach name="orders" item="order">
+    <div class="orderLi">
+      <div class="row">
+        <a href="__CONTROLLER__/order/id/{$order['id']}" class="text-muted">
+        <div class="col-xs-10">
+          <div class="row"><strong class="text-right col-xs-4" style="padding-right:0;">下单时间</strong><span class="col-xs-8">{$order['createTime']|date = "Y-m-d H:i:s",###}</span></div>
+          <div class="row"><strong class="text-right col-xs-4" style="padding-right:0;">车型</strong><span  class="col-xs-8">{$order['carType']}</span></div>
+          <div class="row"><strong class="text-right col-xs-4" style="padding-right:0;">订单状态</strong>
+          <span  class="col-xs-8">
+            <switch name="order.orderStatus">
+              <case value="0">已提交</case>
+              <case value="1">已确认</case>
+              <case value="2">已出发</case>
+              <case value="3">已付款</case>
+              <case value="4">已完成</case>
+              <case value="5">已取消</case>
+              <case value="6">已评价</case>
+            </switch>
+          </span>
+          </div>
+        </div>
+        <div class="col-xs-2">
+            <span class="glyphicon glyphicon-chevron-right" style="line-height:60px;" aria-hidden="true"></span>
+        </div>
+        </a>
+      </div>
+      <hr>
+    </div>
+</foreach>
+  </div>
+
+</div>
+</block>

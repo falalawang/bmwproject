@@ -1,0 +1,85 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+<script src="__PUBLIC__/admin/js/jquery.js"></script>
+<div class="wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading">
+                <a href="__CONTROLLER__/seriesList">车系列表</a>&nbsp;>>&nbsp;修改车系
+            </header>
+            <div class="panel-body">
+                <form action="__CONTROLLER__/updateSeries" class="form-horizontal adminex-form" id="myform" method="post">
+                    <div class="col-sm-2"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">品牌</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="brand" value="{$series[0]['brand']}" disabled />
+                        </div>
+                    </div>
+                    <div class="col-sm-2"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">车系</label>
+                        <input type="hidden" name="id" value="{$series[0]['id']}" />
+                        <div class="col-sm-4">
+                            <input type="text" id="series" class="form-control" name="series" value="{$series[0]['series']}" /><span id="sMsg"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-5"></div>
+					<div class="col-sm-5 panel-body">
+						<button type="submit" class="btn btn-primary">修改</button>
+                    </div>
+                   </form>
+            </div>
+		</section>
+
+		</div>
+    </div>
+</div>
+        <script type="text/javascript">
+
+            var sLog = false;
+            $('#series').blur(function(){
+                seriesCheck();   
+            });
+            function seriesCheck(){
+                if($('#series').val() == ''){
+                    $('#sMsg').html('车系不能为空！').css({color:'red'});
+                    sLog = false;
+                }else{
+                    $('#sMsg').html('输入正确').css({color:'green'});
+                    sLog = true;
+                }
+
+                
+
+                // else{
+                //     var data = {sName:"$('#series').val()"};
+                //     $.get('seriesCheck',data,function(d){
+                //         alert(d);
+                //         if(d == 2){
+                //             $('#sMsg').html('车系已经存在！').css({color:'red'});
+                //             sLog = false;
+                //         }else{
+                //             $('#sMsg').html('输入正确').css({color:'green'});
+                //             sLog = true;
+                //         }
+                //     });
+                // }
+            }
+
+
+            $('#myform').submit(function(){
+                seriesCheck();
+
+                //如果判断不通过则不让提交
+                if(sLog){
+                    return true;
+                }else{
+                    return false;
+                }
+
+            });
+
+        </script>
+</block>

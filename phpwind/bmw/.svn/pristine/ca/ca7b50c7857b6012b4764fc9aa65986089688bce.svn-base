@@ -1,0 +1,225 @@
+<?php
+namespace Admin\Controller;
+use Think\Controller;
+class ServiceController extends CommonController { 
+    
+    public function carList(){
+        $model=M('');
+        $count = $model->table('bmw_brand,bmw_series,bmw_models') -> field('bmw_brand.brand,bmw_series.series,bmw_models.model')->where("bmw_brand.id=bmw_series.bid and bmw_series.id=bmw_models.sid") -> count();  
+        dump($count);
+        $Page  = new \Think\Page($count,3);
+        $show = $Page->show();
+        $models=$model -> table('bmw_brand,bmw_series,bmw_models') -> field("bmw_brand.brand,bmw_series.series,bmw_models.model,bmw_models.id")->where("bmw_brand.id=bmw_series.bid and bmw_series.id=bmw_models.sid") ->limit($Page->firstRow.','.$Page->listRows)-> select();
+        $this -> assign("model", $models);
+        $this -> assign('show',$show);
+        $this -> display();  
+    }
+    
+    public function ajax(){        
+        $ajax = $_POST['search'];
+        $search="brand like '%{$ajax}%' or series like '%{$ajax}%' or model like '%{$ajax}%'";
+        $model = M();
+        $models=$model -> table('bmw_brand,bmw_series,bmw_models') -> field('bmw_brand.brand,bmw_series.series,bmw_models.model')->where("bmw_brand.id=bmw_series.bid and bmw_series.id=bmw_models.sid and {$search}")-> select();
+        //echo $model->getLastSql();die;
+        dump($models);die;
+        foreach($models as $v){
+            dump($v);
+        }
+        //$data=json_encode($models);
+        //echo $data;
+        }
+ 
+    public function brandList(){
+        $brand=M('brand');
+        $brands=$brand->select();
+        $this->assign('brands',$brands);
+        $this->display();
+     }
+    
+    public function insert(){
+        $data=$_POST;
+        $brand=M("brand");
+        if($brand -> create($data)){
+            $res = $brand->add();
+            if($res){
+                $this -> success("OK",U("Service/brandList"));
+            }else{
+                $this -> error("失败");
+            }
+        }else{
+            $this -> error("失败！");
+        }
+     }
+
+    public function addBrand(){
+        $this->display();
+     }
+
+    public function delBrand(){
+         $id=I('get.id');
+         $brand=M('models');
+        if($brand -> delete($id)){
+            $this -> success("删除成功");
+        }else{
+            $this -> error("删除失败11");
+        }      
+     }
+    
+    public function addSeries(){
+        $brand=M('brand');
+        $brands=$brand->select();
+        $this->assign('brands',$brands);
+        $this->display();
+     }
+    
+    public function add_Series(){
+        $data['bid']=$_POST['brand'];
+        $data['series']=$_POST['series'];
+        if($data['bid']){
+        $series=M('series');
+        if($series->create($data)){
+            $res=$series->add();
+            if($res){
+                $this -> success("OK",U("Service/addSeries"));
+            }else{
+                $this -> error("添加失败");
+            }
+            }else{
+                $this -> error("添加失败");
+        }
+        }else{
+        $this -> error("添加失败");
+        }
+     }
+
+    public function Models(){
+        $brand=M('brand');
+        $brands=$brand->select();
+        $this->assign('brands',$brands);
+        $this->display();
+     }
+    
+    public function addModels(){
+        dump($_POST);
+        $data['sid']=$_POST['series'];
+        $data['model']=$_POST['models'];
+        if($data['sid']){
+        $model=M('models');
+        if($model->create($data)){
+            $res=$model->add();
+            if($res){
+                $this -> success("OK",U("Service/Models"));
+            }else{
+                $this -> error("添加失败");
+            }
+            }else{
+                $this -> error("添加失败");
+        }
+        }else{
+        $this -> error("添加失败");
+        }
+
+     }
+    
+    public function keepProjectList(){
+        $project = M('keep');
+        $projects = $project -> select();
+        $this -> assign("project", $projects); 
+        $this -> display();
+     }
+     public function delService(){
+        $id=I('get.id');
+         $project=M('keep');
+        if($project -> delete($id)){
+            $this -> success("删除成功");
+        }else{
+            $this -> error("删除失败");
+        }  
+
+     }
+
+    public function insertService(){
+        $data=$_POST;
+        $keep=M('keep');
+        if($keep->create($data)){
+            $res=$keep->add();
+            if($res){
+                $this->success('OK',U('Service/keepProjectList'));
+            }else{
+                $this->error('添加失败');
+            }
+        }else{
+                $this->error('添加失败');
+        }
+     }
+
+     
+    public function priceList(){
+        $brand=M('brand');
+        $brands=$brand->select();
+        $this->assign('brand',$brands);
+        $price=M('price');
+        $count = $price -> count();
+        $Page  = new \Think\Page($count,10);
+        $show = $Page->show();
+        $prices=$price->limit($Page->firstRow.','.$Page->listRows)->select();
+        $this -> assign('show',$show);
+        $this->assign('price',$prices);
+        $this->display();
+     }
+    
+    public function ajaxPrice(){
+        $data=$_POST['brand'];
+        //dump($data);
+        $model=M('');
+        $models=$model->table("bmw_brand,bmw_series")->field("bmw_series.id,bmw_series.series")->where("bmw_brand.id=bmw_series.bid and bmw_brand.id='$data'")->select();
+        //echo $model->getLastSql();die;
+        //dump($models);die;
+        $str="<option value='0'>请选择车系</option>";
+        foreach($models as $k=>$v){
+                $aa=$v['id'];
+                $bb=$v['series'];
+                $str.="<option value='{$aa}'>{$bb}</option>";
+        }
+        echo $str;
+    }
+          
+    public function ajaxAction(){
+        $data=$_POST['series'];
+        dump($data);
+        $model=M('');
+        $models=$model->table("bmw_series,bmw_models")->field("bmw_models.id,bmw_models.model")->where("bmw_series.id=bmw_models.sid and bmw_series.id='$data'")->select();
+        //echo $model->getLastSql();
+        $str="<option value='0'>请选择车型</option>";
+        foreach($models as $k=>$v){
+            $aa=$v['id'];
+            $bb=$v['model'];
+            $str.="<option value='{$aa}'>{$bb}</option>";
+        }
+        echo $str;        
+     }
+
+    public function updatePrice(){
+        $id=$_GET['id'];
+        $price=M('price');
+        $prices=$price->where("id=$id")->find();
+        $this->assign('prices',$prices);
+        $this->display();
+     }
+    
+    public function update(){
+        $data=$_POST;
+        $id=$_GET['id'];
+        $price=M('price');
+        if($price->create($data)){
+            $res=$price->where("id=$id")->save();
+            if($res){
+                $this->success('修改成功',U("Service/priceList"));
+            }else{
+                $this->error('修改失败',U("Service/priceList"));
+            }
+        }else{
+                $this->error('失败',U("Service/priceList"));
+        }
+     }
+}

@@ -1,0 +1,5 @@
+a:visited{color: #999;}
+.color_box .right_line{border-right:1px solid #DDD;}
+.color_box .glyphicon{font-size:18px;}
+.modal-backdrop{z-index:0;}
+.carousel-inner img{ margin:0 auto;}

@@ -1,0 +1,129 @@
+<?php
+namespace Tech\Controller;
+use Think\Controller;
+class IndexController extends Controller {
+    public function index(){
+        $isLogin = session('tech_isLogin');
+        if($isLogin){
+            $telephone = session('tech_telephone');
+            $this -> assign('telephone',$telephone);
+            $techId = session('tech_id');
+
+            $serCarDB = M("server_car");
+            $serCar = $serCarDB -> select();
+
+            foreach ($serCar as $keys => $values) {
+                foreach ($values as $key => $value) {
+                    if($key == 'techId'){
+                        $array = explode(',', $value);
+                        foreach ($array as $key => $val) {
+                            if($val == $techId){
+                                $serverCarId = $values['id'];
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if(isset($_GET['date'])){
+                $day = $_GET['date'];
+            }else{
+                $day = date("Y-m-d",time());
+            }
+            $nextDay = date("Y-m-d",strtotime($day) + 86400);
+            $prevDay = date("Y-m-d",strtotime($day) - 86400);
+
+            $this -> assign("day",$day);
+            $this -> assign("nextDay",$nextDay);
+            $this -> assign("prevDay",$prevDay);
+
+            // echo $day;
+
+            $orderDB = M("order");
+            $order = $orderDB ->where("serverCarId = $serverCarId and orderDate = '$day' and orderStatus != '5'") ->order("orderDate,orderTime") -> select();
+            $count = $orderDB ->where("serverCarId = $serverCarId and orderDate = '$day' and orderStatus != '5'")-> count();
+            $this -> assign("orders",$order);
+            $this -> assign("count",$count);
+            // dump($order);
+
+            $this -> display();
+        }else{
+            $this -> success("OK",U("login"));
+        }
+    }
+
+    public function login(){
+        $this ->display();
+    }
+
+    public function doLogin(){
+        $tel = $_POST['telephone'];
+        $pwd = md5($_POST['password']);
+        $tech = M("manager");
+        $res = $tech ->where("telephone = '$tel' and password = '$pwd' and auth = '3'")-> find();
+        if($res){
+            echo 1;
+            session('tech_isLogin','1');
+            session('tech_id',$res['id']);
+            session('tech_telephone',$tel);
+            // session('isLogin','1');
+        }else{
+            echo 0;
+        }
+    }
+
+    public function outLogin(){
+        session('tech_isLogin',null);
+        session('tech_telephone',null);
+        $this -> success("OK",U("login"));
+    }
+
+    public function order(){
+        $orderDB = M("order");
+        if (isset($_GET['id']) && $_GET['id'] >= 1) {
+            $id = $_GET['id'];
+            $order = $orderDB ->where("id = $id") -> find();
+            $this -> assign("order",$order);
+            // dump($order);
+            $telephone = session('tech_telephone');
+            $this -> assign('telephone',$telephone);
+
+            $evaDB = M("evaluate");
+            $id = $order['id'];
+            $evaluate = $evaDB -> where("orderId = $id") -> find();
+            $this -> assign("evaluate",$evaluate);
+
+            $this -> display();
+        }else{
+            $this -> success("OK",U("index"));
+        }
+    }
+
+    public function closeOrder(){
+         if (isset($_GET['id']) && $_GET['id'] >= 1) {
+            $id = $_GET['id'];
+            $order = M('order');
+            $data['orderStatus'] = '5';
+
+            if($order -> where("id = $id") -> save($data)){
+                $this -> success("修改成功",U("index/order/id/$id"));
+            }else{
+                $this -> error("修改失败1",U("index/order/id/$id"));
+            }
+        }
+    }
+    public function editOrder(){
+        if (isset($_GET['id']) && $_GET['id'] >= 1) {
+            $id = $_GET['id'];
+            $data['orderStatus'] = $_GET["status"];
+            $order = M('order');
+
+            if($order -> where("id = $id") -> save($data)){
+                $this -> success("修改成功",U("index/order/id/$id"));
+            }else{
+                $this -> error("修改失败1",U("index/order/id/$id"));
+            }
+        }
+    }
+}

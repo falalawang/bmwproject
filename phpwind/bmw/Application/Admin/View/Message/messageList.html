@@ -1,0 +1,36 @@
+<extend name='Layout:layout' />
+<block name='main-content'>
+	<div class="mws-panel grid_8">
+                	<div class="mws-panel-header">
+                    	<span><i class="icon-table"></i>信息管理&nbsp;-->&nbsp;信息列表</span>
+                    </div>
+					<div class="mws-panel-body no-padding">
+                        <table class="mws-table">
+                            <thead>
+                                <tr>
+                                    <th>编号</th>
+                                    <th>标题</th>
+                                    <th>信息</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+								<foreach name='message' item='mes'>
+									<tr>
+										<td>{$mes['id']}</td>
+										<td>{$mes['title']}</td>
+										<td>{$mes['message']}</td>
+										<td style='text-align:center'><a class='btn btn-small' href='__CONTROLLER__/update/id/{$mes["id"]}'><i class="icon-pencil"></i></a></td>
+									</tr>
+								</foreach>
+								<if condition="($pag LT 2)">
+								<else />
+								<tr>
+									<td style='background:#35353a;text-align:center' colspan='4'>{$show}</td>
+								</tr>
+								</if>
+                            </tbody>
+                        </table>
+                    </div>
+    </div>		
+</block>

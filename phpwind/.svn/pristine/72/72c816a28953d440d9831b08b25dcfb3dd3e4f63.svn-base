@@ -1,0 +1,112 @@
+<?php
+namespace Home\Controller;
+use Think\Controller;
+
+class ManageController extends Controller{
+	public function carTypeManage(){
+		$models = M("models");
+		$Types = $models -> select();
+		foreach ($Types as $key => $value) {
+			$brand[$key]=$value['brand'];			
+			$series[$key]=$value['brand'].",".$value['series'];
+			$types[$key]=$value['brand'].",".$value['series'].",".$value['types'];
+		}		
+		$brands=array_unique($brand);
+		$serieses=array_unique($series);
+		$types=array_unique($types);
+		foreach ($serieses as $key=> $value) {
+			$serieses[$key]=explode(",", $value);	
+		}
+		foreach ($types as $key=> $value) {
+			$types[$key]=explode(",", $value);	
+		}
+		$this->assign('brands',$brands);
+		$this->assign('serieses',$serieses);
+		$this->assign('types',$types);
+		$this -> display();
+	}
+	public function addCarType(){
+		$models=M("models"); 
+		$map['brand']=$_GET['brand']; 
+		$map['series']=$_GET['series']; 
+		$map['types']=$_GET['type'];
+		$model=$models->where($map)->find();
+		session('typeId',$model['id']);
+		session('brand',$_GET['brand']);
+		session('series',$_GET['series']);
+		session('type',$_GET['type']);
+		
+		
+	}
+	public function addressManage(){
+		$city=M("city");
+		$c=$city->select();
+		
+		foreach ($c as $key=> $value) {
+			$provinces[$key]=$value['province'];
+			$citys[$key]=$value['province'].",".$value['city'];
+			$countys[$key]=$value['city'].",".$value['county'];
+		}
+		$provinces=array_unique($provinces);
+		$ccitys=array_unique($citys);
+		$ccountys=array_unique($countys);
+		
+		foreach ($ccitys as $key=> $value) {
+			$ccitys[$key]=explode(",", $value);			
+		}
+		foreach ($ccountys as $key=> $value) {
+			$ccountys[$key]=explode(",", $value);			
+		}
+		$this->assign("provinces",$provinces);
+		$this->assign("citys",$ccitys);
+		$this->assign("countys",$ccountys);
+		$this->display();
+	}
+
+	public function addAddress(){
+		session('city',$_GET['province']." ".$_GET['city']." ".$_GET['county']);
+		session('street',$_GET['street']);
+	}
+
+	public function addressManage1(){
+		$city=M("city");
+		$c=$city->select();		
+		foreach ($c as $key=> $value) {
+			$provinces[$key]=$value['province'];
+		}
+		$provinces=array_unique($provinces);
+		$this->assign("provinces",$provinces);
+		$this->display();
+	}
+	public function selectCity(){
+		$p=$_GET['province'];
+		$city=M("city");
+		$citys=$city->select();
+		foreach ($citys as $key=> $value) {
+			if($value['province']==$p){
+				$c[$key]=$value['city'];
+			}
+		}
+		$ci=array_unique($c);
+		foreach ($ci as $key=>$value) {
+			$arr[$key]['city']=$value;
+		}
+		$this->ajaxReturn($arr);
+	}
+	public function selectCounty(){
+		$c=$_GET['city'];
+		$city=M("city");
+		$citys=$city->select();
+		foreach ($citys as $key=> $value) {
+			if($value['city']==$c){
+				$county[$key]=$value['county'];
+			}
+		}
+		$countys=array_unique($county);
+		foreach ($countys as $key=>$value) {
+			$arr[$key]['county']=$value;
+		}
+		$this->ajaxReturn($arr);
+	}
+}	
+?>

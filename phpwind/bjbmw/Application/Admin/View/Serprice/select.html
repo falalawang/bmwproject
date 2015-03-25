@@ -1,0 +1,64 @@
+<extend name='Layout:layout'/>
+<block name='mws-container'>
+<div id="mws-container" class="clearfix">
+        
+            <!-- Inner Container Start -->
+            <div class="container">
+                <div class="mws-panel grid_8">
+                    <div class="mws-panel-header">
+                        <span>服务价格详情表</span>
+                    </div>
+                    <div class="mws-panel-body no-padding">
+                        <form class="mws-form" >
+                            <fieldset class="mws-form-inline">
+                                <legend></legend>
+                                <div class="mws-form-row bordered"  style='letter-spacing:2px;'>
+                                    <h4>车型：{$price['brand']} &nbsp;{$price['series']} &nbsp;{$price['model']}</h4>
+                                    
+                                </div>
+                                <div class="mws-form-row bordered" style='letter-spacing:13px;'>
+                                    机油机滤：
+                                        <input type="text" name='eoof' readonly class="large" size='35' value='{$price['eoof']}' >
+                                    <span style='letter-spacing:9px;'>微尘滤清器：</span>
+                                        <input type="text" name='microfil' readonly class="large" size='35' value='{$price['microfil']}' >
+                                </div>
+                                
+                                <div class="mws-form-row bordered" style='letter-spacing:9px;'>
+                                    后部制动片：
+                                        <input type="text" name='rearbpiece' readonly class="large" size='35' value='{$price['rearbpiece']}' >
+                                    <span style='letter-spacing:1px;'>后部制动盘及制动片：</span>
+                                        <input type="text" name='rearbdisc' readonly class="large" size='35' value='{$price['rearbdisc']}' >
+                                </div>
+                                
+                                <div class="mws-form-row bordered" style='letter-spacing:9px;'>
+                                    前部制动片：
+                                        <input type="text" name='fbpiece' readonly class="large" size='35' value='{$price['fbpiece']}' >
+                                    <span style='letter-spacing:1px;'>前部制动盘及制动片：</span>
+                                        <input type="text" name='frontbdisc' readonly class="large" size='35' value='{$price['frontbdisc']}' >
+                                </div>
+                                
+                                <div class="mws-form-row bordered" style='letter-spacing:18px;'>
+                                    火花塞：
+                                        <input type="text" name='ngk' readonly class="large" size='35' value='{$price['ngk']}' >
+                                    <span style='letter-spacing:11px;'>车辆检查：</span>
+                                        <input type="text" name='carcheck' readonly class="large" size='35' value='{$price['carcheck']}' >
+                                </div>
+                                <div class="mws-form-row bordered" style='letter-spacing:9px;'>
+                                    空气滤清器：
+                                        <input type="text" name='aircleaner' readonly class="large" size='35' value='{$price['aircleaner']}' >
+                                    <span style='letter-spacing:22px;'>雨刮片：</span>
+                                        <input type="text" name='nwb' readonly class="large" size='35' value='{$price['nwb']}' >
+                                </div>
+                                
+                                <legend></legend>
+                                
+                            </fieldset>
+                            
+                            
+                        </form>
+                    </div>      
+                </div>
+            </div>
+</div>
+            
+</block>                

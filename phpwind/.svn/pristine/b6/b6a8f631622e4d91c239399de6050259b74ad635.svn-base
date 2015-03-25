@@ -1,0 +1,8 @@
+<?php
+
+	$str = '0123456789';
+	$str = str_shuffle($str);
+	echo substr($str,3,5);
+
+
+?>

@@ -1,0 +1,44 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+	<div class="mws-panel grid_8">
+                	<div class="mws-panel-header">
+                    	<span>网站Logo</span>
+                    </div>
+                    <div class="mws-panel-body no-padding">
+                    	<form class="mws-form" action="__CONTROLLER__/dologo" method="post" enctype="multipart/form-data">
+                              <div class="mws-form-inline">
+                    			<div class="mws-form-row">
+                    				<label class="mws-form-label">当前LOGO</label>
+                    				
+                    					<ul class="thumbnails mws-gallery">
+			                			<li>
+			                            	<span class="thumbnail"><img src="__PUBLIC__{$logos[0].logo}" alt=""></span>
+			                            </li>
+
+			                			<li></li>
+			                			</ul>
+                    				
+                    			</div>
+                    			<div class="mws-form-row">
+                    				<label class="mws-form-label">更换LOGO</label>
+                    				<div class="mws-form-item">
+                    					<input type="file" name="logo">
+                    					<input type='hidden' name='id' value="{$logos.id}">
+                    				</div>
+                    			</div>
+                    			
+                    		</div>
+                    		<div class="mws-button-row">
+                    			<input type="submit" value="提交" class="btn btn-danger">
+                    			<input type="reset" value="重置" class="btn ">
+                    		</div>
+
+                    	</form>
+                    </div>    	
+                </div>
+                
+            	
+
+                
+
+</block>

@@ -1,0 +1,34 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+<div class="wrapper">
+    <div class="row">
+        <div class="col-sm-12">
+        <section class="panel">
+        <header class="panel-heading">
+            微信用户
+        </header>
+        <div class="panel-body">
+            <div class="adv-table">
+                <table  class="display table table-bordered table-striped" id="dynamic-table">
+                    <thead>
+                    <tr>
+                        <th class="col-sm-4">ID</th>
+                        <th class="col-sm-8">微信ID</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <foreach name="user" item="user">
+                            <tr class="gradeX">
+                                <td>{$user['id']}</td>
+                                <td>{$user['wechatId']}</td>
+                            </tr>
+                        </foreach>
+            		</tbody>
+                </table>
+            </div>
+        </div>
+        </section>
+        </div>
+    </div>
+</div>
+</block>

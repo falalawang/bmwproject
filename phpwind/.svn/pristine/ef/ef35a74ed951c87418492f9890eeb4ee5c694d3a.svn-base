@@ -1,0 +1,73 @@
+<extend name="Layout:layout" />
+<block name="layoutBack">
+      <a class="navbar-brand visible-xs" style="padding-right:0;" href="__CONTROLLER__/address"><</a>
+      <a class="navbar-brand " href="">修改地址</a>
+</block>
+<block name="layoutMain">
+<div class="container">
+
+<form action="__CONTROLLER__/update" method="post">
+  <br>
+<foreach name="address" item="valAddr">
+  <div class="form-group">
+    <label for="addressName">联系人姓名</label>
+    <input type="text" class="form-control" name="name" id="addressName" value="{$valAddr['name']}" placeholder="联系人姓名">
+  </div>
+  <div class="form-group">
+    <label for="addressPhone">手机号码</label>
+    <input type="text" class="form-control" name="telephone" id="addressPhone" value="{$valAddr['telephone']}" placeholder="联系人手机号码">
+  </div>
+  <div class="form-group">
+    <label for="addressName">所在地区</label>
+    <input type="text" class="form-control" name="city" id="addressCity" value="{$valAddr['city']}" placeholder="所在地区"  data-toggle="modal" data-target="#myModal">
+  </div>
+  <div class="form-group">
+    <label for="addressPhone">街道地址</label>
+    <input type="text" class="form-control" name="street" id="addressStreet" value="{$valAddr['street']}" placeholder="街道地址">
+    <input type="hidden" name="id" value="{$_GET['id']}">
+  </div>
+</foreach>
+  <button type="submit" class="btn btn-primary btn-block">确定完成</button>
+  <a href="__CONTROLLER__/delAddr/id/{$valAddr['id']}" type="submit" class="btn btn-danger btn-block">删除</a>
+</form>
+
+</div>
+<!-- 选择城市 -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">请选择城市</h4>
+      </div>
+      <div class="modal-body">
+        <ul id="cityList">
+            <foreach name="provinces" item="province">
+              <li class="province">
+                <button type="button" class="btn btn-sm btn-link provinceBtn">{$province}</button>
+                <ul>
+                <foreach name="citys" item="city">
+                  <if condition="$city[0] eq $province">
+                    <li class="city">
+                      <button type="button" class="btn btn-sm btn-link cityBtn">{$city[1]}</button>
+                      <ul  class="list-unstyled">
+                        <foreach name="countys" item="county">
+                          <if condition="$county[0] eq $city[1]">
+                            <li class="county">
+                              <button type="button" class="btn btn-sm btn-link countyBtn">{$county[1]}</button>
+                            </li>
+                          </if>
+                        </foreach>
+                      </ul>
+                    </li>
+                  </if>
+                </foreach>
+                </ul>
+              </li>
+            </foreach>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</block>

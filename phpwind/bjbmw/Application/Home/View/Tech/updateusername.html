@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <title>修改信息-{$config.webname}</title>
+    <meta name="description" content="{$config.description}">
+    <meta name="keywords" content="{$config.keywords}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="__PUBLIC__/Home/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="__PUBLIC__/Home/bootstrap/css/bootstrap-theme.css" rel="stylesheet"> 
+    </head>
+<body role="document">
+<nav class="navbar navbar-inverse ">
+    <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="__CONTROLLER__/logout">退出</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav"> 
+            <li><a href="__CONTROLLER__/serviceperson">个人信息</a></li>
+            <li><a href="__CONTROLLER__/servicecar">我的服务车</a></li>
+            <li><a href="__CONTROLLER__/serviceorder">我的订单</a></li>
+	
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+<div class="container theme-showcase" role="main">
+		<div class="page-header"> </div>
+		<div class="page-header">
+        <h1>个人信息</h1>
+		</div>
+		<div class="row">
+        <div class="col-md-9">
+			<table class="table table-bordered">
+            <thead>
+				<tr>
+					<th>类别</th>
+					<th>我的信息</th>
+				</tr>
+            </thead>
+            <tbody>
+			<volist name='person' id='person'>
+				<tr><td>技师姓名:</td><td>{$person.userid}</td></tr>
+                <tr><td>技师昵称:</td><td>{$person.username}</td></tr>
+				<tr><td>新的昵称:</td><td><input type="text" name="newuname" id="newuname"></td></tr>				
+<!--				<tr><td>新的密码:</td><td><input type="text" name="newpwd" id="newpwd"></td></tr>				-->
+			</volist>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+		</div>
+		<div class="row">
+		<div class="col-md-2"> </div>
+		<div><tr><input type="button" value="提交" onclick="update()"> <label id="info" ></label></div></tr></div>
+		
+    </div> <!-- /container -->
+	<script type="text/javascript"> 
+		function update(){
+			var newuname=$("#newuname").val();
+			if(newuname!=""){
+			$.ajax({
+				"url":"__CONTROLLER__/updateinfo",
+				"type":"post",
+				"data":{'newuname':newuname},
+				"success":function(data){
+					if(data==1){
+						location.reload();
+						$("#newuname").val('');
+						$("#info").html("更新成功") 
+					}else{  
+						$("#info").html("更新失败")
+					}
+				}
+			})
+			}else{
+				$("#info").html("昵称不能为空")
+			}
+		}
+	</script>
+	<script src="__PUBLIC__/Home/bs/1.11.2.jquery.min.js"></script>
+    <script src="__PUBLIC__/Home/bs/bootstrap.js"></script>
+  </body>
+</html>

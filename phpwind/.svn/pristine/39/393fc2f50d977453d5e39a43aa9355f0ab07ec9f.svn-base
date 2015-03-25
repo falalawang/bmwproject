@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="renderer" content="webkit">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>宇瑞安-个人中心</title>
+  <meta type="keywords" content="1,1,1">
+  <meta type="description" content="111">
+  <!-- 新 Bootstrap 核心 CSS 文件 -->
+  <!-- <link rel="stylesheet" href="__PUBLIC__/home/css/core.css"> -->
+  <link rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css">
+  <link rel="stylesheet" href="__PUBLIC__/home/css/center.css">
+</head>
+<body>
+<!-- 顶部导航 -->
+<div class="navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand " href="./index"><</a>
+      <a class="navbar-brand " href="">地址管理</a>
+    </div>
+    <div class="navbar-collapse collapse" role="navigation">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">关于我们<b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="#" target="_blank">起步</a>
+            </li>
+            <li>
+              <a href="#" target="_blank">服务流程</a>
+            </li>
+          </ul>
+        </li>
+        <li><a href="=" target="_blank">预约保养</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/about/">登录</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="container-fluid">
+    <hr>
+  <foreach name="address" item="valAddr">
+  <a class="text-muted" href="./editAddress?id={$valAddr['id']}">
+  <div class="row">
+    <div class="col-xs-10">
+      {$valAddr['city']}
+      <br>
+      {$valAddr['address']}
+      <br>
+      {$valAddr['name']}
+      {$valAddr['telephone']}
+    </div>
+    <div class="col-xs-2">
+      <span class="glyphicon glyphicon-chevron-right" style="line-height:60px;" aria-hidden="true"></span>
+    </div>
+  </div>
+  </a>
+    <hr>
+  </foreach>
+  <a href="./addAddress" class="btn btn-default btn-lg btn-block">添加新地址</a>
+</div>
+<!-- 底部导航 -->
+<nav class="navbar-inverse navbar-fixed-bottom hidden-md hidden-sm hidden-lg">
+  <div class="container">
+    <ul class="nav navbar-nav row" style="float:none; margin:0;">
+      <li class="col-xs-4 text-center"><a href="" target="_blank" style="padding:10px 0;">品牌介绍</a></li>
+      <li class="col-xs-4 text-center"><a href="" target="_blank" style="padding:10px 0;">立即预约</a></li>
+      <li class="col-xs-4 text-center"><a href="../center/index" target="_blank" style="padding:10px 0;">个人中心</a></li>
+    </ul>
+  </div>
+</nav>
+
+
+
+</body>
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="__PUBLIC__/home/js/jquery.js"></script>
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+</html>

@@ -1,0 +1,227 @@
+<?php
+namespace Home\Controller;
+use Think\Controller;
+
+class OrderController extends Controller{
+	public function inputInfo(){
+		$brand=session('brand');//拿到所有的session值
+		$series=session('series');
+		$type=session('type');
+		$typeId=session('typeId');
+		$city=session('city');
+		$street=session('street');
+		$uid=session('uid');
+
+		$this->assign("brand",$brand);//将session值分配到模版
+		$this->assign("series",$series);
+		$this->assign("type",$type);
+		$this->assign("typeId",$typeId);
+		$this->assign("city",$city);
+		$this->assign("street",$street);
+
+
+		$models=M("models");//得到表对象
+		$combo=M("combo");
+		$customer=M("customer");
+
+		$user=$customer->where("id=$uid")->find();
+		if($user['name']){
+			$this->assign("userName",$user['name']);
+		}
+
+		$time=time();//分配时间戳
+		$this->assign("time",$time);
+
+		$userModel=M("user_model");//用户车型表
+		$userModels=$userModel->where("uid=$uid")->select();
+		foreach ($userModels as $key => $value) {
+			$typeId=$value['typeId'];
+			$userTypes[$key]=$models->find($value['typeId']);//拿到用户具体的车型数据(包括id)
+			$combos[$key]=$combo->where("typeId=$typeId")->select();//拿到用户每辆车各自对应的套餐信息(它的typeId与上面的id对应),不需要分配到模版,通过从模版发送过来的ajax请求判断,再返回对应套餐信息
+		}
+		
+		if(isset($_GET['typeId'])){//通过模版发送的typeId值得到对应的套餐,返回模版
+			$TypeId=$_GET['typeId'];
+			$combos=$combo->where("typeId=$TypeId")->select();
+			foreach ($combos as $key=>$val) {
+				$com[$key]['comboName']=$val['comboName'];
+				$com[$key]['lowPrice']=$val['lowPrice'];
+				$com[$key]['highPrice']=$val['highPrice'];				
+			}
+			$this->ajaxReturn($com);
+		}
+
+		$userAddress=M("user_address");//用户地址表
+		$userAddresses=$userAddress->where("uid=$uid")->select();//拿到用户具体的地址信息(包括街道,姓名,														//手机号,uid,城市名)
+		foreach ($userAddresses as $key => $value) {
+			$userAddre[$key]=$value['city']." ".$value['street'];
+		}
+		
+		$this->assign("userTypes",$userTypes);//将用户的信息分配到模版			
+		$this->assign("userAddresses",$userAddre);
+
+        $arrange=M("arrange");//时间表
+		$servercar=M("server_car");
+		$carNum = $servercar->count();
+		for ($i=0; $i <7 ; $i++) { 
+			$time=time()+3600*24*1*$i;
+			$d[$i]=date('Y-m-d',$time);
+		}
+		foreach ($d as $key => $value) {//初始化一个日期,服务车,时间段的三位数组
+			for ($i=1; $i <=$carNum ; $i++) {
+				$status[$value][$i]=array("0"=>"0","1"=>"0","2"=>"0","3"=>"0");
+			}
+		}
+
+		foreach ($status as $key => $value) {
+			//$date=strtotime($key);//将日期转为时间戳
+			$map['date']=$key;
+			$arranges=$arrange->where($map)->select();
+			if($arranges){
+				foreach ($arranges as $k => $val) {
+					$time=explode(",", $val['time']);					
+					$time=convert($time);//将读出的时间段信息转化为四个时间段是否存在的一维数组
+					$status[$key][$val['carId']]=$time;//更新读出的时间段信息
+				}
+			}
+		}
+
+		foreach ($d as $key => $value) {//初始化一个二维的状态数组
+			$Status[$value]=array("0"=>"1","1"=>"1","2"=>"1","3"=>"1");			
+		}
+		
+		foreach ($status as $key => $value) {//将上面的三位数组转化为上面的二维数组,并根据查出来的信息更新
+			foreach ($status[$key] as $ke => $val) {
+				foreach ($status[$key][$ke] as $k => $v) {
+					if($v){
+						continue;
+					}else{
+						$Status[$key][$k]="0";
+					}
+				}
+			}
+			
+			}		
+
+		$this->assign("status",$Status);//分配状态数组
+
+        $this->display();
+	}
+	public function submitOrder(){
+		$order=M("order");
+		$customer=M("customer");
+		$userModels=M("user_model");
+		$userAddresses=M("user_address");
+
+		if($_POST['code']==session('code')){//判断验证码是否正确
+			//提交完订单,有两种情况
+			//情况一:session里不存在uid
+			if(!session('uid')){
+				$map['telephone']=$_POST['telephone'];
+				$res=$customer->where($map)->find();//session里不存在uid时,判断用户填写的手机号是否被注册过	
+				if($res){							//如果被注册过,将uid查出来放进session里
+					session("uid",$res['id']);
+				}else{								//如果不存在,存进用户表里
+					$user['name']=$_POST['user'];
+					$user['telephone']=$_POST['telephone'];
+					if($customer->create($user)){
+						$res=$customer->add();
+					}				
+					$id=$res;
+					session("uid",$id);				//存完将uid存进session里
+					
+				}
+					session("telephone",$_POST['telephone']);//将手机号存进session里
+
+					$userAdd['city']=$_POST['city'];		//将用户提交订单时的地址信息存进数据表里
+					$userAdd['street']=$_POST['street'];
+					$userAdd['telephone']=$_POST['telephone'];
+					$userAdd['uid']=session("uid");
+					if($userAddresses->create($userAdd)){
+						$userAddresses->add();
+					}
+
+					$userMod['typeId']=$_POST['typeId']; 	//将用户提交订单时的车型存到数据表里
+					$userMod['uid']=session("uid");
+					if($userModels->create($userMod)){
+						$userModels->add();
+					}
+
+			//情况二:session里存在uid
+			}else{
+				$userAdd['city']=session('city');			//将session里的用户地址信息存进数据表里
+				$userAdd['street']=session('street');
+				$userAdd['telephone']=session('telephone');
+				$userAdd['uid']=session("uid");
+				if($userAddresses->create($userAdd)){
+					$userAddresses->add();
+				}
+
+				$userMod['typeId']=session('typeId');		//将session里的用户车型信息存进数据表里
+				$userMod['uid']=session("uid");
+				if($userModels->create($userMod)){
+					$userModels->add();
+
+				}
+			}
+		}else{
+			$this->error('验证码输入错误!');
+		}
+		foreach ($_POST['packages'] as $value) {		//将用户提交的保养套餐拼接成字符串
+			$_POST['combo'].=$value.",";
+		}
+		$len=strlen($_POST['combo'])-1;
+		$_POST['combo']=substr($_POST['combo'],0,$len);
+		$_POST['createTime']=time();					//得到时间戳
+		$_POST['uid']=session('uid');					//得到uid
+		$_POST['carNumber']=$_POST['carF'].$_POST['carNumber'];//得到用户车牌号
+		//dump($_POST);echo session('uid');die;				
+		if($order->create()){
+			$order->add();
+			$this->success("提交成功","message");
+		}else{
+			$this->error("提交失败!");
+		}
+
+		session('city',null);						//清空session
+		session('street',null);
+		session('typeId',null);
+		session('brand',null);
+		session('series',null);
+		session('type',null);
+
+
+		
+	}
+
+
+	public function sendMessage(){		//发送短信
+
+		//初始化必填
+		$options['accountsid']='1f4e25ae1a3cc230e7f96afd6ee9245b';
+		$options['token']='0423f81aa5c4b47ee179a8652587ff27';
+
+		//随机验证码
+		$str = '0123456789';
+		$str = str_shuffle($str);
+		$code = substr($str,3,4);
+
+		//初始化 $options必填
+		$ucpass = new \Org\Util\Ucpaas($options);
+		$appId = "98a2646fc53945cf9b7c7447ce574112";
+		$templateId ="1";
+		$to =$_GET['telephone'];
+		$param =$code;
+		session('code',$param);
+
+		$ucpass-> templateSMS($appId,$to,$templateId,$param,'xml');
+		
+		
+	}
+
+	public function message(){		//提交完订单显示的页面
+		$this->display();
+	}
+
+}	
+?>

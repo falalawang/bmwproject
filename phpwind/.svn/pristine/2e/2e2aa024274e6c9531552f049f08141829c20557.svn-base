@@ -1,0 +1,27 @@
+<?php
+namespace Admin\Controller;
+use Think\Controller;
+
+class ModelsController extends Controller{
+	//显示添加页面
+	public function add(){
+		$this -> display();
+	}
+	
+	//插入到数据库
+	public function insert(){
+		$model = M('models');
+		$models = $model -> add($_POST);
+	}
+	
+	public function modelsList(){
+		$list = M('models');
+		$lists = $list -> select();
+		$this -> assign('list',$lists);
+		$this -> display();
+	}
+	
+
+
+}
+?>

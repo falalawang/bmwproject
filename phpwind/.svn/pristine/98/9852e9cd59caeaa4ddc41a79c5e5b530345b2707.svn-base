@@ -1,0 +1,101 @@
+<?php
+namespace Admin\Controller;
+use Think\Controller;
+class ModelsController extends CommonController{
+
+	//添加品牌
+	public function addBrand(){
+		$this -> display();
+	}
+
+	//添加品牌操作
+	public function insertBrand(){
+
+		$brand = M('brand');
+		if($brand -> create()){
+			if($brand -> add()){
+				$this -> success('添加品牌成功');
+			}else{
+				$this -> error('添加品牌失败');
+			}
+		}else{
+			$this -> error('添加品牌失败');
+		}
+	}
+
+	//添加车系
+	public function addSeries(){
+
+		$brand = M('brand');
+		$brands = $brand -> select();
+		$this -> assign('brand',$brands);
+		$this -> display();
+	}
+
+	//添加车系操作
+	public function insertSeries(){
+		$series = M('series');
+		if($series -> create()){
+			if($series -> add()){
+				$this -> success('添加车系成功');
+			}else{
+				$this -> error('添加车系失败');
+			}
+		}else{
+			$this -> error('添加车系失败');
+		}
+	}
+
+
+	//显示添加车型页面
+	public function addType(){
+		$this -> display();
+	}
+	
+	//插入到数据库操作
+	public function insertType(){
+		
+		$model = M('models');
+		$models = $model -> add($_POST);
+		if($models){
+			$this -> success('OK','modelsList');
+		}else{
+			$this -> error('No');
+		}
+	}
+	
+
+
+
+	//显示车型列表
+	public function modelsList(){
+		$list = M('models');
+		$lists = $list -> select();
+		$this -> assign('list',$lists);
+		$this -> display();
+	}
+	
+	//修改车型信息
+	public function update(){
+		$id = $_GET['id'];
+		$model = M('models');
+		$models = $model -> where("id={$id}") -> select();
+		$this -> assign('model',$models);
+		$this -> display();
+	}
+	
+	//删除车型
+	public function delete(){
+		$id = $_GET['id'];
+		$model = M('models');
+		if($model -> delete($id)){
+			$this -> success('删除成功！');
+		}else{
+			$this -> error('删除失败！');
+		}
+	}
+	
+
+
+}
+?>

@@ -1,0 +1,62 @@
+<extend name='Layout:layout'/>
+<block name='main-content'>
+	<form action='__CONTROLLER__/three' method='post' onclick='return fun()'>
+	<div class='contentb'>
+		<table class='tab'>
+		<foreach name='prices' item='price'>
+			<tr style='line-height:30px'>
+				<td>
+					<input type='checkbox' name='pric[]' value="{$price['project']}" id='pri' /><span id='pre'>{$price['project']}</span><span>{$price['low_price']}</span><span>{$price['high_price']}</span>
+				</td>
+			</tr>
+		</foreach>
+		</table>
+		你的服务费是<input style='color:red;width:25%;' id='pr' name='price' value='200' readonly />￥!<br />
+		<input type='hidden' value="{$zhi['brand']}" name='brand'/>
+		<input type='hidden' value="{$zhi['series']}" name='series'/>
+		<input type='hidden' value="{$zhi['models']}" name='models'/>
+		<button class='inp' type='submit'>下一页</button>
+	</div>
+	</form>
+	<script>
+		/*var i = $('input').length - 4;
+		for(var x = 0;x<i;x++){
+			$('input:eq(x)').get(0).checked = false;
+		}*/
+		$('#pr').val(200);
+		var numa = 200;
+		var numb = 200;
+		var pre = '';
+		$('input').click(function(){
+			var a = $(this).get(0).nextSibling.nextSibling.innerHTML;
+			var b = $(this).get(0).nextSibling.nextSibling.nextSibling.innerHTML;
+			if($(this).get(0).checked == true){
+				numa = numa*1 +a*1;
+				if( b != 0){
+					numb = numb*1 +b*1;
+				}else{
+					numb = numb*1 +a*1;
+				}
+			}else{
+				numa = numa - a;
+				if(b != 0 ){
+					numb = numb - b;
+				}else{
+					numb = numb - a;
+				}	
+			}
+			if(numa == numb){
+				$('#pr').val(numa);
+			}else{
+				$('#pr').val(numa+'-'+numb);
+			}
+		});
+		function fun(){
+			var y = $('#pr').val();
+			if(y == 200){
+				alert('请选择保养项目');
+				return false;
+			};
+		}
+	</script>
+</block>

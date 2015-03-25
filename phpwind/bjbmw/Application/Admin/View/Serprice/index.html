@@ -1,0 +1,93 @@
+<extend name='Layout:layout'/>
+<block name='mws-container'>
+    <div id="mws-container" class="clearfix">
+            <!-- Inner Container Start -->
+            <div class="container">
+                <div class="mws-panel grid_8">
+                    <div class="mws-panel-header">
+                        <span><i class="icon-table"> 服务价格管理</i>
+                        <b style='float:right'>
+
+                        <form action='__CONTROLLER__/index' method='get'>
+                        <label>搜 索: <input aria-controls="DataTables_Table_0" name='model' type="text" placeholder='请输入要搜索的车系'></label>
+                        <input type="submit" class="btn" value='搜索'>
+                        </form>
+                        
+                        </b>
+                        &nbsp;&nbsp;<a href="__APP__/Serprice/add/id/1" class="btn">添加价格</a>
+                        </span>
+                    </div>
+                    <div class="mws-panel-body no-padding">
+                        <table class="mws-table">
+                            <thead>
+                               
+                            <thead>
+                                <tr>
+                                    <th>品牌</th>
+                                    <th>车型</th>
+                                    <th>车系</th>
+                                    <th>机油机滤</th>
+                                    <th>微尘滤清器</th>
+                                    <th>后部制动片</th>
+                                    
+                                    
+                                    <th style='font-size:14px'>...</th>
+                                    <!--<th>前部制动片</th>
+                                    <th>前部制动盘及制动片</th>
+                                    <th>火花塞</th>
+                                    <th>车辆检查</th>
+                                    <th>空气滤清器</th>
+                                    <th>燃油滤清器</th>
+                                    <th>雨刮片</th>
+                                    <th>机油机滤及微尘滤清器</th>  -->
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody style='text-align:center;'>
+                                <foreach name='serprice' item='serprice'>
+                                    <tr>
+                                        <td>{$serprice['brand']}</td>
+                                        <td>{$serprice['series']}</td>
+                                        <td>{$serprice['model']}</td>
+                                        <td>{$serprice['eoof']}</td>
+                                        <td>{$serprice['microfil']}</td>
+                                        <td>{$serprice['rearbpiece']}</td>
+                                       
+                                        <td>...</td>
+                                    
+                                       <!-- <td>{$serprice['fbpiece']}</td>
+                                        <td>{$serprice['frontbdisc']}</td>
+                                        <td>{$serprice['ngk']}</td>
+                                        <td>{$serprice['carcheck']}</td>
+                                        <td>{$serprice['aircleaner']}</td>
+                                        <td>{$serprice['fuelfilter']}</td>
+                                        <td>{$serprice['nwb']}</td>
+                                        <td>{$serprice['eoofmicrofil']}</td> -->
+                                        <td>
+                                            <a href="__APP__/Serprice/select/id/{$serprice.id}" class="btn">详情</a>
+                                            <a href="__APP__/Serprice/edit/id/{$serprice.id}" class="btn">修改</a>
+                                            <a href="__APP__/Serprice/del/id/{$serprice.id}" onclick="return confirm('你确定要删除吗？')" class="btn">删除</a>
+                                        </td>
+                                    </tr>
+
+                                </foreach>
+                                <tr>
+                                    
+                                    <td colspan='8'>
+                                        <div class="right">{$show}</div>
+                                    </td>
+                                
+                                </tr> 
+                                {$trs} 
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+
+                
+                
+            </div>
+    </div>
+</block>
+                                       

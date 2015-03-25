@@ -1,0 +1,70 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+
+        
+        	<!-- Inner Container Start -->
+            <div class="container">
+    
+                
+                <!-- Panels Start -->
+                
+            	<div class="mws-panel grid_8">
+                	<div class="mws-panel-header">
+                    	<span style="float:left">图文自动回复设置</span><span style="float:right"><a href="__CONTROLLER__/relyList"><button class="btn" id="auto" >查看图文自动回复</button></a></span>
+                    </div>
+                    <div class="mws-panel-body no-padding">
+                     <foreach name="images" item="image">
+                    	<form class="mws-form" action="__CONTROLLER__/update" method="post">
+                           
+                    		<div class="mws-form-inline">
+                                <div class="mws-form-row">
+                                    <label class="mws-form-label">关键字：</label>
+                                    <div class="mws-form-item">
+                                        <input type="text" class="mws-form-item-1-8" class="small" name="keyword" value = "{$image.keyword}" required>
+                                        <input type="hidden" name="id" value = "{$image.id}" >
+                                    </div>
+                                </div>
+                    			<div class="mws-form-row">
+                    				<label class="mws-form-label">图文主题：</label>
+                    				<div class="mws-form-item">
+                    					<input type="text" class="small" name="title" value = "{$image.title}" required>
+                    				</div>
+                    			</div>
+                                <div class="mws-form-row">
+                                    <label class="mws-form-label">图片链接地址：</label>
+                                    <div class="mws-form-item">
+                                        <input type="text" class="small" name="imageurl" value = "{$image.imageurl}" required>
+                                    </div>
+                                </div>
+                                <div class="mws-form-row">
+                                    <label class="mws-form-label">网站地址：</label>
+                                    <div class="mws-form-item">
+                                        <input type="text" class="small" name="url" value = "{$image.url}" required>
+                                    </div>
+                                </div>
+
+                    			<div class="mws-form-row">
+                    				<label class="mws-form-label">文字介绍内容：</label>
+                    				<div class="mws-form-item">
+                    					<textarea rows="" cols="" class="large" name="description"  required>{$image.description}</textarea>
+                    				</div>
+                    			</div>
+
+                    		</div>
+                    		<div class="mws-button-row">
+                    			<input type="submit" value="修改" class="btn btn-danger">
+                    			<a href = "__CONTROLLER__/del" class="btn ">删除</a>
+                    		</div>
+                            
+                    	</form>
+                        </foreach>
+                    </div>    	
+                </div>
+                
+
+            </div>
+            <!-- Inner Container End -->
+                       
+            
+        <!-- Main Container End -->
+</block>

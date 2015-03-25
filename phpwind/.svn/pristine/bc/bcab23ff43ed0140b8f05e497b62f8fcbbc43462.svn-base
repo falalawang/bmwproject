@@ -1,0 +1,2 @@
+<extend name="Layout:layout" />
+<block name="main-content">对，你没看错，这就是主页！！！！！！！！！！！！！！！</block>

@@ -1,0 +1,38 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+  <div class="row">
+        <div class="col-sm-12">
+        <section class="panel">
+        <header class="panel-heading">
+            套餐列表
+        </header>
+        <div class="panel-body">
+        <div class="adv-table">
+        <table  class="display table table-bordered table-striped" id="dynamic-table">
+        
+			<thead>
+			<tr>
+				<th>ID</th>
+				<th>套餐名</th>
+				<th>操作</th>
+			</tr>
+			</thead>
+			
+			<tbody>
+			<foreach name="combo" item="combo">
+				<tr class="gradeX">
+					<td>{$combo['id']}</td>
+					<td>{$combo['comboName']}</td>
+					<td><a href="__CONTROLLER__/reply/id/{$combo['id']}">修改套餐名</a></td>
+				</tr>
+			</foreach>
+			</tbody>
+		
+		
+        </table>
+        </div>
+        </div>
+        </section>
+        </div>
+        </div>
+</block>

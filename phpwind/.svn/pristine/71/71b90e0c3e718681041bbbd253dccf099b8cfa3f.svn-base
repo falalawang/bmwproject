@@ -1,0 +1,15 @@
+<?php
+namespace Admin\Controller;
+use Think\Controller;
+class LogController extends CommonController{
+	
+	//配置文件的设置
+	public function log(){
+		
+		$this -> display();
+		
+	}
+
+
+}
+?>

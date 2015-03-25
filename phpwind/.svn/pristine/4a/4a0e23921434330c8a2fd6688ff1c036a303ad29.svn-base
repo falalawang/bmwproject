@@ -1,0 +1,49 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+    <div class="row">
+        <div class="col-sm-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    所有用户
+                    <span class="tools pull-right">
+                        <a href="javascript:;" class="fa fa-chevron-down"></a>
+                    </span>
+                </header>
+                <div class="panel-body">
+                    <div class="adv-table">
+                        <table  class="display table table-bordered table-striped" id="dynamic-table">
+                            <thead>
+                                <tr>
+                                    <th>编号</th>
+                                    <th>品牌</th>
+                                    <th>车系</th>
+                                    <th>车型</th>
+                                    <th>套餐</th>
+                                    <th>价格(元)</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                               <foreach name="datas" item="datas">
+                                    <tr class="gradeX">
+                                        <td>{$datas['id']}</td>
+                                        <td>{$datas['brand']}</td>
+                                        <td>{$datas['series']}</td>
+                                        <td>{$datas['types']}</td>
+                                        <td>{$datas['comboName']}</td>
+                                        <td>{$datas['lowPrice']}
+                                        <if condition="$datas['highPrice'] eq '0'">
+                                        <else />- {$datas['highPrice']}
+                                        </if></td>
+                                        <td><a href="__CONTROLLER__/modCombo/id/{$datas['id']}">修改</td>
+                                    </tr>
+                                </foreach>
+                    		</tbody>
+		
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</block>

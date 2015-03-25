@@ -1,0 +1,45 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+<div class="wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading">
+            <a href="__CONTROLLER__/modelsList">车型列表</a>>>
+                修改车型信息
+            </header>
+            <div class="panel-body">
+                <form action="__CONTROLLER__/insert" class="form-horizontal adminex-form" method="post">
+                    <div class="col-sm-2"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">品牌</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="brand" value="{$model[0]['brand']}" />
+                        </div>
+                    </div>
+                    <div class="col-sm-2"></div>
+					<div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">车系</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="series" value="{$model[0]['series']}" />
+                        </div>
+                    </div>
+                    <div class="col-sm-2"></div>
+					<div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">车型</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="types" value="{$model[0]['types']}" />
+                        </div>
+                    </div>
+                    <div class="col-sm-4"></div>
+					<div class="col-sm-5 panel-body">
+						<button type="submit" class="btn btn-primary">确认修改</button>
+                    </div>
+                   </form>
+            </div>
+		</section>
+		</div>
+        </div>
+    </div>
+</div>
+</block>

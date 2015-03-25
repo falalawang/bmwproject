@@ -1,0 +1,69 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+	
+        
+        	<!-- Inner Container Start -->
+            <div class="container">
+            
+            	<!-- Statistics Button Container -->
+
+                
+                <!-- Panels Start -->
+                
+            	<div class="mws-panel grid_8">
+                	<div class="mws-panel-header">
+                    	<span><i class="icon-settings"></i> 编辑用户信息</span>
+                    </div>
+                    <div class="mws-panel-body no-padding">
+                    	<form class="mws-form" action="__CONTROLLER__/update" method="post">
+                        	<div class="mws-form-inline">
+                            	
+                            	<div class="mws-form-row">
+                                	<label class="mws-form-label">姓&nbsp;&nbsp;&nbsp;&nbsp;名:</label>
+                                	<div class="mws-form-item">
+                                    	<div class="mws-form-col-2-8">
+   									 		<input type="text" name="username" value="{$user.username}"/>
+										</div>
+                                    </div>
+                                </div>
+                                <div class="mws-form-row">
+                                    <label class="mws-form-label">车牌号:</label>
+                                    <div class="mws-form-item">
+                                        <div class="mws-tooltip-slider">
+	                                        <div class="mws-form-col-2-8">
+	   									 		<input type="text" name="car_id" value="{$user.car_id}" />
+											</div>
+										</div>
+                                    </div>
+                                </div>
+                                <div class="mws-form-row">
+                                    <label class="mws-form-label">微信号:</label>
+                                    <div class="mws-form-item">
+                                        <div class="mws-ticks-slider">
+                                        	<div class="mws-form-col-2-8">
+	   									 		<input type="text" name="wid" value="{$user.wid}" />
+	   									 		<input type="hidden" name="id" value="{$user.id}" />
+											</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            	<div class="mws-form-row">
+                                
+                                	<div class="mws-form-item">
+                                        <div id="eq" class="clearfix">
+                                       		<button class="btn btn-inverse btn-large" type="submit">修改</button>
+                                       		<button class="btn btn-inverse btn-large" type="reset">重置</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>    	
+                </div>
+                
+            
+                </div>
+
+        
+
+</block>

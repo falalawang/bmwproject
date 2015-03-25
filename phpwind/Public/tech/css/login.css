@@ -1,0 +1,10 @@
+body{background: #2E363F;}
+#loginBox{color: #FFF; float: none;}
+#loginBox .control-label{color: #FFF;}
+#loginBox input{border: 0; border-radius: 0; float: none;}
+#loginBox button{ border-radius: 0; float: none;}
+#loginBox hr{border-top: 1px solid #3F4954; }
+#loginBox .input-group-addon{border-radius: 0;border:none; color: #FFF;background-color: #5CB85C;border-color: #4CAE4C; top: 0px;}
+#loginBox .form-control-feedback{z-index: 999;}
+#loginBox .has-success .input-group-addon{color: #FFF;background-color: #5CB85C;border-color: #4CAE4C;}
+#loginBox .has-error .input-group-addon{color: #FFF;background-color: #D9534F;border-color: #D43F3A;}

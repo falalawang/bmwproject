@@ -1,0 +1,47 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+<div class="wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading">
+                修改服务车信息
+            </header>
+            <div class="panel-body">
+                <form action="__CONTROLLER__/update" class="form-horizontal adminex-form" method="post">
+                    <div class="col-sm-2"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">服务车编号</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="" class="form-control" name="carNum" /><span id=""></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-2"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">技师姓名</label>
+                        <foreach name="manager" item="manager">
+                        <div class="col-sm-2">                       
+                            <input type="checkbox" name="techId[]" value="{$manager['id']}" />{$manager['name']}  
+                        </div>
+                        </foreach>
+                        <span id=""></span>
+                    </div>
+                    <div class="col-sm-2"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">4S店名称</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="" class="form-control" name="storeName" /><span id=""></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-4 panel-body">
+                        <input type="hidden" name="id" value="{$Think.get.id}">
+                        <button type="submit" class="btn btn-primary">确认修改</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+        </div>
+    </div>
+</div>
+</block>

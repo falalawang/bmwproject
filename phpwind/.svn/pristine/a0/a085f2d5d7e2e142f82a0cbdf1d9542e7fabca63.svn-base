@@ -1,0 +1,116 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+<div class="wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading">
+                修改订单
+            </header>
+            <div class="panel-body">
+                <form action="__CONTROLLER__/updateOrder" class="form-horizontal adminex-form" method="post">
+                    <input type="hidden" name="id" value="{$order[0]['id']}" />
+                    <div class="col-sm-2"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">联&nbsp;&nbsp;系&nbsp;&nbsp;人</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" name="name" value="{$order[0]['user']}" />
+                        </div>
+                        <div class="col-sm-5"></div>
+                    </div>
+                    <div class="col-sm-2"></div>
+					<div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">联系电话</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" name="telephone" value="{$order[0]['telephone']}" />
+                        </div>
+                        <div class="col-sm-5"></div>
+                    </div>
+                    <div class="col-sm-2"></div>
+					<div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">联系地址</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" name="address" value="{$order[0]['address']}" />
+                        </div>
+                        <div class="col-sm-5"></div>
+                    </div>
+                    <div class="col-sm-2"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">用户车型</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" name="carType" value="{$order[0]['carType']}" readonly />
+                        </div>
+                        <div class="col-sm-5"></div>
+                    </div>
+                    <div class="col-sm-2"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">服&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;务</label>
+                        <div class="col-sm-6">
+                            <!--遍历出所有套餐-->
+                            <foreach name="combos" item="combo">
+                                <div class="col-lg-6" style="margin-bottom:10px;">
+                                    <!--in判断一个变量是否在数组中（前面name中的值为变量,value值为数组或逗号分隔的字符串）-->
+                                    <in name="combo['comboName']" value="$order[0]['combo']">
+                                        <if condition="$combo['highPrice']">
+                                            <input type="checkbox" name="combo[]" value="{$combo['comboName']}" checked>&nbsp;&nbsp;{$combo['comboName']}&nbsp;{$combo['lowPrice']}-{$combo['highPrice']}元
+                                        <else />
+                                            <input type="checkbox" name="combo[]" value="{$combo['comboName']}" checked>&nbsp;&nbsp;{$combo['comboName']}&nbsp;{$combo['lowPrice']}元
+                                        </if>
+                                    <else/>
+                                        <if condition="$combo['highPrice']">
+                                            <input type="checkbox" name="combo[]" value="{$combo['comboName']}" />&nbsp;&nbsp;{$combo['comboName']}&nbsp;{$combo['lowPrice']}-{$combo['highPrice']}元
+                                        <else />
+                                            <input type="checkbox" name="combo[]" value="{$combo['comboName']}" />&nbsp;&nbsp;{$combo['comboName']}&nbsp;{$combo['lowPrice']}元
+                                        </if>
+                                    </in>
+                                </div>
+                            </foreach> 
+                        </div>
+                        <div class="col-sm-5"></div>
+                    </div>
+                    <div class="col-sm-2"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">预约时间</label>
+                        <div class="col-sm-2 col-lg-2">
+                            <input type="text" class="form-control" name="orderDate" value="{$order[0]['orderDate']|date="Y-m-d",###}" />
+                        </div>
+                        <div class="col-sm-2 col-lg-2">
+                            <select class="form-control m-bot15" name="orderTime">
+                                <if condition="$order[0]['orderTime'] eq '8:00-10:00'">
+                                    <option value="8:00-10:00" selected>8:00-10:00</option>
+                                    <option value="10:00-12:00">10:00-12:00</option>
+                                    <option value="12:00-14:00">12:00-14:00</option>
+                                    <option value="14:00-16:00">14:00-16:00</option>
+                                <elseif condition="$order[0]['orderTime'] eq '10:00-12:00'" />
+                                    <option value="8:00-10:00">8:00-10:00</option>
+                                    <option value="10:00-12:00" selected>10:00-12:00</option>
+                                    <option value="12:00-14:00">12:00-14:00</option>
+                                    <option value="14:00-16:00">14:00-16:00</option>
+                                <elseif condition="$order[0]['orderTime'] eq '12:00-14:00'" />
+                                    <option value="8:00-10:00">8:00-10:00</option>
+                                    <option value="10:00-12:00">10:00-12:00</option>
+                                    <option value="12:00-14:00" selected>12:00-14:00</option>
+                                    <option value="14:00-16:00">14:00-16:00</option>
+                                <elseif condition="$order[0]['orderTime'] eq '14:00-16:00'" />
+                                    <option value="8:00-10:00">8:00-10:00</option>
+                                    <option value="10:00-12:00">10:00-12:00</option>
+                                    <option value="12:00-14:00">12:00-14:00</option>
+                                    <option value="14:00-16:00" selected>14:00-16:00</option>
+                                </if>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-5"></div>
+					<div class="col-sm-4 panel-body">
+						<button type="submit" class="btn btn-primary">确认修改</button>
+                    </div>
+                   </form>
+            </div>
+		</section>
+
+		</div>
+        </div>
+    </div>
+</div>
+<script language="javascript" type="text/javascript" src="__PUBLIC__/admin/date/WdatePicker.js"></script>
+</block>

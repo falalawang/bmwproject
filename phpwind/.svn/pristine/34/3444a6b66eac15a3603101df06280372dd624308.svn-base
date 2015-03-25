@@ -1,0 +1,65 @@
+<?php
+namespace Home\Controller;
+use Think\Controller;
+class LoginController extends Controller{
+	public function login(){
+		$this -> display();
+	}
+	public function checkLogin(){
+		$tel=$_GET['telephone'];
+		$technician=M("technician");
+		$code=$_GET['code'];
+		if($code && ($code == session('code'))){
+			$customer=M("customer");
+			$map['telephone']=$tel;
+			$cus=$customer->where($map)->find();
+			if($cus){
+				cookie('uid',$cus['id']);
+			}else{
+				if($customer->create($_GET)){
+					$customer->add();
+					$cu=$customer->where($map)->find();
+					cookie('uid',$cu['id']);
+				}
+			}
+			$this->success("ok","__CONTROLLER__/inputInfo");
+		}else{
+			$this->error("failed");
+		}
+
+	}
+
+	public function sendMessage(){
+
+		//初始化必填
+		$options['accountsid']='1f4e25ae1a3cc230e7f96afd6ee9245b';
+		$options['token']='0423f81aa5c4b47ee179a8652587ff27';
+
+		//随机验证码
+		$str = '0123456789';
+		$str = str_shuffle($str);
+		$code = substr($str,3,4);
+
+		//初始化 $options必填
+		$ucpass = new \Org\Util\Ucpaas($options);
+		$appId = "98a2646fc53945cf9b7c7447ce574112";
+		$templateId ="1";
+		$to =$_GET['telephone'];
+		$param =$code;
+		cookie('code',$param);
+		$ucpass-> templateSMS($appId,$to,$templateId,$param,'xml');
+	}
+
+	//退出
+	public function logout(){
+        //将session数组赋值为空数组
+        session(null);
+        session_destroy();
+        if(isset($_COOKIE[session_name()])){
+            setcookie(session_name(),'',time()-1,'/');
+        }
+        $this -> success('退出成功');
+	}
+
+}
+?>

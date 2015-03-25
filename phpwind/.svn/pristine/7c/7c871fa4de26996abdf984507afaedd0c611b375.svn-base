@@ -1,0 +1,7 @@
+body{background: #fff;}
+label{font-style:normal;font-weight: normal;}
+.bg{background: #FEF9F5;margin-bottom: 10px;padding: 10px; }
+.red{color: #DD5A43;}
+.blue{color: #478FCA;}
+.white{color: white;}
+.bottom{background: #222222;height: 50px;color: #FE9;line-height: 50px;font-size: 15px;}

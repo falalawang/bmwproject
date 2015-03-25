@@ -1,0 +1,147 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+<script src="__PUBLIC__/admin/js/jquery.js"></script>
+<div class="wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading">
+                增加价格
+            </header>
+            <div class="panel-body">
+                <form action="__CONTROLLER__/insertPrice" class="form-horizontal adminex-form" method="post" id="myform">
+                    <div class="col-sm-2"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">品牌：</label>
+                        <div class="col-sm-4">
+                            <select class="form-control m-bot15" id="brand" name="brand">
+		                        <option value="-1">--请选择品牌--</option>
+		                        <foreach name="brands" item="brand">
+		                        	<option value="{$brand['brand']}">{$brand['brand']}</option>
+		                        </foreach>
+	                    	</select>
+                        </div>
+                        <div class="col-sm-5"></div>
+                    </div>
+                    <div class="col-sm-2"></div>
+					<div class="form-group">
+                        <label class="col-sm-2 control-label">车系：</label>
+                        <div class="col-sm-4" id="serie">
+                            <select class="form-control m-bot15" id="series" name="series">
+	                           <option value="-1">--请选择品牌--</option>
+	                        </select>
+                        </div>
+                        <div class="col-sm-5"></div>
+                    </div>
+                    <div class="col-sm-2"></div>
+					<div class="form-group">
+                        <label class="col-sm-2 control-label">车型：</label>
+                        <div class="col-sm-4">
+                            <select class="form-control m-bot15" id="types" name="types">
+	                           <option value="-1">--请选择品牌--</option>
+                               
+	                        </select>
+                        </div>
+                        <div class="col-sm-5"></div>
+                    </div>
+              
+                    <div class="col-sm-2"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">套餐：</label>
+                        <div class="col-sm-4">
+                            <select class="form-control m-bot15" id="combo" name="combo">
+                               <option value="-1">--请选择品牌--</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-5"></div>
+                    </div>
+                    <div class="col-sm-2"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">价格(元)：</label>
+                        <div class="col-sm-6">
+                            <div class="col-sm-3">
+                            <input type="text" class="form-control" name="lowPrice" id="lowPrice" value="" /></div>
+                            <div class="col-sm-3">
+                            <input type="text" class="form-control" name="highPrice" id="highPrice" value="" /></div>
+                            <div class="col-sm-6 control-msg">
+                                <code>提示:若不是价格区间,请填入第一个框内</code>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="col-sm-5"></div>
+					<div class="col-sm-4 panel-body">
+						<button type="submit" class="btn btn-primary">确定</button>
+                    </div>
+                </form>
+            </div>
+		</section>
+		</div>
+    </div>
+</div>
+<script>
+    //当品牌的下拉框中的值发生改变时,触发此事件
+    $('#brand').change(function(){
+        if($('#brand').val() == '-1'){
+            var html = "<option value='-1'>--请选择品牌--</option>";
+            $('#series').html(html);
+        }else{
+            //根据品牌查询对应的车系
+            var data = {brand:$('#brand').val()};
+            $.get('__CONTROLLER__/selectSerie',data,function(d){
+               // alert(d);
+                $('#series').html(d);
+                
+            });
+        }
+    });
+
+    //当车系下拉框的值发生变化时,触发
+    $('#series').change(function(){
+        if($('#series').val() == '-1'){
+            var html = "<option value='-1'>--请选择车系--</option>";
+            $('#types').html(html);
+        }else{
+            //根据品牌、车系查询对应的车型
+            var data = {brand:$('#brand').val(),series:$('#series').val()};
+            $.get('__CONTROLLER__/selectType',data,function(d){
+                $('#types').html(d);
+            });
+        }
+    });
+
+    //当车型变化时，改变套餐
+    $('#types').change(function(){
+        if($('#types').val() == '-1'){
+            var html = "<option value='-1'>--请选择套餐--</option>";
+            $('#combo').html(html);
+        }else{
+            var data = {brand:$('#brand').val(),series:$('#series').val(),types:$('#types').val()};
+            $.get('__CONTROLLER__/selectCombo',data,function(d){
+                $('#combo').html(d);
+            });
+        }
+    });
+    var isLogin = false;
+    $('#lowPrice').blur(function(){
+        check();
+    });
+
+    function check(){
+        if($('#lowPrice').val() == ''){
+            alert('请输入价格');
+        }else{
+            isLogin = true;
+        }
+    }
+
+    $('#myform').submit(function(){
+        check();
+        if(isLogin){
+            return true;
+        }else{
+            return false;
+        }
+    });
+</script>
+</block>

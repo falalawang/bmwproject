@@ -1,0 +1,70 @@
+<extend name="Layout:layout"/>
+ <block name="mws-container">
+<div id="mws-container" class="clearfix">
+            <!-- Inner Container Start -->
+            <div class="container">
+                <div class="mws-panel grid_9 ">
+                    <div class="mws-panel-header">
+                        <span> 修改车型</span>
+                    </div>
+                    <div class="mws-panel-body no-padding">
+                        <form class="mws-form" id="mws-validate" novalidate="novalidate" action="__CONTROLLER__/updates" method="post">
+                            <div class="mws-form-inline">
+                                <div class="mws-form-row bordered">
+                                    <label class="mws-form-label">所属品牌</label>
+                                    <div class="mws-form-item">
+                                        <select id="brand" name="brandid" class="required large">
+                                            <foreach name="brand" item="brand">
+                                            <option value="{$brand['id']}">{$brand['brand']}</option>
+                                            </foreach>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="mws-form-row bordered">
+                                    <label class="mws-form-label">车系名字</label>
+                                    <div class="mws-form-item">
+                                         <select id="series" name="seriesid" class="required large">
+                                            <foreach name="series" item="series">
+                                            <option value="{$series['id']}">{$series['series']}</option>
+                                            </foreach>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="mws-form-row bordered">
+                                    <label class="mws-form-label">车型名字</label>
+                                    <div class="mws-form-item">
+                                         <input  name="model" value="{$model['model']}" type="text" class="required large">
+                                         <input  name="id" value="{$model['id']}" type="hidden" />
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="mws-button-row">
+                                <button type="submit"class="btn btn-danger">提交</button>
+                                <button type="reset"class="btn ">重置 </button>
+                            </div>
+                        </form>
+                    </div>      
+                </div>
+                <!-- Panels End -->
+            </div>
+        </div>
+ </block>
+ <block name="js">
+    <script type="text/javascript" charset="utf-8">
+        $("#brand  option[value={$model['brandid']}] ").attr("selected",true);   
+        $("#series  option[value={$model['seriesid']}]").attr("selected",true);   
+        $("#brand").click(function(){
+                $("#brand").change(function(){
+                    $.ajax({
+                        url: "__CONTROLLER__/series",
+                        type: "POST",
+                        data: {'id':$("#brand").val()},
+                        success: function(msg){
+                         $("#series").html(msg);
+                            }
+                        });
+                });
+        });    
+    </script>
+ </block>

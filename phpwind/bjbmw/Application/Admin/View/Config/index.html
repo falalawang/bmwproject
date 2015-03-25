@@ -1,0 +1,102 @@
+<extend name="Layout:layout"/>
+<block name="css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/custom-plugins/picklist/picklist.css" media="screen">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/plugins/select2/select2.css" media="screen">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/plugins/ibutton/jquery.ibutton.css" media="screen">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/plugins/cleditor/jquery.cleditor.css" media="screen">
+</block>
+<block name="mws-container">
+    <div id="mws-container" class="clearfix">
+                <!-- Inner Container Start -->
+                <div class="container">
+                    <div class="mws-panel grid_8">
+                            <div class="mws-panel-header">
+                                <span><i class="icon-ok"></i> 网站配置</span>
+                            </div>
+                            <div class="mws-panel-body no-padding">
+                                <form action="__CONTROLLER__/updates" enctype="Multipart/form-data" method="post" class="mws-form" id="mws-validate" novalidate="novalidate">
+                                    <div style="display:none;" class="mws-form-message error" id="mws-validate-error"></div>
+                                    <div class="mws-form-inline">
+                                        <div class="mws-form-row">
+                                            <label class="mws-form-label">网站名称</label>
+                                            <div class="mws-form-item ">
+                                                <input type="text" value="{$config['webname']}" class="required large" name="webname">
+                                                 <input type="hidden" name="id" value="{$config['id']}">
+                                            </div>
+                                        </div>
+                                        <div class="mws-form-row" >
+                                            <label class="mws-form-label">网站Logo</label>
+                                            <div class="left  mws-form-item grid_4">
+                                                <input type="file" name="logo" class="">
+                                                <label for="picture" class="error" generated="true"  style="display:none"></label>
+                                            </div>
+                                            <div class="thumbnails mws-gallery">
+                                                <img alt="" width="128" height="128" src="__PUBLIC__/{$config['logo']}">
+                                            </div>
+                                         </div>
+                                        <div class="mws-form-row">
+                                            <label class="mws-form-label">网站关键字</label>
+                                            <div class="mws-form-item">
+                                            <textarea class="required large" name="keywords" cols="" rows="">{$config['keywords']}</textarea>
+                                            </div>
+                                        </div>
+                                       
+                                        <div class="mws-form-row">
+                                            <label class="mws-form-label">网站描述</label>
+                                            <div class="mws-form-item">
+                                            <textarea class="required large" name="description" cols="" rows="">{$config['description']}</textarea>
+                                            </div>
+                                        </div>
+                                         <div class="mws-form-row">
+                                            <label class="mws-form-label">网站版权备案信息</label>
+                                            <div class="mws-form-item">
+                                                <input type="text" value="{$config['copyright']}" class="required  large" name="copyright">
+                                            </div>
+                                        </div>
+                                        <div class="mws-form-row">
+                                            <label class="mws-form-label">友情连接</label>
+                                            <div class="mws-form-item">
+                                                <script id="link" name="link"  type="text/plain" style="width:100%;height:100%;">{$config['link']}</script>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mws-button-row">
+                                        <input type="submit" value="提交" class="btn btn-danger">
+                                        <input type="reset" value="重置" class="btn btn-danger">
+                                    </div>
+                                </form>
+
+                            </div>      
+                    </div>
+                  
+                </div>
+    </div>
+</block>
+ <block name="js">
+    <script src="__PUBLIC__/Admin/jui/js/globalize/globalize.js"></script>
+    <script src="__PUBLIC__/Admin/jui/js/globalize/cultures/globalize.culture.en-US.js"></script>
+
+    <!-- Plugin Scripts -->
+    <script src="__PUBLIC__/Admin/custom-plugins/picklist/picklist.min.js"></script>
+    <script src="__PUBLIC__/Admin/plugins/autosize/jquery.autosize.min.js"></script>
+    <script src="__PUBLIC__/Admin/plugins/select2/select2.min.js"></script>
+    <script src="__PUBLIC__/Admin/plugins/ibutton/jquery.ibutton.min.js"></script>
+    <script src="__PUBLIC__/Admin/plugins/cleditor/jquery.cleditor.min.js"></script>
+    <script src="__PUBLIC__/Admin/plugins/cleditor/jquery.cleditor.table.min.js"></script>
+    <script src="__PUBLIC__/Admin/plugins/cleditor/jquery.cleditor.xhtml.min.js"></script>
+    <script src="__PUBLIC__/Admin/plugins/cleditor/jquery.cleditor.icon.min.js"></script>
+
+    <!-- Demo Scripts (remove if not needed) -->
+    <script src="__PUBLIC__/Admin/js/demo/demo.formelements.js"></script>
+
+    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/Admin/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/Admin/ueditor/ueditor.all.min.js"> </script>
+    
+    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/Admin/ueditor/lang/zh-cn/zh-cn.js"></script>
+
+    <script type="text/javascript">
+        var ue = UE.getEditor('link');   
+    </script>
+    
+
+ </block>

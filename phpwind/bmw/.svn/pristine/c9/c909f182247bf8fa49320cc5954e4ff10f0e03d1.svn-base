@@ -1,0 +1,130 @@
+<extend name='Layout:layout' />
+<block name='main-content'>
+	<div class='contentb'>
+		<form action='__CONTROLLER__/add' method='post' onsubmit="return fun()">
+			<table class='tab' width='100%' cellspacing='0'>
+				<tr style='border-bottom:1px solid #ccc;line-height:40px'>
+					<td bgcolor='#4392a4' style='text-align:center'>名称</td>
+					<td bgcolor='#28accd' style='text-align:center'>详情</td>
+				</tr>
+				<tr style='border-bottom:1px solid #ccc'>
+					<td bgcolor='#aec6cb' style='text-align:center'>品牌</td>
+					<td bgcolor='#b7d6db'><input readonly class='inpb' type='text' name='brand' value="{$value['brand']}" readonly /></td>
+				</tr>
+				<tr style='border-bottom:1px solid #ccc'>
+					<td bgcolor='#aec6cb' style='text-align:center'>车型</td>
+					<td bgcolor='#b7d6db'><input readonly class='inpb' type='text' name='series' value="{$value['series']}"/></td>
+				</tr>
+				<tr style='border-bottom:1px solid #ccc'>
+					<td bgcolor='#aec6cb' style='text-align:center'>车系</td>
+					<td bgcolor='#b7d6db'><input readonly class='inpb' type='text' name='models' value="{$value['models']}"/></td>
+				</tr>
+				<tr style='border-bottom:1px solid #ccc'>
+					<td bgcolor='#aec6cb' style='text-align:center'>保养日期</td>
+					<td bgcolor='#b7d6db'><input readonly class='inpb' type='text' name='date' value="{$value['date']}"/></td>
+				</tr>
+				<tr style='border-bottom:1px solid #ccc'>
+					<td bgcolor='#aec6cb' style='text-align:center'>保养时间</td>
+					<td bgcolor='#b7d6db'><input readonly class='inpb' type='text' name='keep_time' value="{$value['keep_time']}"/></td>
+				</tr>
+				<tr style='border-bottom:1px solid #ccc'>
+					<td bgcolor='#aec6cb' style='text-align:center'>保养项目</td>
+					<td bgcolor='#b7d6db'><input readonly class='inpb' type='text' name='combo' value="{$value['combo']}" readonly /></td>
+				</tr>
+				<tr style='border-bottom:1px solid #ccc'>
+					<td bgcolor='#aec6cb' style='text-align:center'>保养总价</td>
+					<td bgcolor='#b7d6db'><input readonly class='inpb' type='text' name='price' value="{$value['price']}"/></td>
+				</tr>
+				<tr style='border-bottom:1px solid #ccc'>
+					<td bgcolor='#aec6cb' style='text-align:center'>车牌号</td>
+					<td bgcolor='#b7d6db'><input readonly class='inpb' type='text' name='LPN' value="{$value['LPN']}"/></td>
+				</tr>
+				<tr style='border-bottom:1px solid #ccc'>
+					<td bgcolor='#aec6cb' style='text-align:center'>VIN码</td>
+					<td bgcolor='#b7d6db'><input readonly class='inpb' type='text' name='vin' value="{$value['vin']}"/></td>
+				</tr>
+				<tr style='border-bottom:1px solid #ccc'>
+					<td bgcolor='#aec6cb' style='text-align:center'>保养地址</td>
+					<td bgcolor='#b7d6db'><input readonly class='inpb' type='text' value="{$value['city']}{$value['county']}{$value['address']}"/><input readonly class='inpc' type='hidden' name='city' value="{$value['city']}"/><input readonly type='hidden' name='county' value="{$value['county']}"/><br /><input readonly type='hidden' name='address' value="{$value['address']}"/></td>
+				</tr>
+				<tr style='border-bottom:1px solid #ccc'>
+					<td bgcolor='#aec6cb' style='text-align:center'>留言</td>
+					<td bgcolor='#b7d6db'><input readonly class='inpb' type='text' name='texts' value="{$value['texts']}"/></td>
+				</tr>
+				<tr id='ye' style='height:80px'>
+					<if condition="($_SESSION['phone'] == '')"><td colspan='2' style='text-align:center'><input  href="#loginmodal" class='inp' type='submit' id="modaltrigger" value='请登录' /></td>
+					<else /><td colspan='2' style='text-align:center'><input class='inp' type='submit' name='sub' value='确认订单' /></td>
+					</if>
+				</tr>
+			</table>
+			
+		</form>
+	</div>
+	<div id="loginmodal" style="display:none;">
+	<p>请登录</p>
+    <!--<form id="loginform" name="loginform" method="post" onsubmit='return false'>-->
+      <input placeholder='*手机号' type="text" name="phone" id="username" maxlength="11" class="txtfield" value="" ><span id="sp" style="font-size:12px;color:red"></span>
+      <br />
+      <input placeholder='*验证码' type="text" name="code" class="txtfiel" id="code" maxlength="4" value="" ><input type="button" id="getcode" class="flatbtn-w" value="获取验证码" >
+      <br />
+      <input type="submit" name="loginbtn" id="loginbtn" class="flatbtn-blu hidemodal" value="确定" tabindex="3">
+    <!--</form>-->
+  </div>
+  <script type="text/javascript">
+		/*$(function(){
+		$('#loginform').submit(function(e){
+			var p = $("#username").val();
+			var c = $("#code").val();
+			if(p !="" && c !=""){
+				return true;
+			}else{
+				return false;
+			}
+		});*/
+		$('#modaltrigger').leanModal({ top: 110, overlay: 0.45, closeButton: ".hidemodal" });
+		//});
+		$('#getcode').click(function(){
+			var p = $("#username").val();
+			var curCount=60;
+			var len = $("#username").val().length
+			if(p !="" && len == 11){
+				$.get("__APP__/Sms/sendMessage",{"phone":p},function(data){
+			});
+			$("#sp").html("");
+			function SetRemainTime() {
+		        if (curCount == 0) {                  
+		            window.clearInterval(InterValObj);//停止计时器  
+		            $("#getcode").removeAttr("disabled");//启用按钮  
+		            $("#getcode").val("重新获取验证码");  
+		            code = ""; //清除验证码。如果不清除，过时间后，输入收到的验证码依然有效      
+		        }else {  
+		            curCount--;  
+		            $("#getcode").val(curCount + "秒后重新获取");
+		        }  
+	    	}
+			$("#getcode").val(curCount + "秒后重新获取");
+			$("#getcode").attr("disabled", "true");
+			InterValObj = window.setInterval(SetRemainTime, 1000); //启动计时器，1秒执行一次  
+	        //向后台发送处理数据 
+			}else{
+				$("#sp").html("请输入手机号");
+			}
+	});
+	$('#loginbtn').click(function(){
+		
+			var p = $("#username").val();
+			var c = $("#code").val();
+
+			if(p !="" && c !=""){
+				$.get('__APP__/Sms/checka',{'phone':p,'code':c},function(data){
+					if(eval(data)){
+						$('#ye').html("<td colspan='2' style='text-align:center'><input class='inp' type='submit' name='sub' value='确认订单' /></td>");
+						window.location.reload();
+					}else{
+						alert('验证失败');
+					}
+				})
+			}
+	});
+</script>
+</block>

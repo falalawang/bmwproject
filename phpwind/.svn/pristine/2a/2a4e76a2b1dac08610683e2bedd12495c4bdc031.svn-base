@@ -1,0 +1,16 @@
+<extend name="Layout:layout" />
+<block name="layoutMain">
+  <a class="navbar-brand visible-xs" style="padding-right:0;" href="__CONTROLLER__/index"><</a>
+  <a class="navbar-brand " href="">订单评价</a>
+</block>
+<block name="layoutMain">
+<foreach name="evaluate" item="evaluate">
+<div><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></div>
+
+{$evaluate['content']}
+{$evaluate['orderId']}
+{$evaluate['vtime']}
+{$evaluate['reply']}
+{$evaluate['rtime']}
+</foreach>
+</block>

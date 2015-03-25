@@ -1,0 +1,273 @@
+<?php
+namespace Admin\Controller;
+use Think\Controller;
+class ManageController extends CommonController{
+	//网站配置
+	public function set(){
+		$webset = M('webset');
+		//将网站基本配置查询出来
+		$web = $webset  -> field('id,title,keywords,description,webLogo')
+						->select();
+		$this -> assign('web',$web);
+		$this -> display();
+	}
+	//更新网站配置方法
+	public function updateSet(){
+		$webset = M('webset');
+		$web = $webset -> field('id,webLogo')
+					   -> select();
+		//获取原先的Logo名称
+		$oWebLogo = $web[0]['webLogo'];
+
+		//判断上传的错误
+		$error = $_FILES['webLogo']['error'];
+		switch($error){
+			case 1:
+				exit('文件的大小超过了php.ini中upload_max_filesize设置的大小');
+				break;
+			case 2:
+				exit('文件的大小超过了HTML表单中MAX_FILE_SIZE选项指定的值');
+				break;
+			case 3:
+				exit('文件只有部分被上传');
+				break;
+			case 4:
+				exit('没有文件被上传');
+				break;
+			case 6:
+				exit('找不到临时文件');
+				break;
+			case 7:
+				exit('文件写入失败');
+				break;
+		}
+		
+		//将文件所有的mime类型组合为一个数组
+		$allMime = array('image/jpeg','image/gif','image/png');
+		//获取上传文件的mime类型
+		$mime = $_FILES['webLogo']['type'];
+		//判断文件的mime类型是否在以上数组中
+		if(!in_array($mime,$allMime)){
+			exit('不是允许的mime类型');
+		}
+		
+		//判断上传文件的后缀名
+		//获取上传文件的后缀名
+		$subFix = pathinfo($_FILES['webLogo']['name'],PATHINFO_EXTENSION);
+		//设置允许上传文件的类型
+		$allType = array('jpg','jpeg','png','gif');
+		//判断文件的后缀名是否在以上数组中
+		if(!in_array($subFix,$allType)){
+			exit('不是合法的后缀名');
+		}
+		//获取上传文件的大小
+		$fileSize = $_FILES['webLogo']['size'];
+		
+		//设置允许上传文件的大小
+		$allowSize = 1024*1024;
+		//判断
+		if($fileSize > $allowSize){
+			exit('上传文件超过了大小');
+		}
+		//设置上传文件的随机名
+		$newName = date('YmdHis').rand(100,999).'.'.$subFix;
+
+		//定义图片的路径和名称
+		$imgPath = "./Public/uploads/images/{$newName}";
+		//哪张图片进行缩放
+		$oImg = imagecreatefromjpeg($imgPath);
+
+		//新图片的资源
+		$nImg = imagecreatetruecolor(80,80);//宽100 高100
+
+		//获得新图片的宽高
+		$weight = 80;//新图片的宽
+		$height = 80;//新图片的高度
+
+		//获得旧图片的宽高
+		$oWeight = imagesx($oImg);//旧的宽度
+		$oHeight = imagesy($oImg);//旧的高度
+
+		//进行等比缩放
+		if($weight && ($oWeight < $oHeight)){
+
+			$weight = ($height / $oHeight) * $oWeight;
+
+		}else{
+			$height = ($weight / $oWeight) * $oHeight;
+
+		}
+
+		//开始重新采样
+		imagecopyresampled($nImg,$oImg,0,0,0,0,$weight,$height,$oWeight,$oHeight);
+
+		//输出并保存
+		imagejpeg($nImg,'./Public/uploads/Logo/'.$newName);
+
+		//关闭资源
+		imagedestroy($nImg);
+		imagedestroy($oImg);
+
+		//判断是否通过post方法上传的
+		if(is_uploaded_file($_FILES['webLogo']['tmp_name'])){
+			move_uploaded_file($_FILES['webLogo']['tmp_name'],'./Public/uploads/images/'.$newName);
+
+			$_POST['webLogo'] = $newName;
+
+			if($webset -> create($_POST)){
+				if($webset -> save()){
+					$this -> success('修改成功','set');
+					//将原Logo删除
+					//unlink("./Public/uploads/Logo/{$oWebLogo}");
+					//unlink("./Public/uploads/images/{$oWebLogo}");
+				}else{
+					$this -> error('修改失败','set');
+				}
+			}else{
+				$this -> error('失败','set');
+			}
+		}
+		
+	}
+	//网站开关
+	public function onOff(){
+		$web = M('webset');
+		$sw = $web -> field('webStatus,id')
+					   -> select();
+		$this -> assign('sw',$sw);
+		$this -> display();
+	}
+	//更新网站开关
+	public function updateSwitch(){
+		$web = M('webset');
+		if($web -> create($_POST)){
+			if($web -> save()){
+				$this -> success('更新成功','onOff');
+			}else{
+				$this -> error('更新失败','onOff');
+			}
+		}else{
+			$this -> error('失败','onOff');
+		}
+	}
+
+	//显示后台人员列表
+	public function myList(){
+		
+		$manager = M('manager');
+		//把超级管理员的信息去掉
+		$managers = $manager -> where("auth!='0'") -> select();
+		$this -> assign('manager',$managers);
+		$this -> display();
+	}
+
+	//显示超级管理员增添后台管理员和客服界面
+	public function add(){
+
+		$this -> display();
+	}
+	
+	//把后台人员信息插入数据库
+	public function insert(){
+
+		$manager = M('manager');
+		//把接收的密码进行md5加密
+		$_POST['password'] = md5($_POST['password']);
+		$data = $_POST;
+		//创建数据对象
+		if($manager -> create($data)){
+			$managers = $manager -> add();
+			if($managers){
+				$this -> success('OK','myList');
+			}else{
+				$this -> error('添加失败');
+			}
+		}else{
+			$this -> error('创建失败');
+		}
+	}
+
+	//删除功能
+	public function delete(){
+
+		//获取要删除用户的ID
+		$id = $_GET['id'];
+		$manager = M('manager');
+		if($manager -> delete($id)){
+			$this -> success('OK');
+		}else{
+			$this -> error('删除失败');
+		}
+	}
+
+	//ajax请求检查用户名是否存在
+	public function checkName(){
+
+		$manager = M('manager');
+		$managers = $manager -> where("name='{$_GET['name']}'") -> select();
+		if($managers){
+			echo '1';
+		}else{
+			echo '2';
+		}
+
+	}
+
+
+	//修改管理员信息
+	public function mod(){
+
+		$id = $_GET['id'];
+		$manager = M('manager');
+		$managers = $manager -> where("id={$id}") -> select();
+		$this -> assign('manager',$managers);
+		$this -> display();
+
+	}
+
+	//修改后台管理人员密码
+	public function doMod(){
+		
+		$_POST['password'] = md5($_POST['password']);
+		$data = $_POST;
+		$data['id'] = $_GET['id'];
+		$manager = M('manager');
+		if($manager -> create($data)){
+			if($manager -> save()){
+				$this -> success('OK',U('Manage/myList'));
+			}else{
+				$this -> error('修改失败');
+			}
+		}else{
+			$this -> error('创建失败');
+		}
+	}
+
+	//修改权限
+	public function auth(){
+
+		$id = $_GET['id'];
+		$manager = M('manager');
+		$data = $manager -> where("id={$id}") -> select();
+		$this -> assign('manager',$data);
+		$this -> display();
+	}
+
+	public function authMod(){
+
+		$data = $_POST;
+		$data['id'] = $_GET['id'];
+		$manager = M('manager');
+		if($manager -> create($data)){
+			if($manager -> save()){
+				$this -> success('OK',U('Manage/myList'));
+			}else{
+				$this -> error('修改失败');
+			}
+		}else{
+			$this -> error('创建失败');
+		}
+	}
+
+}
+?>

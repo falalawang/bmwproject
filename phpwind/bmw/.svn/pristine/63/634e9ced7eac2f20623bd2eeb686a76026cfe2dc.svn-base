@@ -1,0 +1,55 @@
+<extend name='Layout:layout' />
+<block name='main-content'>
+	<div class='contentb'>
+		<form action='__CONTROLLER__/look' method='post'>
+			<input class='inpa' name='date' id="d11" type="text" placeholder='点击选择日期' onClick="WdatePicker()"/>
+			<select class='sela' name='keep_time' id='time'>
+				<option>请选择时间</option>
+				<option value='08:00-10:00' id='one'>08:00-10:00</option>
+				<option value='10:00-12:00' id='two'>10:00-12:00</option>
+				<option value='14:00-16:00' id='three'>14:00-16:00</option>
+				<option value='16:00-18:00' id='four'>16:00-18:00</option>
+            </select><br />
+			<input type='hidden' value="{$zhi['brand']}" name='brand'/>
+			<input type='hidden' value="{$zhi['series']}" name='series'/>
+			<input type='hidden' value="{$zhi['models']}" name='models'/>
+			<input type='hidden' value="{$zhi['price']}" name='price'/>
+			<input class='inp' type='text' name='LPN' placeholder='*您的车牌号' />
+			<input class='inp' type='text' name='vin' placeholder='*您的VIN码' />
+			<input class='inp' type='hidden' name='combo' value="{$zhi['combo']}"/>
+			{$city}
+			<input type='text' name='address' placeholder='*街道' class='inp' /><br />
+			<input type='text' name='texts' placeholder='*备注' class='inp' /><br />
+			<input type='submit' value='提交' class='inp' />
+		</form>
+	</div>
+	<script>
+		$('#d11').blur(function(){
+			var date = $('#d11').val();
+			
+			var dto = date+'08:00-10:00';
+			$.get('__CONTROLLER__/four',{'dto':dto},function(data){
+			if(data.a == 4){
+				$('#one').attr({'disabled':'disabled'});
+			}},'json');
+			
+			var dtt = date+'10:00-12:00';
+			$.get('__CONTROLLER__/four',{'dtt':dtt},function(data){
+			if(data.b == 4){
+				$('#two').attr({'disabled':'disabled'});
+			}},'json');
+			
+			var dts = date+'14:00-16:00';
+			$.get('__CONTROLLER__/four',{'dts':dts},function(data){
+			if(data.c == 4){
+				$('#three').attr({'disabled':'disabled'});
+			}},'json');
+			
+			var dtf = date+'16:00-18:00';
+			$.get('__CONTROLLER__/four',{'dtf':dtf},function(data){
+			if(data.d == 4){
+				$('#four').attr({'disabled':'disabled'});
+			}},'json');
+		});
+	</script>
+</block>

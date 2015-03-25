@@ -1,0 +1,28 @@
+<?php
+namespace Admin\Controller;
+use Think\Controller;
+
+class UserController extends Controller{
+	
+	public function userList(){
+		$user = M('user');
+		$count = $user -> count();
+		$Page = new \Think\Page($count,2);
+		$show = $Page -> show();
+		$users = $user -> limit($Page -> firstRow.','.$Page -> listRows) -> select();
+		$this -> assign('users',$users);
+		$this -> assign('show',$show);
+		$this -> display();
+	}
+
+	public function follower(){
+		$follower = M('follower');
+		$followers = $follower -> select();
+		$this -> assign('followers',$followers);
+		$this -> display();
+	}
+
+	
+	
+}
+?>

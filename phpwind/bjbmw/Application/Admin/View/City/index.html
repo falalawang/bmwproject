@@ -1,0 +1,38 @@
+<extend name='Layout:layout'/>
+<block name='mws-container'>
+	<div id="mws-container" class="clearfix">
+            <div class="container">
+            	<div class="mws-panel grid_8">
+                	<div class="mws-panel-header">
+                    	<span><i class="icon-table">城市列表</i><b style='float:right'><a href="__CONTROLLER__/add" class="btn"><i class="icol-accept" ></i>&nbsp;&nbsp;添加城市</a></b></span>
+                    </div>
+                    <div class="mws-panel-body no-padding">
+                        <table class="mws-table">
+                            <thead>
+                                <tr>
+                                    <th>编号</th>
+                                    <th>城市</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody  align='center'>
+	                            <foreach name='city' item='city'>
+	                                <tr>
+	                                    <td>{++$count}</td>
+	                                    <td>{$city.city}</td>
+	                                    <td>
+	                                    <a href="__CONTROLLER__/mod/id/{$city.id}/city/{$city.city}" class="btn"><i class="icol-arrow-refresh"></i></a>
+	                                    	<a href="__CONTROLLER__/del/id/{$city.id}" onclick="return confirm('你确定要删除吗？')" class="btn"><i class="icol-cross"></i></a>
+	                                    </td>
+	                                </tr>
+	                            </foreach>
+                                    <tr>
+                                        <td colspan='4'><span style='float:right'>{$show}</span>        
+                                    </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+    </div>
+</block>

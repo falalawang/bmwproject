@@ -1,0 +1,50 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+
+   
+        
+        <!-- Main Container Start -->
+
+        
+        	<!-- Inner Container Start -->
+            <div class="container">
+                <!-- Panels Start -->
+
+            	<div class="mws-panel grid_8">
+                	<div class="mws-panel-header">
+                    	<span>Columned Form</span>
+                    </div>
+                    <div class="mws-panel-body no-padding" style="text-align:center">
+                    	<form class="mws-form" action="__CONTROLLER__/insert" method="post">
+                           
+                                            <p><div class="mws-form-col-2-8">
+                                                用户名：<input type="text" name="username">
+                                            </div></p>
+                                            <p><div class="mws-form-col-2-8" >
+                                                电&nbsp;&nbsp;&nbsp;&nbsp;话：<input type="text" name="phone">
+                                            </div></p>
+                                            <p><div class="mws-form-col-2-8">
+                                                车牌号：<input type="text" name="car_id">
+                                            </div></p>
+                                            <p><div class="mws-form-col-2-8">
+                                                微信号：<input type="text" name="wid">
+                                            </div></p>
+
+
+                    		<div class="mws-button-row" style="text-align:center">
+                    			<input type="submit" value="添加" class="btn btn-danger">
+                    			<input type="reset" value="重置" class="btn ">
+                    		</div>
+                        </form>
+                    </div>
+                </div>
+                
+            </div>
+            <!-- Inner Container End -->
+                       
+            
+        <!-- Main Container End -->
+        
+
+	
+</block>

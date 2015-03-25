@@ -1,0 +1,38 @@
+<extend name="Layout:layout"/>
+<block name="main-content">
+		              
+            	<div class="mws-panel grid_8">
+                	<div class="mws-panel-header">
+                    	<span><i class="icon-table"></i> 评价列表</span>
+                    </div>
+                    <div class="mws-panel-body no-padding">
+                        <table class="mws-table">
+                            <thead>
+                                <tr>
+                                    <th>发表人</th>
+                                    <th>保养项目</th>
+                                    <th>评价内容</th>
+                                    <th>评价时间</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+							<foreach name='message' item='messages'>
+                            <froeach >
+                            <tbody>
+                                <tr align='center'>
+                                    <td>{$messages.username}</td> 
+                                    <td>{$messages.project}</td>
+                                    <td>{$messages.message}</td>
+                                    <td>{$messages.ctime|date="Y-m-d H:i:s",###}</td>
+                                    <td>
+                                        <a href="#">删除</a>
+                                        <a href="#">修改</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            </froeach>							
+							</foreach>
+                        </table>
+                    </div>
+                </div>
+</block>

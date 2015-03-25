@@ -1,0 +1,89 @@
+<extend name='Layout:layout'/>
+<block name='mws-container'>
+<div id="mws-container" class="clearfix">
+        
+            <!-- Inner Container Start -->
+            <div class="container"><div class="mws-panel grid_8">
+                    <div class="mws-panel-header">
+                        <span>添加服务价格</span>
+                    </div>
+                    <div class="mws-panel-body no-padding">
+                        <form class="mws-form"  method='post' action="__CONTROLLER__/doadd">
+                            <fieldset class="mws-form-inline">
+                                <legend></legend>
+                                <div class="mws-form-row bordered"  style='letter-spacing:2px;'>
+                                    
+                                       品 牌：
+                                        <select id='sel' style='width:160px' name='brand' class="large" >
+                                        
+                                            <option>请选择品牌</option>
+                                            <foreach name="brand" item="brand" >
+                                                <option value='{$brand.brand}'>{$brand.brand}</option>
+                                            </foreach>
+                                            
+                                        </select>
+                                    
+                                       车 系：
+                                        <select style='width:160px' name='series' class="large" >
+                                            <option>请选择车系</option>
+                                        </select>
+                                    
+                                       车 型：
+                                        <select name='model' style='width:160px' class="large" >
+                                            <option>请选择车型</option>
+                                        </select>
+                                </div>
+                                <div class="mws-form-row bordered" style='letter-spacing:13px;'>
+                                    机油机滤：
+                                        <input  required type="text" name='eoof'  class="large" size='35'  >
+                                    <span style='letter-spacing:9px;'>微尘滤清器：</span>
+                                        <input  required type="text" name='microfil'  class="large" size='35'  >
+                                </div>
+                                
+                                <div class="mws-form-row bordered" style='letter-spacing:9px;'>
+                                    后部制动片：
+                                        <input  required type="text" name='rearbpiece'  class="large" size='35'  >
+                                    <span style='letter-spacing:1px;'>后部制动盘及制动片：</span>
+                                        <input  required type="text" name='rearbdisc'  class="large" size='35'  >
+                                </div>
+                                
+                                <div class="mws-form-row bordered" style='letter-spacing:9px;'>
+                                    前部制动片：
+                                        <input  required type="text" name='fbpiece'  class="large" size='35'  >
+                                    <span style='letter-spacing:1px;'>前部制动盘及制动片：</span>
+                                        <input  required type="text" name='frontbdisc'  class="large" size='35' >
+                                </div>
+                                
+                                <div class="mws-form-row bordered" style='letter-spacing:18px;'>
+                                    火花塞：
+                                        <input  required type="text" name='ngk'  class="large" size='35' >
+                                    <span style='letter-spacing:11px;'>车辆检查：</span>
+                                        <input  required type="text" name='carcheck'  class="large" size='35' >
+                                </div>
+                                <div class="mws-form-row bordered" style='letter-spacing:9px;'>
+                                    空气滤清器：
+                                        <input  required type="text" name='aircleaner'  class="large" size='35' >
+                                    <span style='letter-spacing:22px;'>雨刮片：</span>
+                                        <input  required type="text" name='nwb'  class="large" size='35'  >
+                                </div>
+                                
+                            </fieldset>
+                            <div class="mws-button-row">
+                                <input  required type="submit" value="确认" class="btn btn-danger">
+                                <input  required type="reset" value="重置" class="btn ">
+                            </div>
+                            
+                        </form>
+                    </div>      
+                </div>
+            </div>
+</div>
+
+             
+</block>
+<block name='js'>       
+    <script>
+            var con = "__CONTROLLER__";
+    </script> 
+    <script src="__PUBLIC__/Admin/js/adminjs/serpriceadd.js"></script>  
+</block>        

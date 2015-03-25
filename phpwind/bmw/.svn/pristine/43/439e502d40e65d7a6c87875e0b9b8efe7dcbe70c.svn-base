@@ -1,0 +1,96 @@
+<?php
+namespace Admin\Controller;
+use Think\Controller;
+class ServiceController extends Controller { 
+    
+     public function brandList(){
+        $car = M('series_models');
+        $cars = $car -> select();
+        $this -> assign("car", $cars);    
+        $this -> display();
+     }
+     
+     public function addBrand(){
+        $car = M('series_models');
+        $cars = $car -> select();
+        $this -> display();
+     }
+     public function keepProjectList(){
+        $project = M('keep');
+        $projects = $project -> select();
+        $this -> assign("project", $projects); 
+        $this -> display();
+     }
+     public function delService(){
+        $id=I('get.id');
+         $project=M('keep');
+        if($project -> delete($id)){
+            $this -> success("删除成功");
+        }else{
+            $this -> error("删除失败");
+        }  
+
+     }
+     public function addService(){
+        $this->display();
+     }
+     public function insertService(){
+        $data=$_POST;
+        //dump($data);
+        $keep=M('keep');
+        if($keep->create($data)){
+            $res=$keep->add();
+            if($res){
+                $this->success('OK',U('Service/keepProjectList'));
+            }else{
+                $this->error('添加失败');
+            }
+        }else{
+                $this->error('添加失败');
+        }
+     }
+     public function insert(){
+         $data=$_POST;
+         dump($data);die;
+         $car=M("series_models");
+		 if($car -> create($data)){
+            $res = $car->add();
+            if($res){
+                $this -> success("OK",U("Service/brandList"));
+            }else{
+                $this -> error("失败");
+            }
+        }else{
+            $this -> error("失败！");
+        }
+     }
+     public function delBrand(){
+         $id=I('get.id');
+         echo $id;
+         $brand=M('series_models');
+        if($brand -> delete($id)){
+            $this -> success("删除成功");
+        }else{
+            $this -> error("删除失败");
+        }      
+     }
+     public function priceList(){
+        $price=M('project');
+        //dump($price);
+        $prices=$price->select();
+        $this->assign('price',$prices);
+        //dump($prices);
+        $this->display();
+     }
+     public function updatePrice(){
+        $id=$_GET['id'];
+        $price=M('project');
+        $prices=$price->where("id=$id")->find();
+        dump($prices);
+        $this->assign('prices',$prices);
+        $this->display();
+     }
+     public function update(){
+        
+     }
+}

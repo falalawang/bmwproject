@@ -1,0 +1,67 @@
+<extend name="Layout:layout"/>
+<block name="main-content">
+	            	<div class="mws-panel grid_8">
+                	<div class="mws-panel-header">
+                    	<span><i class="icon-table"></i> 服务管理 -> 品牌列表</span>
+                    </div>
+                    <div class="mws-panel-body no-padding">
+                        <table class="mws-table">
+                            <thead>
+                                <tr>
+                                    <th>车系</th>
+									<th>车型</th>
+									<th>机油机滤</th>
+									<th>制动液</th>
+									<th>微尘滤清器</th>
+									<th>后部制动片</th>
+									<th>后部制动盘及制动片
+</th>
+									<th>前部制动片
+</th>
+									<th>前部制动盘及制动片
+</th>
+									<th>火花塞
+</th>
+									<th>车辆检查
+</th>
+									<th>空气滤清器
+</th>
+									<th>燃油滤清器
+</th>
+									<th>雨刮片
+</th>
+									<th>机油机滤及微尘滤清器
+</th>
+									<th>操作</th>
+
+                                </tr>
+                            </thead>
+							<foreach name='price' item='prices'>
+                            <tbody>
+                                <tr align='center'>
+                                    <td>{$prices.series}</td>
+                                    <td>{$prices.models}</td>
+                                    <td><input type='text' value='{$prices.a}' size="8"></td>		
+                                    <td><input type='text' value='{$prices.b}' size="8"></td>		
+                                    <td><input type='text' value='{$prices.c}' size="8"></td>		
+                                    <td><input type='text' value='{$prices.d}' size="8"></td>		
+                                    <td><input type='text' value='{$prices.e}' size="8"></td>		
+                                    <td><input type='text' value='{$prices.f}' size='8'></td>		
+                                    <td><input type='text' value='{$prices.g}' size='8'></td>		
+                                    <td><input type='text' value='{$prices.h}' size='8'></td>		
+                                    <td><input type='text' value='{$prices.i}' size='8'></td>		
+                                    <td><input type='text' value='{$prices.j}' size='8'></td>		
+                                    <td><input type='text' value='{$prices.k}' size='8'></td>		
+                                    <td><input type='text' value='{$prices.l}' size='8'></td>		
+                                    <td><input type='text' value='{$prices.m}' size='8'></td>		 
+                                    <td>
+										<a href='__APP__/Service/updatePrice/id/{$prices.id}'><button>修改价格</button></a>
+									</td>
+                                    </form>
+                                </tr>
+                            </tbody>
+							</foreach>
+                        </table>
+                    </div>
+                </div>
+</block>

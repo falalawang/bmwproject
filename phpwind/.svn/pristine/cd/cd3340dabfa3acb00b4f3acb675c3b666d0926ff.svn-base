@@ -1,0 +1,78 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+<script src="__PUBLIC__/admin/js/jquery.js"></script>
+    <div class="row">
+        <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading">
+                添加车型
+            </header>
+            <div class="panel-body">
+                <form action="__CONTROLLER__/insert" class="form-horizontal adminex-form" method="post">
+                    <div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">品牌</label>
+                        <div class="col-sm-6">
+                            <input type="text" id="brand" class="form-control round-input" name="brand" /><span id="bHtml"></span>
+                        </div>
+                    </div>
+					<div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">车系</label>
+                        <div class="col-sm-6">
+                            <input type="text" id="series" class="form-control round-input" name="series" /><span id="sHtml"></span>
+                        </div>
+                    </div>
+					<div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">车型</label>
+                        <div class="col-sm-6">
+                            <input type="text" id="types" class="form-control round-input" name="types"><span id="tHtml"></span>
+                        </div>
+                    </div>
+					<div class="panel-body">
+						<button type="submit" class="btn btn-primary">确认添加</button>
+                    </div>
+                   </form>
+            </div>
+		</section>
+
+		</div>
+        </div>
+        </div>
+        <script type="text/javascript">
+            var isLog = false;
+            $('#brand').blur(function(){
+                if($(this).val() == ''){
+                    $('#bHtml').html('品牌不能为空！').css({color:'red'});
+                }else{
+                    $('#bHtml').html('输入格式可用！').css({color:'green'});
+                    isLog = true;
+                }
+            });
+            $('#series').blur(function(){
+                if($(this).val() == ''){
+                    $('#sHtml').html('车系不能为空！').css({color:'red'});
+                }else{
+                    $('#sHtml').html('输入格式可用！').css({color:'green'});
+                    isLog = true;
+                }
+            });
+            $('#types').blur(function(){
+                if($(this).val() == ''){
+                    $('#tHtml').html('车型不能为空！').css({color:'red'});
+                }else{
+                    $('#tHtml').html('输入格式可用！').css({color:'green'});
+                    isLog = true;
+                }
+
+            });
+
+            if(isLog){
+                $('form').submit(function(){
+                    return true;
+                });
+            }else{
+                $('form').submit(function(){
+                    return false;
+                });
+            }
+        </script>
+</block>

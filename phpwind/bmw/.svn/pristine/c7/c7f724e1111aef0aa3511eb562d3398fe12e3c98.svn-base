@@ -1,0 +1,153 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>个人中心</title>
+		<link rel="stylesheet" href="__PUBLIC__/home/css/gerenzhongxin.css">
+     <script src="__PUBLIC__/home/js/jquery.js"></script>
+     <link href="__PUBLIC__/home/dfcss/css/lanrenzhijia.css" type="text/css" rel="stylesheet" />
+     <script type="text/javascript" src="__PUBLIC__/home/dfcss/js/jquery.js"></script>
+  </head>
+ 
+	<body>
+
+<div class="container user-info i">
+
+  <div class="row">
+    <div class="col-md-12 title">
+      个人信息
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3" >
+  <ul class="menu">
+    <li class="" style="background-color:#28abcc;">
+      <a href="__APP__/order/order">我的订单</a>
+    </li>
+    
+    <li class="" style="background-color:#28abcc;">
+      <a href="__APP__/settings/setting">个人信息</a>
+    </li>
+  </ul>
+</div>
+
+
+
+    <div class="col-md-9 content">
+      <div class="info" style="background-color:#28abcc;">
+       
+        <div style="display:none">
+        <input name="utf8" value="✓" type="hidden">
+        <input name="_method" value="patch" type="hidden">
+        <input name="authenticity_token" value="q588laSmQQNSEgRESgNgjSV/xsAAic0QjGM/ek7W4co=" type="hidden">
+        </div>
+
+          <div class="address">
+            <div class="header">
+              评价订单
+            </div>
+
+            <div class="form-group addresses">
+  
+
+  <div class="col-sm-6">
+    <div class="current_addresses">
+
+        <div class="radio">
+          <label class="addr col-sm-8 control-label">
+            请您对本订单做出正确的评价
+          </label>
+         
+        </div>
+
+
+</div>
+
+   
+  </div>
+</div>
+
+          </div>
+
+          <div class="settings">
+            <div class="header">
+
+              评价内容
+            </div>
+            
+            <div class="form-group" style="margin-left:10%;">
+              
+              <div class="col-sm-8">
+            (点击星星做出评价,5星满分)
+              <div class='star' >
+              <img src="__PUBLIC__/home/imgs/star4.png" width="30px" height="30px">
+              <img src="__PUBLIC__/home/imgs/star4.png" width="30px" height="30px">
+              <img src="__PUBLIC__/home/imgs/star4.png" width="30px" height="30px">
+              <img src="__PUBLIC__/home/imgs/star4.png" width="30px" height="30px">
+              <img src="__PUBLIC__/home/imgs/star4.png" width="30px" height="30px">
+
+          </div>
+               
+                <textarea id="textarea" class="form-control" id="user_phone_number" style="resize:none"></textarea>
+              </div>
+
+              
+             <button class="btn btn-default" style="margin-left:10%;margin-top:10%;">评价订单</button>
+             <input type="hidden" class="id" value="{$id}">
+             
+    
+             
+             </div>
+         
+            </div>
+          </div>
+         
+          
+
+
+     </div>
+    </div>
+  </div>
+</div>
+</body>
+<script>
+
+$('img').click(function(){
+
+  $(this).prevAll().attr('src','__PUBLIC__/home/imgs/star3.png');
+  $(this).attr('src','__PUBLIC__/home/imgs/star3.png');
+
+
+})
+
+
+$('button').click(function(){
+
+  var a = $("img[src*=3.]").length;
+  var b = $('#textarea').val(); 
+  var c = $('.id').attr('value'); 
+
+  
+  $.get('__CONTROLLER__/dopopular',{star:a,evaluate:b,id:c},function(data){
+
+    if(data){
+
+      window.document.location.href="__CONTROLLER__/order";
+
+    }
+
+  });
+
+
+})
+
+ 
+
+</script>
+
+
+
+ 
+</html>

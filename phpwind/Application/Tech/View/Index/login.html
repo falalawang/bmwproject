@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="renderer" content="webkit">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>宇瑞安-技师后台管理登录</title>
+  <meta type="keywords" content="1,1,1">
+  <meta type="description" content="111">
+  <!-- 新 Bootstrap 核心 CSS 文件 -->
+  <link rel="stylesheet" href="__PUBLIC__/tech/css/bootstrap.min.css">
+  <link rel="stylesheet" href="__PUBLIC__/tech/css/login.css">
+</head>
+<body>
+<div class="container-fluid">
+  <div class="col-xs-12 col-sm-4 center-block" style="float:none; color:#FFF;" id="Loginlogo">
+    <br>
+    <h2 class="text-center">宇瑞安-上门汽车保养</h2>
+    <h5 class="text-center">技师后台管理登录</h5>
+    <br>
+  </div>
+  <div class="col-xs-12 col-sm-4 center-block" id="loginBox">
+    <hr>
+      <form>
+        <div class="form-group has-feedback" id="user_tel">
+          <label class="control-label" for="telephone">手机号:</label>
+          <div class="input-group">
+            <span class="input-group-addon glyphicon glyphicon-user"></span>
+            <input type="text" class="form-control" id="telephone" value="" name="telephone" placeholder="请输入您的手机号">
+          </div>
+          <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+        </div>
+
+        <div class="form-group has-feedback" id="user_pwd">
+          <label  class="control-label" for="password">密码:</label>
+          <div class="input-group">
+            <span class="input-group-addon glyphicon glyphicon-lock"></span>
+            <input type="password" class="form-control" id="password" value="" name="password" placeholder="请输入您的密码">
+          </div>
+          <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+        </div>
+        <hr>
+        <button type="button" id="loginSub" class="btn btn-success btn-block">登录</button>
+      </form>
+  </div>
+</div>
+</body>
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="__PUBLIC__/tech/js/jquery.js"></script>
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="__PUBLIC__/tech/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/tech/js/tech.js"></script>
+</html>

@@ -1,0 +1,21 @@
+<?php
+namespace Admin\Controller;
+use Think\Controller;
+class AutoReplyController extends Controller{
+	
+	//显示自动回复
+	public function index(){
+		$autoReply = M('autoreply');
+		$autoReplys = $autoReply -> select();
+		$this -> assign('list',$autoReplys);
+		$this -> display();
+	}
+
+	//修改自动回复
+	public function mod(){
+		dump($_POST);
+		$this -> display();
+	}
+
+}
+?>

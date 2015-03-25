@@ -1,0 +1,44 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+<div class="wrapper">
+    <div class="row">
+        <div class="col-sm-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    套餐列表
+                    <a href="__CONTROLLER__/addCombo"><input type="submit" class="btn btn-primary pull-right" value="添加"></a>
+                </header>
+                <div class="panel-body">
+                    <div class="adv-table">
+                        <table  class="display table table-bordered table-striped" id="dynamic-table">
+                                <tr>
+                                    <th>编号</th>
+                                    <th>套餐</th>
+                                    <if condition="$Think.session.auth neq '2'">
+                                        <th class="hidden-sm">操作</th>
+                                    </if>
+                                </tr>
+                            <tbody>
+                               <foreach name="combo" item="datas">
+                                    <tr class="gradeX">
+                                        <td class="hidden-sm">{$datas['id']}</td>
+                                        <td class="hidden-sm">{$datas['name']}</td>
+                                   
+                                        <if condition="$datas['highPrice'] eq ''">
+                                        <else />- {$datas['highPrice']}
+                                        </if></td>
+                                         <if condition="$Think.session.auth neq '2'">
+                                        <td class="hidden-sm"><a href="__CONTROLLER__/modCombo/id/{$datas['id']}">修改&nbsp;&nbsp;<a href="__CONTROLLER__/delCombo/name/{$datas['name']}" onclick="return confirm('你确定要删除此套餐吗？')">删除</td>
+                                        </if>
+                                    </tr>
+                                </foreach>
+                    		</tbody>
+		
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+</block>

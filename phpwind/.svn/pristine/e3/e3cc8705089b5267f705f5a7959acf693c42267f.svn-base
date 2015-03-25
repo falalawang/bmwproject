@@ -1,0 +1,99 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+<script src="__PUBLIC__/admin/js/jquery.js"></script>
+    <div class="row">
+        <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading">
+                添加车型
+            </header>
+            <div class="panel-body">
+                <form action="__CONTROLLER__/insert" class="form-horizontal adminex-form" id="myform" method="post">
+                    <div class="col-sm-2"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">品牌</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="brand" class="form-control" name="brand" /><span id="bMsg"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-2"></div>
+					<div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">车系</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="series" class="form-control" name="series" /><span id="sMsg"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-2"></div>
+					<div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">车型</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="types" class="form-control" name="types"><span id="tMsg"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-4"></div>
+					<div class="col-sm-4 panel-body">
+						<button type="submit" class="btn btn-info">确认添加</button>
+                    </div>
+                   </form>
+            </div>
+		</section>
+
+		</div>
+        </div>
+
+        <script type="text/javascript">
+
+            var bLog = false;
+            var sLog = false;
+            var tLog = false;
+
+            $('#brand').blur(function(){
+                brandCheck();   
+            });
+            function brandCheck(){
+                if($('#brand').val() == ''){
+                    $('#bMsg').html('品牌不能为空！').css({color:'red'});
+                }else{
+                    $('#bMsg').html('输入格式可用！').css({color:'green'});
+                    bLog = true;
+                }
+            }
+            $('#series').blur(function(){
+                seriesCheck();                
+            });
+            function seriesCheck(){
+                if($('#series').val() == ''){
+                    $('#sMsg').html('车系不能为空！').css({color:'red'});
+                }else{
+                    $('#sMsg').html('输入格式可用！').css({color:'green'});
+                    sLog = true;
+                }
+            }
+            $('#types').blur(function(){
+                typesCheck();
+            });
+            function typesCheck(){
+                 if($('#types').val() == ''){
+                    $('#tMsg').html('车型不能为空！').css({color:'red'});
+                }else{
+                    $('#tMsg').html('输入格式可用！').css({color:'green'});
+                    tLog = true;
+                }
+            }
+
+            $('#myform').submit(function(){
+                brandCheck();
+                seriesCheck();
+                typesCheck();
+
+                //如果判断不通过则不让提交
+                if(bLog && sLog && tLog){
+                    return true;
+                }else{
+                    return false;
+                }
+
+            });
+
+        </script>
+</block>

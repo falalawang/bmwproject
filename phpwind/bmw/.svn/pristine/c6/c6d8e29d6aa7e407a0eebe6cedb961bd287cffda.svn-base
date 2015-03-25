@@ -1,0 +1,111 @@
+
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>个人中心</title>
+		<link rel="stylesheet" href="__PUBLIC__/home/css/gerenzhongxin.css">
+		<script src="__PUBLIC__/home/js/jquery.js"></script>
+		
+		<link href="__PUBLIC__/home/dfcss/css/lanrenzhijia.css" type="text/css" rel="stylesheet" />
+
+
+  </head>
+<body>
+
+	<div class="container user-info i">
+
+	 	 <div class="row">
+	    	<div class="col-md-12 title">
+	      个人信息
+	    	</div>
+		 </div>
+
+  <div class="row">
+	    <div class="col-md-3" >
+	  <ul class="menu">
+	    <li class="" style="background-color:#28abcc;">
+	      <a href="__APP__/order/order">我的订单</a>
+	    </li>
+	    
+	    <li class="" style="background-color:#28abcc;">
+	      <a href="__APP__/settings/setting">个人信息</a>
+	    </li>
+	  </ul>
+	</div>
+
+
+
+
+<foreach name="result" item="res">
+    <div class="col-md-9 content" style="float:right; margin-bottom:10px;">
+      <div class="info" style="background-color:#28abcc;">
+        <form accept-charset="UTF-8" action="/users/18989" class="form-horizontal" id="edit_user_18989" method="post"><div style="display:none">
+
+	        <input name="utf8" value="✓" type="hidden">
+
+	        <input name="_method" value="patch" type="hidden">
+
+	        <input name="authenticity_token" value="q588laSmQQNSEgRESgNgjSV/xsAAic0QjGM/ek7W4co=" type="hidden"></div>
+
+          <div class="address">
+           
+            <div class="form-group addresses">
+             <label class="addr col-sm-2 control-label" style="margin-bottom:10px;">
+				    订单编号：{$res['id']}
+				  </label>
+				  <label class="addr col-sm-4 control-label" style="margin-bottom:10px;">
+				    订单时间：{$res[ctime]}
+				  </label>
+				 
+			</div>
+
+          </div>
+          <div class="address">
+           
+            <div class="form-group addresses">
+             <label class="addr col-sm-5 control-label" style="margin-bottom:10px;">
+				    保养项目：{$res['combo']}
+			</label>
+				  <label class="addr col-sm-3 control-label" style="margin-bottom:10px;">
+				    保养价格：{$res['price']}
+				  </label>
+				
+				 <label class="addr col-sm-3 control-label" style="margin-bottom:10px;">
+				    订单状态：{$res['status']}
+				  </label><br/>
+					
+
+				<if condition="$res['status']=='已付款'">	
+				  <label class="addr col-sm-3 control-label" style="margin-bottom:10px;">
+				   
+               			 <a class="btn btn-default" href="__CONTROLLER__/popular/id/{$res['id']}">评价订单</a>
+             		 
+				  </label>
+				  </if>
+				  <label class="addr col-sm-2 control-label" style=" margin-bottom:5%;">
+               			 <a class="btn btn-default" href="__CONTROLLER__/signconre">快速预约</a>
+             		
+				  </label>
+
+				</div>
+
+          </div>
+          </form>
+		</div>
+
+</div>
+
+</foreach>
+
+
+  </div>
+</div>
+
+ 
+  </div>
+</div>
+
+</body>
+</html>

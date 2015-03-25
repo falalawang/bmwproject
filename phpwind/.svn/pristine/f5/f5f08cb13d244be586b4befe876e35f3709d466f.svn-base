@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" />
+		<title>宇瑞安|4s到家汽车保养|输入个人信息</title>
+		<meta name="keywords" content="汽车保养上门服务，4s店上门保养，宝马4s点保养" />
+		<meta name="description" content="4s店汽车保养上门服务" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link href="__PUBLIC__/home/css/bootstrap.min.css" rel="stylesheet" />
+		<link href="__PUBLIC__/home/css/bwm.css" rel="stylesheet" />
+	</head>
+<body>
+<div id="test">
+	<div class="col-sm-6 packages" style="margin-bottom:10px;">
+	<input type="checkbox" name="packages[]" class="col-sm-1" onclick="recordCombo(this)"><input type="hidden"><input type="hidden"><b class="col-sm-6"></b><b class="col-sm-5"></b>
+	</div>
+</div>		
+<div>
+	<div class="center">
+	<h1><span class="red">4s</span>
+		<span class="white">到家汽车保养</span>
+	</h1>
+	<h4 class="blue">&copy; 宇瑞安</h4>
+	</div>
+	<div class="content">
+		<div class="top">							
+		<h4 class="center blue msg">请输入您的信息</h4><hr>
+		<form role="form" action="submitOrder" method="post">
+			<label class="blue msg" style="line-height:35px;">*您的车型</label>
+			<a href="../Manage/carTypeManage">
+				<button type="button" class="btn btn-sm pull-right" style="margin-bottom:10px;">+添加车型</button>
+			</a>
+			<div class="row">
+				<foreach name="userTypes" item="userType">
+					<div class="col-lg-12" style="margin-bottom:10px;">
+					<input type="radio" onclick="checkCombo(this)"  value="{$userType['id']}">&nbsp&nbsp{$userType['brand']}&nbsp{$userType['series']}&nbsp{$userType['types']}
+					<input type="hidden" name="carType" value="{$userType['brand']},{$userType['series']},{$userType['types']}">
+					</div>
+				</foreach>
+			</div>
+			<label class="blue massage">请选择您需要的保养套餐<small>&nbsp&nbsp您的车型有以下套餐可以选择:</small></label>			
+			<div class="row" id="combo"></div>
+			<label class="blue msg" style="line-height:35px;">*联系信息</label>		
+			<a href="../Manage/addressManage">
+				<button type="button" class="btn btn-sm pull-right" style="margin-bottom:10px;">+添加地址</button>
+			</a>
+			<foreach name="userAddresses" item="userAddress">	
+			<div class="row">
+				<div class="col-lg-12" style="margin-bottom:10px;">				
+				<div id="addressCity">
+				<input type="radio" name="city" value="{$userAddress['city']}">
+				<input type="hidden" name="street" value="{$userAddress['street']}">
+				<input type="hidden" name="telephone" value="{$userAddress['telephone']}">&nbsp&nbsp{$userAddress['city']}&nbsp&nbsp{$userAddress['street']}&nbsp&nbsp{$userAddress['telephone']}>></div>
+				</div>
+			</div></foreach>
+			<label class="blue msg" style="line-height:35px;">*您的姓名</label>
+			<div class="row">
+				<div class="col-lg-12" style="margin-bottom:10px;">
+				<if condition="$userName eq null">
+				<input  class="form-control" type="text" name="user" value="">
+				<else />
+				{$userName}
+				</if>
+				</div><!-- /.col-lg-12 -->
+			</div>
+			<label class="blue msg" onclick="showAddress()">支付方式</label>
+			<div class="row">
+				<div class="col-sm-3">
+			        <input type="radio" name="payType" checked value="现金">&nbsp&nbsp现金
+			    </div>
+			    <div class="col-sm-3"> 
+			        <input type="radio" name="payType" value="pos机">&nbsp&nbsppos机
+				</div>
+		  	</div><br>
+		  	<label class="blue msg">车牌号</label>
+			<div class="row">
+			<select class="btn-group col-sm-1" style="height:35px;" name="carF">
+			    <option>京</option>
+			    <option>津</option>
+			    <option>沪</option>
+			    <option>晋</option>
+			    <option>豫</option>
+			    <option>冀</option>
+			    <option>蒙</option>
+			    <option>云</option>
+			    <option>陕</option>
+			    <option>辽</option>
+			    <option>吉</option>
+			    <option>黑</option>
+			    <option>闽</option>
+			    <option>湘</option>
+			    <option>贵</option>
+			    <option>皖</option>
+			    <option>粤</option>
+			    <option>川</option>
+			    <option>鲁</option>
+			    <option>新</option>
+			    <option>青</option>
+			    <option>苏</option>
+			    <option>藏</option>
+			    <option>浙</option>
+			    <option>琼</option>
+			    <option>赣</option>
+			    <option>宁</option>
+			    <option>鄂</option>
+			    <option>渝</option>
+			    <option>桂</option>
+			    <option>甘</option>
+			</select>
+			<input class="col-sm-11" type="text" style="height:35px;" placeholder="您的车牌号" name="carNumber">   
+		  	</div><br>
+		  	<label class="blue msg">vin码</label>
+			<div class="row">
+			<input class="form-control" type="text" placeholder="您的vin码" name="vin">   
+		  	</div><br>
+		  	<label class="blue msg" onclick="showAddress()">备注</label>
+			<div class="row">
+			<input class="form-control" type="text" placeholder="可填写车架号,其他信息或需求" name="remark" value="remark">   
+		  	</div><br>
+		  	<h2 class="red">应付总额:<small id="lastPrice">0元</small></h2>
+		  	<input type="hidden" id="LastPrice" name="lastPrice" value="">
+		  	<input type="submit" value="提交订单" class="btn btn-sm btn-block" style="margin-bottom:10px;">
+		</form>										
+		</div>
+		<div class="bottom navbar-fixed-bottom"></div>
+		</div></div>
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+		    <div class="modal-content">
+		    <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">请选择城市</h4>
+		    </div>
+		    <div class="modal-body">
+		    <ul id="cityList">
+		        <foreach name="provinces" item="province">
+		        <li class="province">
+		        <button type="button" class="btn btn-sm btn-link provinceBtn">{$province}</button>
+		    	<ul>
+		            <foreach name="citys" item="city">
+		                <if condition="$city[0] eq $province">
+		                <li class="city">
+		                <button type="button" class="btn btn-sm btn-link cityBtn">{$city[1]}</button>
+		                    <ul  class="list-unstyled">
+		                    <foreach name="countys" item="county">
+		                        <if condition="$county[0] eq $city[1]">
+		                        <li class="county">
+		                        <button type="button" class="btn btn-sm btn-link countyBtn">{$county[1]}
+		                        </button>
+		                        </li>
+		                        </if>
+		                    </foreach>
+		                    </ul>
+		                </li>
+		                </if>
+		            </foreach>
+		        </ul>
+		        </li>
+		        </foreach>
+		    </ul>
+		    </div>
+		    </div>
+		</div>
+	</div>		
+</body>
+		<script src="__PUBLIC__/home/js/jquery.js"></script>
+		<script src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+		<script src="__PUBLIC__/home/js/city.js"></script>
+<script type="text/javascript">
+	$("#test").hide();
+	$(".massage").hide();
+	function checkCombo(obj){
+		$(".massage").show();
+		var typeId=obj.value;
+		var data={typeId:typeId};
+		$.get("inputInfo",data,function(d){
+			$("#combo").html("");
+			for(x in d){				
+				var comboName=d[x].comboName;
+				var lowPrice=d[x].lowPrice;
+				var highPrice=d[x].highPrice;
+				if(highPrice){
+					var str="价格:"+lowPrice+"-"+highPrice+"元";
+				}else{
+					var str="价格:"+lowPrice+"元";
+				}
+				$("#test b:eq(0)").html(comboName);
+				$("#test input:eq(0)").val(comboName);
+				$("#test input:eq(1)").val(lowPrice);
+				$("#test input:eq(2)").val(highPrice);
+				$("#test b:eq(1)").html(str);
+				$("#test div").clone().appendTo("#combo").show();
+			}
+		});
+	}
+	var lowPrice=0;
+	var highPrice=0;
+	function recordCombo(obj){
+		
+		var low=parseInt(obj.nextSibling.value);
+		lowPrice+=low;
+		if(obj.nextSibling.nextSibling.value){
+			var high=parseInt(obj.nextSibling.nextSibling.value);
+		}else{
+			var high=low;
+		}
+		highPrice+=high;
+		if(lowPrice != highPrice){
+			var str=lowPrice+"-"+highPrice+"元";
+		}else{
+			var str=lowPrice+"元";
+		}
+		$("#lastPrice").html(str);
+		$("#LastPrice").val(str);
+	}
+						
+</script>
+</html>

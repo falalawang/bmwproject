@@ -1,0 +1,9 @@
+<?php
+	namespace Admin\Controller;
+	use	Think\Controller;
+	class IndentController extends Controller{
+		public function indentList(){
+			$this->display();
+		}
+	}
+?>

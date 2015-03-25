@@ -1,0 +1,37 @@
+<extend name="Layout:order" />
+<block name="content">
+	<div id="province" class="container">
+		<h4 class="text-center blue msg">请选择您所在的省份(直辖市)</h4><hr>
+		<foreach name="provinces" item="province">						
+			<div class="province">
+			<button type="button" class="btn btn-default btn-block" style="margin-bottom:10px;" onclick="getProvince(this)">{$province}</button>
+			<foreach name="citys" item="city">
+				<if condition="$city[0] eq $province">
+					<div class="city">
+						<button type="button" class="btn btn-default btn-block" style="margin-bottom:10px;" onclick="getCity(this)">{$city[1]}</button>
+						<foreach name="countys" item="county">
+							<if condition="$county[0] eq $city[1]">
+								<div class="county">
+									<button type="button" class="btn btn-default btn-block" style="margin-bottom:10px;" onclick="getCounty(this)">{$county[1]}</button>
+								</div>
+							</if>
+						</foreach>
+					</div>
+				</if>
+			</foreach>
+			</div>
+		</foreach>
+		<div class="msg">
+			<p>请填写您的具体地址信息</p>
+			<input type="text" name="street" id="street" class="form-control" />
+			<div id="l-map"class="hidden"></div>
+    <div id="searchResultPanel" style="height:auto; display:none;"></div>
+			<br>
+			<button type="button" class="msg btn btn-block btn-primary" style="margin-bottom:10px;" onclick="send()">提交</button>
+			<br />
+		</div>
+	</div>
+	<div class="bottom navbar-fixed-bottom"></div>	
+</block>
+
+

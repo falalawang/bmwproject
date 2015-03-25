@@ -1,0 +1,169 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+<!--pickers css-->
+  <!--<link rel="stylesheet" type="text/css" href="__PUBLIC__/admin/js/bootstrap-datepicker/css/datepicker-custom.css" />
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/admin/js/bootstrap-timepicker/css/timepicker.css" />
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/admin/js/bootstrap-colorpicker/css/colorpicker.css" />
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/admin/js/bootstrap-daterangepicker/daterangepicker-bs3.css" />
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/admin/js/bootstrap-datetimepicker/css/datetimepicker-custom.css" />-->
+  <div class="row">
+        <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading">
+                修改订单
+            </header>
+            <div class="panel-body">
+                <form action="__CONTROLLER__/updateOrder" class="form-horizontal adminex-form" method="post">
+                    <input type="hidden" name="id" value="{$order[0]['id']}" />
+                    <div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">联&nbsp;&nbsp;系&nbsp;&nbsp;人</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" name="name" value="{$order[0]['user']}" />
+                        </div>
+                        <div class="col-sm-5"></div>
+                    </div>
+					<div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">联系电话</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" name="telephone" value="{$order[0]['telephone']}" />
+                        </div>
+                        <div class="col-sm-5"></div>
+                    </div>
+					<div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">联系地址</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" name="address" value="{$order[0]['address']}" />
+                        </div>
+                        <div class="col-sm-5"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">用户车型</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" name="carType" value="{$order[0]['carType']}" readonly />
+                        </div>
+                        <div class="col-sm-5"></div>
+                    </div>
+                    <!--<div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;牌</label>
+                        <div class="col-sm-1">
+                            <select name="brand" id="brand">
+                               <foreach name='Mbrands' item="Mbrand">
+                               		<if condition="$order[0]['brand'] eq $Mbrand">
+                                        <option value="{$Mbrand}" selected>{$Mbrand}</option>
+                                    <else />
+                                    	<option value="{$Mbrand}">{$Mbrand}</option>
+                                    </if>
+                                </foreach>
+                            </select>
+                        </div>
+                        <label class="col-sm-1 col-sm-1 control-label">车&nbsp;&nbsp;系</label>
+                        <div class="col-sm-2">
+                            <select name="series" id="series">
+                                <foreach name='Mseries' item="Mserie">
+                                	<if condition="$order[0]['brand']">
+                                	<option value="{$Mserie[1]}">{$Mserie[1]}</option>>
+                                </foreach>
+                            </select>
+                        </div>
+                         <label class="col-sm-1 col-sm-1 control-label">车&nbsp;&nbsp;型</label>
+                        <div class="col-sm-1">
+                            <select name="types" id="types">
+                                
+                            </select>
+                        </div>
+                        <div class="col-sm-5"></div>
+                    </div>-->
+                    <div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">服&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;务</label>
+                        <div class="col-sm-6">
+                            <!--遍历出所有套餐-->
+                            <foreach name="combos" item="combo">
+                                <div class="col-lg-6" style="margin-bottom:10px;">
+                                    <!--in判断一个变量是否在数组中（前面name中的值为变量,value值为数组或逗号分隔的字符串）-->
+                                    <in name="combo['comboName']" value="$order[0]['combo']">
+                                        <if condition="$combo['highPrice']">
+                                            <input type="checkbox" name="combo[]" value="{$combo['comboName']}" checked>&nbsp;&nbsp;{$combo['comboName']}&nbsp;{$combo['lowPrice']}-{$combo['highPrice']}元
+                                        <else />
+                                            <input type="checkbox" name="combo[]" value="{$combo['comboName']}" checked>&nbsp;&nbsp;{$combo['comboName']}&nbsp;{$combo['lowPrice']}元
+                                        </if>
+                                    <else/>
+                                        <if condition="$combo['highPrice']">
+                                            <input type="checkbox" name="combo[]" value="{$combo['comboName']}" />&nbsp;&nbsp;{$combo['comboName']}&nbsp;{$combo['lowPrice']}-{$combo['highPrice']}元
+                                        <else />
+                                            <input type="checkbox" name="combo[]" value="{$combo['comboName']}" />&nbsp;&nbsp;{$combo['comboName']}&nbsp;{$combo['lowPrice']}元
+                                        </if>
+                                    </in>
+                                </div>
+                            </foreach> 
+                        </div>
+                        <div class="col-sm-5"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">预约时间</label>
+                        <div class="col-sm-3">
+                            <input class="Wdate" type="text" onClick="WdatePicker()" value="{$order[0]['orderDate']}">
+                        </div>
+                        <div class="col-sm-2">
+                            <select name="orderTime">
+                                <!--<if condition="$order[0]['orderTime'] eq '8:00-10:00'">-->
+                                    <option value="0" selected>8:00-10:00</option>
+                                    <option value="1">10:00-12:00</option>
+                                    <option value="2">12:00-14:00</option>
+                                    <option value="3">14:00-16:00</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-5"></div>
+                    </div>
+
+
+                    <!--<div class="col-md-12">
+                        <section class="panel">
+                            <div class="panel-body">
+                                <form class="form-horizontal  " action="#">
+                                <div class="form-group">
+                                    <label class="control-label col-md-2"> 预约时间</label>
+                                    <div class="col-md-4">
+                                        <div class="input-group date form_datetime-component">
+                                            <input type="text" class="form-control" readonly="" size="16">
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-primary date-set"><i class="fa fa-calendar"></i></button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                </form>
+                            </div>
+                        </section>
+                    </div>-->
+                    
+
+
+					<div class="panel-body">
+						<button type="submit" class="btn btn-primary">确认修改</button>
+                    </div>
+                   </form>
+            </div>
+		</section>
+
+		</div>
+        </div>
+        </div>
+<script language="javascript" type="text/javascript" src="__PUBLIC__/admin/date/WdatePicker.js"></script>
+<!-- Placed js at the end of the document so the pages load faster -->
+<!--<script src="__PUBLIC__/admin/js/jquery-1.10.2.min.js"></script>
+<script src="__PUBLIC__/admin/js/jquery-ui-1.9.2.custom.min.js"></script>
+<script src="__PUBLIC__/admin/js/jquery-migrate-1.2.1.min.js"></script>
+<script src="__PUBLIC__/admin/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/admin/js/modernizr.min.js"></script>
+<script src="__PUBLIC__/admin/js/jquery.nicescroll.js"></script>-->
+<!--pickers plugins-->
+<!--<script type="text/javascript" src="__PUBLIC__/admin/js/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/bootstrap-daterangepicker/moment.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/bootstrap-daterangepicker/daterangepicker.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>-->
+
+<!--pickers initialization-->
+<!--<script src="__PUBLIC__/admin/js/pickers-init.js"></script>-->
+</block>

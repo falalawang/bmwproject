@@ -1,0 +1,150 @@
+*{
+	margin:0 auto;
+	padding:0;
+
+}
+
+.index{
+	width:100%;
+}
+header{
+	color:white;
+}
+
+.status{
+	background:#333;
+	height:35px;
+	font-size:80%;
+	color:white;
+	line-height:35px;
+}
+.status span{
+	
+	
+	
+	line-height:100%;
+}
+
+
+.toppic{
+	
+	height:180px;
+	background-image:url('../image/web/top1.png');
+	background-size:100% 100% ;
+	background-position:center;
+	background-repeat: no-repeat;
+}
+
+.nav{
+	width:93%;
+	background:white;
+	height:40px;
+	color:red;
+}
+
+.nav span{
+	display:block;
+	float:left;
+	font-size:80%;
+	width:29%;
+	line-height:40px;
+	color:#222;
+	text-align:center;
+}
+.nav*{
+	float:left;
+}
+#navs{
+	width:33%;
+}
+.listnav{
+	background:#09c;
+	height:35px;
+	line-height:35px;
+	text-align:center;
+	font-weight:600;
+}
+
+.content{
+	background:#ccc;
+	height:55px;
+}
+
+.content span{
+	display:block;
+	float:left;
+	font-size:80%;
+	width:25%;
+	padding-top:10px;
+	color:#777;
+	text-align:center;
+}
+.order{
+	background:#ddd;
+	height:60px;
+	color:blue;
+	padding-top:30px;
+	font-weight:800;
+}
+
+.order span{
+	display:block;
+	background:#def;
+	height:120px;
+	color:#09c;
+	width:45%;
+	height:35px;
+	border:2px solid #09c;
+	text-align:center;
+	line-height:35px;
+}
+
+.endpic{
+	height:65px;
+	//background-image:url('../image/web/yu.png') ;
+	background-repeat:no-repeat;
+	background-size:100% 50%;
+}
+
+section{
+	height:240px;
+	
+}
+section div:first-child{
+	border-radius:2px;
+	width:90%;
+	height:170px;
+	//background-image:url('../image/web/section.jpg');
+	background-size:100% 100%;
+}
+section div:nth-child(2){
+	color:#666;
+	width:90%;
+	margin-top:15px;
+	font-weight:800;
+	font-size:12px;
+}
+
+section div:nth-child(2) span{
+	display:block;
+	padding-left:20%;
+	padding-top:10px;
+}
+
+footer{
+	background:purple;
+}
+
+.ftop{
+	background:pink;
+//	background-image:url('../image/web/foot1.png');
+	background-size:100% 25px;
+	background-position:top;
+	background-repeat:no-repeat;
+	height:760px;
+}
+
+.fbot{
+	background:#3f3322;
+	height:550px;
+}

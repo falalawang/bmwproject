@@ -1,0 +1,17 @@
+<?php
+namespace Admin\Controller;
+use Think\Controller;
+class ComboController extends Controller{
+
+	public function comboList(){
+
+		$combo = M('combo');
+		$combos = $combo -> select();
+		$this -> assign('combo',$combos);
+		$this -> display();
+	
+	}
+
+
+}
+?>

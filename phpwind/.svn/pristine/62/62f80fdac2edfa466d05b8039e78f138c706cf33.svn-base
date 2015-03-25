@@ -1,0 +1,9 @@
+<?php
+namespace Admin\Controller;
+use Think\Controller;
+class LogController extends Controller{
+	public function log(){
+		$this -> display();
+	}
+}
+?>

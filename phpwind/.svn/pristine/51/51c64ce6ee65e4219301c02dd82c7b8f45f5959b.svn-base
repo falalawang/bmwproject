@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test</title>
+	<script src="__PUBLIC__/home/js/jquery.js"></script>
+
+</head>
+<body>
+	<button>dianji fasong  ajax</button>
+	<script type="text/javascript">
+	$('button').click(function(){
+
+		$.get("__APP__/Manage/selectCity/",{province:'陕西省'},function(data){
+			$('body').append(data);
+		})
+
+	})
+	</script>
+</body>
+</html>

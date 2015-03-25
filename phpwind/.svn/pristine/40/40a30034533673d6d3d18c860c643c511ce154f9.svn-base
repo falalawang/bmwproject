@@ -1,0 +1,27 @@
+<?php
+namespace Home\Controller;
+use Think\Controller;
+
+class AppointmentController extends Controller{
+	public function test(){
+		echo $_COOKIE['brand'];
+		echo $_COOKIE['series'];
+		echo $_COOKIE['type'];
+	}
+	public function inputInfo(){
+		$uid=1;
+		$usermodel=M("usermodel");
+		$models=M("models");
+		$usermodels=$usermodel->where("uid=$uid")->select();
+		foreach ($usermodels as $key => $value) {
+			$userTypes[$key]=$models->find($value['typeId']);
+		}
+		$this->assign("userTypes",$userTypes);
+		$this->display();
+	}
+	public function selectCombo(){
+
+		$this->display();
+	}
+}	
+?>

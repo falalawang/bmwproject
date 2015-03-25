@@ -1,0 +1,28 @@
+function grade(){
+    var grade = $(".grade").attr('grade');
+    $(".grade").children("span.glyphicon").removeClass("text-danger");
+    for(var n = 0 ;n <= grade ; n++){
+        $(".grade").children("span.glyphicon").eq(n).addClass("text-danger");
+    }
+}
+grade();
+$("#evaluate").children("span.glyphicon").click(function(){
+    var num = $(this).attr("num");
+    $(".grade").attr("grade",num);
+    $(".grade").children("input#gradeNum").val(num);
+    grade();
+})
+
+$("#evaluateBtn").click(function(){
+    var num = $("input#gradeNum").val();
+    var con = $("#evaluateCon").val();
+    if(num < 0){
+        alert("还没点击星星评分!");
+        return false;
+    }
+    if(con == ""){
+        alert("还没输入您的评价!");
+        return false;
+    }
+
+})

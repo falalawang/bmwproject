@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" />
+		<title>宇瑞安|4s到家汽车保养|输入个人信息</title>
+		<meta name="keywords" content="汽车保养上门服务，4s店上门保养，宝马4s点保养" />
+		<meta name="description" content="4s店汽车保养上门服务" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link href="__PUBLIC__/home/css/bootstrap.min.css" rel="stylesheet" />
+		<link href="__PUBLIC__/home/css/bwm.css" rel="stylesheet" />
+	</head>
+	<body>			
+		<div class="">
+			<div class="center">
+				<h1>
+					<span class="red">4s</span>
+					<span class="white">到家汽车保养</span>
+				</h1>
+				<h4 class="blue">&copy; 宇瑞安</h4>
+			</div>
+			<div class="content">
+				<div class="top">							
+					<h4 class="center blue msg">请输入您的信息</h4>
+					<form>												
+						<input type="text" class="form-control" placeholder="您的名字" />
+						<input type="teleplone" class="form-control" placeholder="您的手机号" />
+						<p><input type="radio" name="address">&nbsp&nbsp地址信息</p>
+						<p><input type="radio" name="address">&nbsp&nbsp地址信息</p>
+						<a href="../Manage/addressManage">
+							<button type="button" class="btn btn-sm btn-block" style="margin-right:10px;margin-bottom:10px;">
+								添加地址</button>
+						</a>
+						<a href="../Appointment/appointment">
+							<button type="button" class="btn btn-sm btn-block" style="margin-right:10px;margin-bottom:10px;">
+								下一步</button>
+						</a>
+					</form>										
+				</div>
+				<div class="bottom"></div>
+			</div>
+		</div>		
+	</body>
+</html>

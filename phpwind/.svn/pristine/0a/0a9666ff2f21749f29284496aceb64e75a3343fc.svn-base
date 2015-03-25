@@ -1,0 +1,306 @@
+<?php
+namespace Admin\Controller;
+use Think\Controller;
+class ServerCarController extends CommonController{
+
+	//显示服务车列表
+	public function storeCarList(){
+
+		//查询4S店名，服务车名，技师名
+		$data = M();
+		$datas = $data -> table("xdl_store,xdl_server_car,xdl_serviceman_car") -> where("xdl_server_car.storeId=xdl_store.id and xdl_serviceman_car.carId=xdl_server_car.id") -> select();
+		foreach($datas as $k => $v){
+			$rid = explode(',',$v['servicemanId']);
+			$datas[$k]['servicemanId'] = $rid;
+		}
+
+		$serviceman = M('serviceman');
+		$servicemans = $serviceman -> select();
+//		dump($servicemans);exit();
+		$this -> assign('data',$datas);
+		$this -> assign('serviceman',$servicemans);
+		$this -> display();
+	}
+
+
+	public function storeList(){
+		$store = M('store');
+		$stores = $store -> select();
+		$this -> assign('store',$stores);
+		$this -> display();
+	}
+
+	//添加4S店
+	public function addStore(){
+
+		$this -> display();
+	}
+
+	//添加4S店操作
+	public function insertStore(){
+
+		$data = $_POST;
+		$store = M('store');
+		if($store -> create($data)){
+			if($store -> add()){
+				$this -> success('添加成功','storeList');
+			}else{
+				$this -> error('添加失败');
+			}
+		}else{
+			$this -> error('添加失败');
+		}	
+	}
+
+	//修改4S店名称
+	public function modStore(){
+		$id = $_GET['id'];
+		$store = M('store');
+		$stores = $store -> where("id={$id}") -> select();
+		$this -> assign('store',$stores);
+		$this -> display();
+	}
+
+	//修改4S店操作
+	public function updateStore(){
+		$data = $_GET;
+		$store = M('store');
+		if($store -> create($data)){
+			if($store -> save()){
+				$this -> success('修改成功','storeList');
+			}else{
+				$this -> error('内容没有修改');
+			}
+		}else{
+			$this -> error('修改失败');
+		}
+
+
+	}
+
+	//删除4S店
+	public function delStore(){
+		//4S店id
+		$id = $_GET['id'];
+		$store = M('store');
+		
+		$serverCar = M('server_car');
+		$serverCars = $serverCar -> where("storeId={$id}") -> select();
+		//查询服务车id
+		$serverCarId = $serverCars[0]['id'];
+
+		$serviceman_car = M('serviceman_car');
+		$carId = $serverCarId;
+		if($serviceman_car -> where("carId={$carId}") -> delete()){
+			$this -> success('删除成功');
+		}else{
+			$this -> error('删除失败');
+		}
+		
+		
+		exit();
+		$stores = $store -> delete($id);
+		if($stores){
+			$this -> success('删除成功');
+		}else{
+			$this -> error('删除失败');
+		}
+	}
+
+	//服务车列表
+	public function serverCarList(){
+		$serverCar = M('server_car');
+		$serverCars = $serverCar -> select();
+		$this -> assign('serverCar',$serverCars);
+		$this -> display();
+	}
+
+	//添加服务车信息
+	public function addServerCar(){
+
+		$store = M('store');
+		$stores = $store -> select();
+		$this -> assign('store',$stores);
+		$this -> display();
+
+	}
+
+	//添加服务车操作
+	public function insertServerCar(){
+
+		$data = $_POST;
+		$data['storeId'] = $data['store'];
+		$serverCar = M('serverCar');
+		if($serverCar -> create($data)){
+			if($serverCar -> add()){
+				$this -> success('添加服务车成功','serverCarList');
+			}else{
+				$this -> error('添加服务车失败');
+			}
+		}else{
+			$this -> error('添加服务车失败');
+		}
+	}
+
+	//修改服务车列表
+	public function modServerCar(){
+		$id = $_GET['id'];
+		$serverCar = M('server_car');
+		$serverCars = $serverCar -> select($id);
+		$this -> assign('serverCar',$serverCars);
+		$this -> display();
+	}
+
+	//修改服务车操作
+	public function updateServerCar(){
+
+		$serverCar = M('server_car');
+		if($serverCar -> create()){
+			if($serverCar -> save()){
+				$this -> success('修改成功');
+			}else{
+				$this -> error('数据没有变化');
+			}
+		}else{
+			$this -> error('修改失败');
+		}
+	}
+
+	//删除服务车列表
+	public function delServerCar(){
+		$id = $_GET['id'];
+		$serverCar = M('server_car');
+		if($serverCar -> delete($id)){
+			$this -> success('删除成功');
+		}else{
+			$this -> error('删除失败');
+		}
+	}
+
+	//ajax请求，判断车编号是否存在
+	public function check(){
+
+		$carNum = $_GET['mark'];
+
+		$serverCar = M('server_car');
+		$serverCars = $serverCar -> where("mark='$carNum'") -> select();
+
+		if($serverCars){
+			echo 1;
+		}else{
+			echo 2;
+		}
+	}
+
+	//选择技师
+	public function selectServiceman(){
+
+		//查出技师编号
+		$serverCar = M('server_car');
+		$serverCars = $serverCar -> select();
+		//查出所有的技师
+		$serviceman = M('serviceman');
+		$servicemans = $serviceman -> select();
+
+		//查出被安排过的技师
+		$servicemanCar = M('serviceman_car');
+		$servicemanCars = $servicemanCar -> field("servicemanId") -> select();
+		foreach($servicemanCars as $k => $v){
+
+			$servicemanId = explode(',',$v['servicemanId']);
+
+			$servicemanCars[$k]['servicemanId'] = $servicemanId;
+		}
+		$this -> assign('serverCar',$serverCars);
+		$this -> assign('serviceman',$servicemans);
+		$this -> assign('servicemanCar',$servicemanCars);
+		$this -> display();
+	}
+
+	//选择技师的操作
+	public function insertServiceman(){
+
+		$data = $_POST;
+		$data['carId'] = $data['mark'];
+		$data['servicemanId'] = implode(',',$data['servicemanId']);
+		$rela = M('serviceman_car');
+		if($rela -> create($data)){
+			if($rela -> add()){
+				$this -> success('添加成功');
+			}else{
+				$this -> error('添加失败');
+			}
+		}else{
+			$this -> error('添加失败');
+		}
+	
+	}
+
+	//技师列表
+	public function servicemanList(){
+		$serviceman = M('serviceman');
+		$servicemans = $serviceman -> select();
+		$this -> assign('serviceman',$servicemans);
+		$this -> display();
+	}
+
+	//修改信息
+	public function mod(){
+
+		$id = $_GET['id'];
+		$serviceman = M('serviceman');
+		$servicemans = $serviceman -> where("id={$id}") -> select();
+		$this -> assign('serviceman',$servicemans);
+		$this -> display();
+
+	}
+
+	public function doMod(){
+		$_POST['password'] = md5($_POST['password']);
+		$data = $_POST;
+		$data['id'] = $_GET['id'];
+		$serviceman = M('serviceman');
+		if($serviceman -> create($data)){
+			if($serviceman -> save()){
+				$this -> success('修改密码成功',U('ServerCar/servicemanList'));
+			}else{
+				$this -> error('修改失败');
+			}
+		}else{
+			$this -> error('创建失败');
+		}
+	}
+
+
+	public function able(){
+
+		//获取要禁用或者开启的用户的ID
+		$id = $_GET['id'];
+		$serviceman = M('serviceman');
+		$servicemans = $serviceman -> field("status") -> where("id={$id}") -> select();
+		//改变状态值
+		if($servicemans[0]['status'] == '0'){
+			$servicemans[0]['status'] = '1';
+		}else{
+			$servicemans[0]['status'] = '0';
+		}
+		$servicemans[0]['id'] = $id;
+		if($serviceman -> create($servicemans[0])){
+			if($serviceman -> save()){
+				if($servicemans[0]['status'] == '1'){
+					$this -> success('禁用成功');
+				}else{
+					$this -> success('启用成功');
+				}
+			}else{
+				$this -> error('操作失败');
+			}
+		}else{
+			$this -> error('操作失败');
+		}
+	}
+
+
+
+}
+?>

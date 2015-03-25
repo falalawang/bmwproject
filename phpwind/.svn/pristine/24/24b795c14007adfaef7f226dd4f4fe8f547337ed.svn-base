@@ -1,0 +1,85 @@
+<extend name="Layout:layout" />
+<block name="layoutBack">
+  <a class="navbar-brand" style="padding-right:0;" href="__CONTROLLER__/index">< 我的爱车</a>
+</block>
+<block name="layoutMain">
+<div class="container">
+    <br>
+    <div class="hidden" id="carClone">
+      <div class="carCopy">
+        <div class="row">
+          <div class="col-xs-10 text-muted">
+            <div class="carBrand"><strong>品牌：</strong></div>
+            <div class="carSeries"><strong>系列：</strong></div>
+            <div class="carType"><strong>型号：</strong></div>
+          </div>
+          <a class="text-muted addCarId" href="__CONTROLLER__/delCar/id/" onclick="return false">
+            <div class="col-xs-2 text-right">
+              <span class="glyphicon glyphicon-trash" style="line-height:60px;" aria-hidden="true"></span>
+            </div>
+          </a>
+        </div>
+        <hr>
+      </div>
+    </div>
+<div id="carList">
+<foreach name="mycar" item="valCar">
+<div class="carResult">
+  <div class="row">
+    <div class="col-xs-10 text-muted">
+      <div class="carBrand"><strong>品牌：</strong>{$valCar['brand']}</div>
+      <div class="carSeries"><strong>系列：</strong>{$valCar['series']}</div>
+      <div class="carType"><strong>型号：</strong>{$valCar['types']}</div>
+    </div>
+  <a class="text-muted addCarId"  href="__CONTROLLER__/delCar/id/{$valCar['id']}" onclick="return false">
+    <div class="col-xs-2 text-right">
+      <span class="glyphicon glyphicon-trash" style="line-height:60px;" aria-hidden="true"></span>
+    </div>
+  </a>
+  </div>
+    <hr>
+</div>
+</foreach>
+</div>
+    <a class="btn btn-default btn-lg btn-block" id="addCar" data-toggle="modal" data-target="#myModal">添加车型</a>
+</div>
+<!-- 选择车型 -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">请选择车型</h4>
+      </div>
+      <div class="modal-body">
+        <ul id="carList" class="list-unstyled">
+<foreach name="brands" item="brand">
+<li class="brand">
+    <a class="btn btn-link brandBtn" role="button">{$brand}</a>
+    <ul class="list-unstyled">
+    <foreach name="serieses" item="series">
+        <if condition="$series[0] eq $brand">
+            <li class="series">
+                <a class="btn btn-link seriesBtn" role="button">{$series[1]}</a>
+                <ul>
+                    <foreach name="types" item="type">
+                        <if condition="($series[1] eq $type[1]) and ($brand eq $type[0])">
+                            <li class="type">
+                                <button class="btn btn-link typeBtn" value="{$type[3]}">{$type[2]}</button>
+                            </li>
+                        </if>
+                    </foreach>
+                </ul>
+            </li>
+        </if>
+    </foreach>
+    </ul>
+</li>
+</foreach>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+</block>

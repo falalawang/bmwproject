@@ -1,0 +1,48 @@
+<extend name='Layout:layout' />
+<block name='head'>
+	<div class='banner'>
+		<img id='im1' src='__PUBLIC__/home/imgs/11.jpg' style='display:block'/>
+		<img id='im2' src='__PUBLIC__/home/imgs/12.jpg' style='display:none'/>
+		<img id='im3' src='__PUBLIC__/home/imgs/13.jpg' style='display:none'/>
+		<img id='im4' src='__PUBLIC__/home/imgs/14.jpg' style='display:none'/>
+	</div>
+	<script>
+	var imgs = document.getElementsByTagName('img');
+	var as = document.getElementsByTagName('a');
+	var len = imgs.length;
+	var index = 0;
+	var index1 = 0;
+	function change(){
+		imgs[index1].style.display = 'none';
+		index++;
+		var m = Math.ceil(index%len);
+		index1 = m;
+		imgs[m].style.display = 'block'
+	}
+	time = setInterval('change()',2000);
+	</script>
+</block>
+<block name='main-content'>
+	<div class='map'>
+		<img src='__PUBLIC__/home/imgs/21.jpg' />
+		<img src='__PUBLIC__/home/imgs/22.jpg' />
+		<img src='__PUBLIC__/home/imgs/23.jpg' />
+		<img src='__PUBLIC__/home/imgs/24.jpg' />
+	</div>
+	<div class='service'>
+		<h1>品牌介绍</h1>
+		<span>365天上门服务，随时随地！<br />每天13小时上门保养，预约时间随心安排</span>
+		<div class='ab'>
+			<img src='__PUBLIC__/home/imgs/001.jpg' />
+			<img src='__PUBLIC__/home/imgs/002.jpg' />
+			<img src='__PUBLIC__/home/imgs/003.jpg' />
+		</div>
+		<div class='ac'>
+			<img src='__PUBLIC__/home/imgs/004.jpg' />
+			<img src='__PUBLIC__/home/imgs/005.jpg' />
+		</div>
+	</div>
+	<div class='bnav'>
+		<img src='__PUBLIC__/home/imgs/003.png' />
+	</div>
+</block>

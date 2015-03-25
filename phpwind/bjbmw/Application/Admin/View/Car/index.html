@@ -1,0 +1,73 @@
+<extend name="Layout:layout"/>
+ <block name="mws-container">
+<div class="clearfix" id="mws-container">       
+            <!-- Inner Container Start -->
+            <div class="container">
+                <!-- Panels Start -->               
+                <div class="mws-panel grid_8">
+                    <div class="mws-panel-header">
+                        <span class="left block"><i class="icon-table "></i> 服务车列表</span>
+                      
+                        <div class="right btn block" style="margin-left:10px"><a class="block" href="__CONTROLLER__/add"><i class="icol-add  "></i> 增加车辆</a></div>
+                       
+                        
+
+
+                        <div class="right block" >
+                        <form action="__CONTROLLER__/index" method="get">
+                            <label>
+                                <input type="text" style="width:250px" placeholder="请输入(4s店|服务车|人员)信息" name="shop" aria-controls="DataTables_Table_1">
+                                <input type="submit" class="btn" value="查询">
+                            </label>
+                        </form>
+
+
+                        </div>
+
+
+
+
+
+
+                    </div>
+                    <div class="mws-panel-body no-padding">
+                        <table class="mws-table" style="text-align:center">
+                            <thead>
+                                <tr>
+                                    <th>城市</th>
+                                    <th>4s店</th>
+                                    <th>车辆编号</th>
+                                    <th>人员名</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <foreach name="car" item="car">
+                                     <tr>
+                                        <td>{$car['shop']['ofcity']}</td>
+                                        <td>{$car['shop']['shopname']}</td>
+                                        <td>{$car['carname']}</td>
+                                        <td>{$car['technicians']}</td>
+                                        
+                                        
+                                        <td>
+                                        <a class="btn btn-small" href="__CONTROLLER__/edit/carid/{$car['carid']}"><i class="icon-pencil"></i></a>
+                                        <a class="btn btn-small" href="__CONTROLLER__/del/id/{$car['carid']}"><i class="icon-trash"></i></a>
+                                        </td>
+                                       
+                                    </tr>
+                                </foreach>
+                                <tr>
+                                    
+                                    <td colspan="<if condition="(empty($_SESSION['status'])) AND ($_SESSION['status'] neq 1 ) ">5<else />4</if>">
+                                        <div class="right">{$show}</div>
+                                    </td>
+                                
+                                </tr>   
+                            </tbody>
+                        </table>                        
+                    </div>
+            </div>
+            <!-- Inner Container End -->         
+        </div>
+ </block>

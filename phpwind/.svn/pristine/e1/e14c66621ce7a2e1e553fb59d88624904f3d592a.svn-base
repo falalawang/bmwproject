@@ -1,0 +1,65 @@
+<?php
+namespace Tech\Controller;
+use Think\Controller;
+class IndexController extends Controller {
+    public function index(){
+        $isLogin = session('tech_isLogin');
+        if($isLogin){
+            $telephone = session('tech_telephone');
+            $this -> assign('telephone',$telephone);
+
+            $orderDB = M("order");
+            $order = $orderDB ->where("uid = 1") ->order("id desc") -> select();
+            $this -> assign("orders",$order);
+
+            $this ->display();
+        }else{
+            $this -> success("OK",U("login"));
+        }
+    }
+
+    public function login(){
+        $this ->display();
+    }
+
+    public function doLogin(){
+        $tel = $_POST['telephone'];
+        $pwd = md5($_POST['password']);
+        $tech = M("manager");
+        $res = $tech ->where("telephone = '$tel' and password = '$pwd' and auth = '3'")-> find();
+        if($res){
+            echo 1;
+            session('tech_isLogin','1');
+            session('tech_telephone',$tel);
+            // session('isLogin','1');
+        }else{
+            echo 0;
+        }
+    }
+
+    public function outLogin(){
+        session('tech_isLogin',null);
+        session('tech_telephone',null);
+        $this -> success("OK",U("login"));
+    }
+
+    public function order(){
+        $orderDB = M("order");
+        if (isset($_GET['id']) && $_GET['id'] >= 1) {
+            $id = $_GET['id'];
+            $order = $orderDB ->where("id = $id") -> find();
+            $this -> assign("order",$order);
+            $telephone = session('tech_telephone');
+            $this -> assign('telephone',$telephone);
+
+            $evaDB = M("evaluate");
+            $id = $order['id'];
+            $evaluate = $evaDB -> where("orderId = $id") -> find();
+            $this -> assign("evaluate",$evaluate);
+            $this -> display();
+        }else{
+            $this -> success("OK",U("index"));
+        }
+
+    }
+}

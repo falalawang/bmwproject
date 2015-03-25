@@ -1,0 +1,113 @@
+<?php
+namespace Home\Controller;
+use Think\Controller;
+class CenterController extends Controller{
+    
+    //个人中心首页
+    public function index(){
+        $this -> display();
+    }
+
+    //个人中心订单
+    public function order(){
+        $this -> display();
+    }
+
+    //个人中心地址管理
+    public function address(){
+        // $model = M();
+        // $address = $model -> table('xdl_address as a,xdl_city as c')
+        //                 -> field('c.id as cid,c.province,c.city,c.county,a.id as aid,a.cityId,a.uid,a.address,a.name,a.telephone')
+        //                 -> where("a.uid = 1 and c.id = a.cityId")
+        //                 -> order("a.address desc")
+        //                 ->select();
+        $addr = M('address');
+        $resAddr = $addr->where("uid = 1")->select();
+        $this -> assign("address",$resAddr);
+
+        // $cityId = $resAddr[0]['address'];
+        // $city = M('city');
+        // $resCity = $city->where("id = $cityId")->select();
+        // var_dump($resCity);
+        // $this -> assign("city",$resCity);
+
+        $this -> display();
+    }
+
+    //用户车型管理
+    public function userCar(){
+
+        $
+
+        $this -> display();
+    }
+
+    //添加用户地址
+    public function addAddress(){
+        $city=M("city");
+        $c=$city->select();
+
+        foreach ($c as $key=> $value) {
+            $provinces[$key]=$value['province'];
+            $citys[$key]=$value['province'].",".$value['city'];
+            $countys[$key]=$value['city'].",".$value['county'];
+        }
+        $provinces=array_unique($provinces);
+        $ccitys=array_unique($citys);
+        $ccountys=array_unique($countys);
+
+
+        foreach ($ccitys as $key=> $value) {
+            $ccitys[$key]=explode(",", $value);
+        }
+        foreach ($ccountys as $key=> $value) {
+            $ccountys[$key]=explode(",", $value);
+        }
+        $this->assign("provinces",$provinces);
+        $this->assign("citys",$ccitys);
+        $this->assign("countys",$ccountys);
+
+        $this -> display();
+    }
+
+    //编辑用户地址
+    public function editAddress(){
+
+        if(isset($_GET['id']) && $_GET['id'] > 0){
+            $addr=M("address");
+            $id = $_GET['id'];
+            $address = $addr->where("id = $id and uid = 1")->select();
+            $this -> assign('address',$address);
+        }else{
+            $this -> success('错误操作', U('/center/address'),0);
+        }
+
+        $city=M("city");
+        $c=$city->select();
+
+        foreach ($c as $key=> $value) {
+            $provinces[$key]=$value['province'];
+            $citys[$key]=$value['province'].",".$value['city'];
+            $countys[$key]=$value['city'].",".$value['county'];
+        }
+        $provinces=array_unique($provinces);
+        $ccitys=array_unique($citys);
+        $ccountys=array_unique($countys);
+
+        foreach ($ccitys as $key=> $value) {
+            $ccitys[$key]=explode(",", $value);
+        }
+        foreach ($ccountys as $key=> $value) {
+            $ccountys[$key]=explode(",", $value);
+        }
+        $this->assign("provinces",$provinces);
+        $this->assign("citys",$ccitys);
+        $this->assign("countys",$ccountys);
+
+        $this -> display();
+    }
+
+
+
+}
+?>

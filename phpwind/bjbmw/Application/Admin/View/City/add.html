@@ -1,0 +1,29 @@
+<extend name='Layout:layout'/>
+<block name='mws-container'>
+	<div id="mws-container" class="clearfix">
+        	<!-- Inner Container Start -->
+            <div class="container">
+            	<div class="mws-panel grid_8">
+                	<div class="mws-panel-header">
+                    	<span>添加城市</span>
+                    </div>
+                    <div class="mws-panel-body no-padding">
+                    	<form class="mws-form" action="__CONTROLLER__/save" method='post'>
+                    		<div class="mws-form-inline">
+                    			<div class="mws-form-row">
+                    				<label class="mws-form-label">城市</label>
+                    				<div class="mws-form-item">
+                    					<input type="text" name='city' class="small">
+                    				</div>
+                    			</div>
+                    		</div>
+                    		<div class="mws-button-row">
+                    			<input type="submit" value="添加" class="btn btn-danger">
+                    			<input type="reset" value="重置" class="btn ">
+                    		</div>
+                    	</form>
+                    </div>    	
+                </div>
+            </div>
+        </div>
+</block>

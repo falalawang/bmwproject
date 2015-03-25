@@ -1,0 +1,30 @@
+<?php
+	namespace Admin\Controller;
+	use	Think\Controller;
+	class LogController extends CommonController{
+		public function logList(){
+			$search = I('post.search');
+			$mad =empty($search) ? '': "username like '%{$search}%'";
+			$log = M('log');
+			
+			$count = $log ->where("{$mad}")-> count();
+			$Page       = new \Think\Page($count,10);
+			$show       = $Page->show();
+			
+			$data = $log -> where("{$mad}")->limit($Page->firstRow.','.$Page->listRows) -> select();
+			$this -> assign('pag',$count);
+			$this -> assign('logs',$data);
+			$this -> assign('show',$show);
+			$this -> display();
+		}
+		public function delete(){
+			$id = I('get.id');
+			$log = M('log');
+			if($log->delete($id)){
+				$this->success('ok');
+			}else{
+				$this->error('error');
+			}
+		}
+	}
+?>

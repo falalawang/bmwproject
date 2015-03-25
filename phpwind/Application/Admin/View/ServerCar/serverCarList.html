@@ -1,0 +1,38 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+<div class="wrapper">
+	<div class="row">
+            <div class="col-sm-12">
+                <section class="panel">
+                    <header class="panel-heading">
+                        服务车列表
+                        <a href="__CONTROLLER__/addServerCar"><button class="btn btn-primary pull-right"><i class="fa fa-plus">&nbsp;添加</i></button></a>
+                    </header>
+
+                    <div class="panel-body">
+                        <div class="adv-table">
+                            <table  class="display table table-bordered table-striped" id="editable-sample">
+                            <tr>
+                                <th class="col-sm-4">ID</th>
+                                <th class="col-sm-4">服务车编号</th>
+                                <th class="col-sm-4">操作</th>
+                            </tr>
+                    	        <tbody>
+                    				<foreach name="serverCar" item="data">
+                    		        	<tr class="gradeX">
+                                            <td>{$data['id']}</td>
+                    			            <td>{$data['mark']}</td>
+                    			            <td><a href="__CONTROLLER__/modServerCar/id/{$data['id']}">修改</a>&nbsp;&nbsp;<a href="__CONTROLLER__/delServerCar/id/{$data['id']}" onclick="return confirm('你确定要删除吗？')">删除</a></td>
+                    		      	  	</tr>
+                    				</foreach>
+                    	        </tbody>
+
+                            </table>
+                            
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>	
+</div>
+</block>

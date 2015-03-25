@@ -1,0 +1,26 @@
+<script src="__PUBLIC__/admin/js/jquery.js"></script>
+<input type="text" value="{$id}" id="orderId" />
+<script type="text/javascript" charset="utf-8">
+        /*
+           ajax() 方法。是最底层的方法，功能是最全的
+           参数：JSON对象
+                 URL   请求的地址
+                 TYPE  请求的方法
+                 DATA  请求时发送的数据
+                 SUCCESS 响应成功时用于得到响应数据
+                 DATATYPE  响应数据的格式，主要用于自动的把JSON格式数据转为对象
+                 ASYNC  设置同步或异步（默认为异步）
+           */
+        var orderId = document.getElementById('orderId');
+        alert(11);
+        alert(orderId.value);
+        $.ajax({"url":"__CONTROLLER__/detail"},
+                "type":"post",
+                "data":{"id":orderId.value},
+                "success":function(data){
+                    alert(data.id);
+                    alert(data.name);
+                },
+                "dataType":"json",
+                "async":"false"});
+</script>

@@ -1,0 +1,8 @@
+		body{background: #1D2024;}
+		.content{max-width: 100%;margin: 0 auto;}
+		.center{text-align: center;}
+		.red{color: #DD5A43;}
+		.blue{color: #478FCA;}
+		.white{color: white;}
+		.top{max-width: 100%;background: #fff;padding: 16px 36px 36px;border:5px solid #597597}
+		.bottom{background: #597597;height: 50px;color: #FE9;line-height: 50px;font-size: 15px;}

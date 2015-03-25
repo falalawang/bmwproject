@@ -1,0 +1,52 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+	<!-- Main Container Start -->
+                <!-- Panels Start -->
+                
+            	<div id="rely" class="mws-panel grid_8">
+                	<div class="mws-panel-header">
+                    	<span style="float:left">自动回复设置 </span>
+                    </div>
+                    <div class="mws-panel-body no-padding">
+                    	<form class="mws-form" action="__CONTROLLER__/dorely" method="post">
+                    		<div class="mws-form-inline">
+                    			<div class="mws-form-row">
+                    				<label class="mws-form-label">收件人：</label>
+                    				<div class="mws-form-item">
+                    					<input type="text" name="usernum" value="{$usernum}" class="small" readonly>
+                    				</div>
+                    			</div>
+                                <div class="mws-form-row">
+                                    <label class="mws-form-label">原消息：</label>
+                                    <div class="mws-form-item">
+                                        <input type="text" name="message" value="{$uwechat[0]['content']}" class="small" readonly>
+                                        
+
+                                    </div>
+                                </div>
+
+                    			<div class="mws-form-row">
+                    				<label class="mws-form-label">回复内容：</label>
+                    				<div class="mws-form-item">
+                    					<textarea rows="" cols="" class="large" name="content" required></textarea>
+                    				</div>
+                    			</div>
+                    		</div>
+                    		<div class="mws-button-row" style="text-align:center">
+                    			<input type="submit" value="回复消息" class="btn btn-danger">
+                    			<input type="reset" value="重置" class="btn ">
+                    		</div>
+                    	</form>
+                    </div>    	
+                </div>
+        
+                <script src = "__PUBLIC__/Admin/js/jquery.js"></script>
+
+                <script>
+                	$("#auto").click(function(){
+                		$("#rely").siblings().slideToggle();
+					});
+                </script>
+
+        <!-- Main Container End -->
+</block>

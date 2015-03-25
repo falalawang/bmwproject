@@ -1,0 +1,35 @@
+<extend name="Layout:layout"/>
+<block name="main-content">
+         <div class="mws-panel grid_8">
+            <div class="mws-panel-header">
+            <span style='float:left'><i class="icon-table"></i> 服务管理 -> 添加系列&nbsp;&nbsp;</span>
+        </div>                	
+        <div class="mws-panel-body no-padding">
+            <form class="mws-form" action="__APP__/Service/add_Series" method="post">
+                 <div class="mws-form-inline">
+                 	<div class="mws-form-row">
+                 	  <label class="mws-form-label">请添加品牌</label>
+                    	<div class="mws-form-item">
+                    		<select class="large" name='brand'>
+                    		<option value='0'>请选择品牌</option>
+                    		<foreach name='brands' item='brands'>
+                    		    <option value='{$brands.id}'>{$brands.brand}</option>
+                    		</foreach>
+                    		</select>
+                    	</div>
+                    </div>
+					<div class="mws-form-row">
+	                    <label class="mws-form-label">请添加系列</label>
+	                    <div class="mws-form-item">
+	                    	<input type="text" name='series' class="large">
+	                	</div>
+	                </div>
+                </div>
+             <div class="mws-button-row">
+                 <input type="submit" value="添加" class="btn btn-danger">
+                 <input type="reset" value="重置" class="btn ">
+             </div>
+           </form>
+        </div>    	
+     </div>
+</block>

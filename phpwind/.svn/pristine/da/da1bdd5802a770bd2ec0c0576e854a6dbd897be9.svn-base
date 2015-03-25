@@ -1,0 +1,113 @@
+<?php
+namespace Admin\Controller;
+use Think\Controller;
+class ComboController extends CommonController{
+    
+	//套餐列表
+	public function comboList(){
+		$data = M();
+		$datas = $data -> table('xdl_price,xdl_models') -> where("xdl_price.typeId=xdl_models.id") -> select();
+		$this -> assign('datas',$datas);
+		$this -> display();
+	}
+
+	//修改套餐价格
+	public function modCombo(){
+
+		$id = $_GET['id'];
+		$res = M();
+		$data = $res -> table('xdl_price,xdl_models') -> where("xdl_price.id={$id} and xdl_price.typeId=xdl_models.id") -> select();
+		$this -> assign('data',$data);
+		$this -> display();
+	}
+
+	//增加套餐和价格
+	public function addPrice(){
+
+		$data = $_POST;
+		$model = M('models');
+		//从车型表中找出对应的id,需要和套餐的typeId对应
+		$models = $model -> where("series='".$data['series']."' and types='".$data['types']."'") -> select();
+		$data['typeId'] = $models[0]['id'];
+		dump($data['typeId']);
+		if($model -> create($data)){
+			if($model -> add()){
+				$this -> success('增加成功');
+			}else{
+				$this -> error('操作失败');
+			}
+		}else{
+			$this -> error('操作失败');
+		}
+
+	}
+
+	//修改价格更新数据库
+	public function updatePrice(){
+		
+		$combo = M('price');
+		$data = $_POST;
+		if($combo -> create($data)){
+			if($combo -> save()){
+				$this -> success('修改成功',U('Combo/comboList'));
+			}else{
+				$this -> error('修改失败');
+			}
+		}else{
+			$this -> error('修改失败');
+		}
+
+	}
+
+    //修改套餐
+	public function addCombo(){
+
+		//查询出所有品牌
+		$models = M('models');
+		$model = $models -> select();
+		foreach($model as $key=>$value){
+			//将所有的品牌放到一个数组中
+			$brands[$key] = $value['brand'];
+		}
+		//移除品牌数组中的重复值
+		$brand = array_unique($brands);
+
+		//将所有的品牌发送到模板
+		$this -> assign('brands',$brand);
+
+		$this -> display();                                 
+	}
+
+	//查询指定品牌下的所有车系
+	public function selectSerie(){
+		$brand = $_GET['brand'];
+		$models = M('models');
+		$model = $models -> field('series') -> where("brand='$brand'") -> select();
+
+		$str = "<option value='-1'>--请选择车系--</option>";
+		foreach($model as $k=>$value){
+			
+			foreach($value as $v){
+				$str .="<option value='$v'>$v</option>";
+			}	
+		}
+		echo trim($str);
+	}
+
+	//查询指定品牌和车系下的车型
+	public function selectType(){
+		$brand = $_GET['brand'];
+		$serie = $_GET['series'];
+
+		$models = M('models');
+		$model = $models -> field('id,types') -> where("brand='$brand' and series='$serie'") -> select();
+
+		$str = "<option value='-1'>--请选择车型--</option>";
+		foreach($model as $v){	
+			$str .="<option value=".$v['types'].">".$v['types']."</option>";
+		}
+		echo trim($str);
+	}
+
+}
+?>

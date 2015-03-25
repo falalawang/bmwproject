@@ -1,0 +1,48 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+ <div class="mws-panel grid_8 mws-collapsible">
+                    <div class="mws-panel-header">
+                        <span><i class="icon-table"></i> Browser Engines</span>
+                    </div>
+                    <div class="mws-panel-body no-padding">
+                        <table class="mws-table mws-datatable">
+                            <thead>
+                                <tr>
+                                    <th>友链ID</th>
+                                    <th>友链名称</th>
+                                    <th>友情链接(s)</th>
+                                   
+                                    <th></th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                             <foreach name="list" item="lists">
+                                <tr>
+                                    <td>{$lists.id}</td>
+                                    <td>{$lists.links_id}</td>
+                                    <td>{$lists.links}</td>
+                                    
+                                    <td><span class="badge badge-info">A</span></td>
+                                    <td>
+                                        <span class="btn-group">
+                                           
+                                            <a href="__CONTROLLER__/mod/id/{$lists.id}" class="btn btn-small"><i class="icol-disconnect"></i></a>
+                                            <a href="__CONTROLLER__/del/id/{$lists.id}" class="btn btn-small"><i class="icol-cancel"></i></a>
+                                        </span>
+                                    </td>
+                                </tr>
+                               </foreach>  
+                             
+                                   
+                    
+
+                                        <tr style="background:#000;"><td colspan="5">{$show}</td></tr>
+
+                           
+                              </tbody>
+                        </table>
+                    </div>
+				
+		
+</block>

@@ -1,0 +1,35 @@
+<?php
+namespace Admin\Controller;
+use Think\Controller;
+class VipController extends Controller{
+	public function index(){
+		$this -> display();
+	}
+	public function mod(){
+		$managers = M('manager');
+		$name = $_SESSION['hname'];
+		//根据session中的用户名，查出id和password
+		$manager = $managers -> field('id,password') -> where("name='$name'") -> select();
+		$id = $manager[0]['id'];
+		$password = $manager[0]['password'];
+		
+		//通过post方法得到原密码和新密码
+		$oPwd = md5($_POST['oPwd']);
+		if($password !== $oPwd){
+			$this -> error('原密码不正确','index');
+		}else{
+			$data['password'] = md5($_POST['nPwd']);
+			$data['id'] = $id;
+			if($managers -> create($data)){
+				if($managers -> save()){
+					$this -> success('修改成功',U('Index/main'));
+				}else{
+					$this -> error('修改失败','index');
+				}
+			}else{
+				$this -> error('失败','index');
+			}
+		}
+	}
+}
+?>

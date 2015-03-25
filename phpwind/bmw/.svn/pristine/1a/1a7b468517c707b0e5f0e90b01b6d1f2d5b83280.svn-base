@@ -1,0 +1,50 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+	<div class="mws-panel grid_8">
+                	<div class="mws-panel-header">
+                    	<span>系统管理信息</span>
+                    </div>
+                    <div class="mws-panel-body no-padding">
+                    	<form class="mws-form" action="__CONTROLLER__/doconfig" method="post">
+                              <div class="mws-form-inline">
+                    			<div class="mws-form-row">
+                    				<label class="mws-form-label">网站标题</label>
+                    				<div class="mws-form-item">
+                    					<input type="text" class="small" name="title" value="{$configs['0']['title']}">
+                    				</div>
+                    			</div>
+                    			<div class="mws-form-row">
+                    				<label class="mws-form-label">网站关键字</label>
+                    				<div class="mws-form-item">
+                    					<input type="text" class="medium" name="keywords" value="{$configs[0][keywords]}">
+                    				</div>
+                    			</div>
+                    			
+                    			<div class="mws-form-row">
+                    				<label class="mws-form-label">网站描述</label>
+                    				<div class="mws-form-item">
+                    					<textarea rows="" cols="" class="large" name="description" placeholder="{$configs[0]['description']}"></textarea>
+                    				</div>
+                    			</div>
+                    			<div class="mws-form-row">
+                    				<label class="mws-form-label">网站版权号</label>
+                    				<div class="mws-form-item">
+                    					<input type="text" class="medium" name="copyright" value="{$configs[0]['copyright']}">
+                    				</div>
+                    			</div>
+                                   <input type="hidden" name="id" value="{$configs[0]['id']}">
+                    		</div>
+                    		<div class="mws-button-row">
+                    			<input type="submit" value="提交" class="btn btn-danger">
+                    			<input type="reset" value="重置" class="btn ">
+                    		</div>
+
+                    	</form>
+                    </div>    	
+                </div>
+                
+            	
+
+                
+
+</block>

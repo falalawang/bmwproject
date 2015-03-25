@@ -1,0 +1,28 @@
+<?php
+namespace Admin\Controller;
+use Think\Controller;
+
+class CustomerController extends CommonController{
+	
+	//显示所有用户
+	public function userList(){
+		
+		$user = M('customer');
+		$users = $user -> select();
+		$this -> assign('users',$users);
+		$this -> display();
+	}
+
+	//显示微信关注用户
+	public function wechat(){
+
+		$user = M('wechat_user');
+		$users = $user -> select();
+		$this -> assign('user',$users);
+		$this -> display();
+	}
+
+	
+	
+}
+?>

@@ -1,0 +1,56 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+<div class="wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading">
+            <a href="__CONTROLLER__/carList">服务车列表</a>>>
+                修改服务车信息
+            </header>
+            <div class="panel-body">
+                <form action="__CONTROLLER__/update" class="form-horizontal adminex-form" method="post">
+                    <div class="col-sm-2"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">服务车编号</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="" class="form-control" name="carNum" value="{$data[0]['carNum']}" /><span id=""></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-2"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">技师姓名</label>
+                        <div class="col-sm-4">                
+                            <foreach name="manager" item="m">
+                                <in name="m['id']" value="$data[0]['techId']">
+                                    <div class="col-md-6">
+                                        <input type="checkbox" name="name" checked />{$m['name']}
+                                    </div>
+                                <else />
+                                    <div class="col-md-6">
+                                        <input type="checkbox" name="name" />{$m['name']}
+                                    </div>
+                                </in>
+                            </foreach>             
+                        </div>
+                        <span id=""></span>
+                    </div>
+                    <div class="col-sm-2"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">4S店名称</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="" class="form-control" name="storeName" value="{$data[0]['storeName']}" /><span id=""></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-4 panel-body">
+                        <input type="hidden" name="id" value="{$Think.get.id}">
+                        <button type="submit" class="btn btn-primary">确认修改</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+        </div>
+    </div>
+</div>
+</block>

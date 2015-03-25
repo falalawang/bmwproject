@@ -1,0 +1,59 @@
+<extend name="Layout:layout"/>
+ <block name="mws-container">
+<div class="clearfix" id="mws-container">       
+            <!-- Inner Container Start -->
+            <div class="container">
+                <!-- Panels Start -->               
+                <div class="mws-panel grid_8">
+                    <div class="mws-panel-header">
+                        <span class="left block"><i class="icon-table "></i> 车系列表</span>
+                        
+                        <div class="right btn block" ><a class="block" href="__CONTROLLER__/add"><i class="icol-add  "></i> 增加车系</a></div>
+                        
+                        <div class="right block" >
+                        <form action="__CONTROLLER__/index" method="get">
+                            <label>
+                                <input style="width:250px" type="text" placeholder="请输入(品牌|车系)信息" name="series" aria-controls="DataTables_Table_1">
+                                <input type="submit" style="margin-right:10px" class="btn" value="查询">
+                            </label>
+                        </form>
+                    </div>
+                        
+                    </div>
+                    <div class="mws-panel-body no-padding">
+                        <table class="mws-table" style="text-align:center">
+                            <thead>
+                                <tr> 
+                                    <th>品牌</th>
+                                    <th>车系</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <foreach name="series" item="series">
+                                     <tr>
+                                        
+                                        <td>{$series['brand'][brand]}</td>
+                                        <td>{$series['series']}</td>
+                                        
+                                      
+                                        <td>
+                                        <a class="btn btn-small" href="__CONTROLLER__/edit/id/{$series['id']}"><i class="icon-pencil"></i></a>
+                                        <a class="btn btn-small" href="__CONTROLLER__/del/id/{$series['id']}"><i class="icon-trash"></i></a>
+                                        </td>
+                                        
+                                    </tr>
+                                </foreach>
+                                <tr>
+                                    <td colspan="<if condition="(empty($_SESSION['status'])) AND ($_SESSION['status'] neq 1 ) ">3<else />2</if>">
+                                        <div class="right">{$show}</div>
+                                    </td>
+                                </tr>   
+                            </tbody>
+                        </table>
+                    </div>
+                <!-- Panels End -->
+            </div>
+            <!-- Inner Container End -->         
+        </div>
+ </block>

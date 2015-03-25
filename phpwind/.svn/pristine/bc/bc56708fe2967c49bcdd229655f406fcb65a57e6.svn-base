@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="ThemeBucket">
+    <link rel="shortcut icon" href="#" type="image/png">
+
+    <title>后台管理系统</title>
+
+    <link href="__PUBLIC__/admin/css/style.css" rel="stylesheet">
+    <link href="__PUBLIC__/admin/css/style-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="__PUBLIC__/admin/js/html5shiv.js"></script>
+    <script src="__PUBLIC__/admin/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="login-body">
+
+<div class="container">
+
+    <form class="form-signin" action="__CONTROLLER__/aa" method="post">
+        <div class="form-signin-heading text-center">
+            <h1 class="sign-title">后台管理系统</h1>
+            <img src="__PUBLIC__/admin/images/login-logo.png" alt="">
+        </div>
+        <div class="login-wrap">
+            <input type="text" name="name" class="form-control" placeholder="用户名" autofocus>
+            <input type="password" name="password" class="form-control" placeholder="密码">
+
+            <button class="btn btn-lg btn-login btn-block" type="submit">
+                <i class="fa fa-check"></i>登录
+            </button>
+        </div>
+    </form>
+
+</div>
+
+
+
+<!-- Placed js at the end of the document so the pages load faster -->
+
+<!-- Placed js at the end of the document so the pages load faster -->
+<script src="__PUBLIC__/admin/js/jquery-1.10.2.min.js"></script>
+<script src="__PUBLIC__/admin/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/admin/js/modernizr.min.js"></script>
+
+</body>
+</html>
+

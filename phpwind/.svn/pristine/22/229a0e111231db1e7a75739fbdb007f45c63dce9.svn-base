@@ -1,0 +1,307 @@
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+	<meta name="keywords" content="admin, dashboard, bootstrap, template, flat, modern, theme, responsive, fluid, retina, backend, html5, css, css3">
+	<meta name="description" content="">
+	<meta name="author" content="ThemeBucket">
+	<link rel="shortcut icon" href="#" type="image/png">
+
+	<title>BMW后台管理系统</title>
+
+	<!--icheck-->
+	<link href="/bug/Public/admin/js/iCheck/skins/minimal/minimal.css" rel="stylesheet">
+	<link href="/bug/Public/admin/js/iCheck/skins/square/square.css" rel="stylesheet">
+	<link href="/bug/Public/admin/js/iCheck/skins/square/red.css" rel="stylesheet">
+	<link href="/bug/Public/admin/js/iCheck/skins/square/blue.css" rel="stylesheet">
+
+	<!--dashboard calendar-->
+	<link href="/bug/Public/admin/css/clndr.css" rel="stylesheet">
+
+	<!--Morris Chart CSS -->
+	<link rel="stylesheet" href="/bug/Public/admin/js/morris-chart/morris.css">
+
+	<!--common-->
+	<link href="/bug/Public/admin/css/style.css" rel="stylesheet">
+	<link href="/bug/Public/admin/css/style-responsive.css" rel="stylesheet">
+
+   <!--dynamic table-->
+  <link href="/bug/Public/admin/js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
+  <link href="/bug/Public/admin/js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/bug/Public/admin/js/data-tables/DT_bootstrap.css" />
+
+  <link href="/bug/Public/admin/css/style.css" rel="stylesheet">
+  <link href="/bug/Public/admin/css/style-responsive.css" rel="stylesheet">
+
+
+	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+	<script src="/bug/Public/admin/js/html5shiv.js"></script>
+	<script src="/bug/Public/admin/js/respond.min.js"></script>
+	<![endif]-->
+</head>
+
+<body class="sticky-header">
+
+<section>
+    <!-- left side start-->
+    <div class="left-side sticky-left-side">
+
+        <!--logo and iconic logo start-->
+        <div class="logo">
+            <a href="/bug/admin.php/Index/main"><img src="/bug/Public/admin/images/logo.png" alt=""></a>
+        </div>
+
+        <div class="logo-icon text-center">
+            <a href="index.html"><img src="/bug/Public/admin/images/logo_icon.png" alt=""></a>
+        </div>
+        <!--logo and iconic logo end-->
+
+        <div class="left-side-inner">
+
+            <!-- visible to small devices only -->
+            <div class="visible-xs hidden-sm hidden-md hidden-lg">
+                <div class="media logged-user">
+                    <div class="media-body">
+                        <h4><a href="#"><?php echo (session('hname')); ?></a></h4>
+                    </div>
+                </div>
+
+                <!--<h5 class="left-nav-title">Account Information</h5>
+                <ul class="nav nav-pills nav-stacked custom-nav">
+                  <li><a href="#"><i class="fa fa-user"></i> <span>Profile</span></a></li>
+                  <li><a href="#"><i class="fa fa-cog"></i> <span>Settings</span></a></li>
+                  <li><a href="#"><i class="fa fa-sign-out"></i> <span>Sign Out</span></a></li>
+                </ul>-->
+            </div>
+
+            <!--sidebar nav start-->
+            <ul class="nav nav-pills nav-stacked custom-nav">
+                <li class="active"><a href="/bug/admin.php/Index/main"><i class="fa fa-home"></i> <span>后台首页</span></a></li>
+                <li class="menu-list"><a href=""><i class="fa fa-user"></i> <span>用户管理</span></a>
+                    <ul class="sub-menu-list">
+                        <li><a href="/bug/admin.php/User/userList"> 所有用户</a></li>
+                        <li><a href="/bug/admin.php/User/wechat"> 微信用户</a></li>
+
+                    </ul>
+                </li>
+                <li class="menu-list"><a href=""><i class="fa fa-book"></i> <span>订单管理</span></a>
+                    <ul class="sub-menu-list">
+                        <li><a href="/bug/admin.php/Order/index"> 订单列表</a></li>
+                        <li><a href="/bug/admin.php/Order/cancel"> 已取消订单</a></li>
+                        <li><a href="tabs-accordions.html"> Tabs & Accordions</a></li>
+                    </ul>
+                </li>
+				<li class="menu-list"><a href=""><i class="fa fa-ambulance"></i> <span>车辆管理</span></a>
+                    <ul class="sub-menu-list">
+                        <li><a href="/bug/admin.php/Models/add"> 添加车型</a></li>
+                        <li><a href="/bug/admin.php/Models/modelsList"> 车型列表</a></li>
+                    </ul>
+                </li>
+                <li><a href="/bug/admin.php/Evaluate/evaluate"><i class="fa fa-bullhorn"></i> <span>评价列表</span></a></li>
+                <li><a href="/bug/admin.php/Combo/comboList"><i class="fa fa-bullhorn"></i> <span>套餐管理</span></a></li>
+
+				
+                <li class="menu-list"><a href=""><i class="fa fa-cogs"></i> <span>网站管理</span></a>
+                    <ul class="sub-menu-list">
+                        <li><a href="/bug/admin.php/Log/log"> <i class="fa fa-file-text"></i> 操作日志</a></li>
+                        <li><a href="calendar.html"> 网站配置</a></li>
+                        <li><a href="tree_view.html"> </a></li>
+                        <li><a href="nestable.html"> Nestable</a></li>
+                    </ul>
+                </li>
+                <li class="menu-list"><a href=""><i class="fa fa-sign-in"></i> <span>管理</span></a>
+                    <ul class="sub-menu-list">
+                        <li><a href="form_layouts.html"> 添</a></li>
+                        <li><a href="form_advanced_components.html"> 表</a></li>
+                        <li><a href="form_wizard.html"> Form Wizards</a></li>
+                        <li><a href="form_validation.html"> Form Validation</a></li>
+
+                    </ul>
+                </li>
+            </ul>
+            <!--sidebar nav end-->
+
+        </div>
+    </div>
+    <!-- left side end-->
+    
+    <!-- main content start-->
+    <div class="main-content" >
+
+        <!-- header section start-->
+        <div class="header-section">
+
+            <!--toggle button start-->
+            <a class="toggle-btn"><i class="fa fa-bars"></i></a>
+            <!--toggle button end-->
+
+
+            <!--notification menu start -->
+            <div class="menu-right">
+                <ul class="notification-menu">
+					<li>
+                        <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <?php echo (session('hname')); ?>
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-usermenu pull-right">
+                            <li><a href="/bug/admin.php/Vip/index"><i class="fa fa-user"></i> 设置 </a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="/bug/admin.php/Index/logout" class="btn btn-default dropdown-toggle info-number">
+                            <i class="fa fa-sign-out"></i>退出
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!--notification menu end -->
+
+        </div>
+        <!-- header section end-->
+
+        <!-- page heading start-->
+        <div class="page-heading">
+            <h3>
+                欢迎光临
+            </h3>
+         
+            <div class="state-info">
+                <section class="panel">
+                    <div class="panel-body">
+                        <div class="summary">
+                            <span>yearly expense</span>
+                            <h3 class="red-txt">$ 45,600</h3>
+                        </div>
+                        <div id="income" class="chart-bar"></div>
+                    </div>
+                </section>
+                <section class="panel">
+                    <div class="panel-body">
+                        <div class="summary">
+                            <span>yearly  income</span>
+                            <h3 class="green-txt">$ 45,600</h3>
+                        </div>
+                        <div id="expense" class="chart-bar"></div>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <!-- page heading end-->
+
+        <!--body wrapper start-->
+        <div class="wrapper">
+		
+<script src="/bug/Public/admin/js/jquery.js"></script>
+	<div class="wrapper">
+		<div class="row">
+        <div class="col-sm-12">
+        <section class="panel">
+        <header class="panel-heading">
+            车型列表
+            <span class="tools pull-right">
+                <a href="javascript:;" class="fa fa-chevron-down"></a>
+             </span>
+        </header>
+        <div class="panel-body">
+        <div class="adv-table">
+        <table  class="display table table-bordered table-striped" id="dynamic-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>品牌</th>
+            <th>车系</th>
+            <th class="hidden-phone">车型</th>
+            <th class="hidden-phone">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+		<?php if(is_array($list)): foreach($list as $key=>$list): ?><tr class="gradeX">
+            <td><?php echo ($list['id']); ?></td>
+            <td><?php echo ($list['brand']); ?></td>
+            <td><?php echo ($list['series']); ?></td>
+            <td class="center hidden-phone"><?php echo ($list['types']); ?></td>
+            <td class="center hidden-phone"><a href="/bug/admin.php/Models/update/id/<?php echo ($list['id']); ?>">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/bug/admin.php/Models/delete/id/<?php echo ($list['id']); ?>" onclick="return confirm('你确定要删除吗？')">删除</a></td>
+        </tr><?php endforeach; endif; ?>
+        </tbody>
+        </table>
+        </div>
+		
+        </div>
+        </section>
+        </div>
+        </div>
+	</div>
+    <script type="text/javascript">
+
+    </script>
+
+	   </div>
+        <!--body wrapper end-->
+
+        <!--footer section start-->
+        <footer>
+            2015 &copy; 宇瑞安
+        </footer>
+        <!--footer section end-->
+
+
+    </div>
+    <!-- main content end-->
+</section>
+
+<!-- Placed js at the end of the document so the pages load faster -->
+<script src="/bug/Public/admin/js/jquery-1.10.2.min.js"></script>
+<script src="/bug/Public/admin/js/jquery-ui-1.9.2.custom.min.js"></script>
+<script src="/bug/Public/admin/js/jquery-migrate-1.2.1.min.js"></script>
+<script src="/bug/Public/admin/js/bootstrap.min.js"></script>
+<script src="/bug/Public/admin/js/modernizr.min.js"></script>
+<script src="/bug/Public/admin/js/jquery.nicescroll.js"></script>
+
+<!--dynamic table-->
+<script type="text/javascript" language="javascript" src="/bug/Public/admin/js/advanced-datatable/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/bug/Public/admin/js/data-tables/DT_bootstrap.js"></script>
+
+<!--dynamic table initialization -->
+<script src="/bug/Public/admin/js/dynamic_table_init.js"></script>
+
+
+<!--easy pie chart-->
+<script src="/bug/Public/admin/js/easypiechart/jquery.easypiechart.js"></script>
+<script src="/bug/Public/admin/js/easypiechart/easypiechart-init.js"></script>
+
+<!--Sparkline Chart-->
+<script src="/bug/Public/admin/js/sparkline/jquery.sparkline.js"></script>
+<script src="/bug/Public/admin/js/sparkline/sparkline-init.js"></script>
+
+<!--icheck -->
+<script src="/bug/Public/admin/js/iCheck/jquery.icheck.js"></script>
+<script src="/bug/Public/admin/js/icheck-init.js"></script>
+
+<!-- jQuery Flot Chart-->
+<script src="/bug/Public/admin/js/flot-chart/jquery.flot.js"></script>
+<script src="/bug/Public/admin/js/flot-chart/jquery.flot.tooltip.js"></script>
+<script src="/bug/Public/admin/js/flot-chart/jquery.flot.resize.js"></script>
+
+
+<!--Morris Chart-->
+<script src="/bug/Public/admin/js/morris-chart/morris.js"></script>
+<script src="/bug/Public/admin/js/morris-chart/raphael-min.js"></script>
+
+<!--Calendar-->
+<script src="/bug/Public/admin/js/calendar/clndr.js"></script>
+<script src="/bug/Public/admin/js/calendar/evnt.calendar.init.js"></script>
+<script src="/bug/Public/admin/js/calendar/moment-2.2.1.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+
+<!--common scripts for all pages-->
+<script src="/bug/Public/admin/js/scripts.js"></script>
+
+<!--Dashboard Charts-->
+<script src="/bug/Public/admin/js/dashboard-chart-init.js"></script>
+
+
+</body>
+</html>

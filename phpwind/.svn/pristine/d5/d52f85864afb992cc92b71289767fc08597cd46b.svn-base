@@ -1,0 +1,42 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+<script src="jquery.js"></script>
+	<div class="wrapper">
+		<div class="row">
+            <div class="col-sm-12">
+                <section class="panel">
+                    <header class="panel-heading">
+                        自动回复设置
+                    </header>
+                    <div class="panel-body">
+                        <div class="adv-table">
+                            <table  class="display table table-bordered table-striped" id="editable-sample">
+                            <tr>
+                                <th class="col-sm-2">ID</th>
+                                <th class="col-sm-2">接收的关键字</th>
+                                <th class="hidden-sm col-sm-6">自动回复内容</th>
+                                <th class="col-sm-2">操作</th>
+                            </tr>
+                    	        <tbody>
+                    				<foreach name="list" item="list">
+                    		        	<tr class="gradeX">
+                                            <td>{$list['id']}</td>
+                    			            <td>{$list['replyKey']}</td>
+                                            <td class="hidden-sm"><div style="width:480px;height:18px;text-overflow:ellipsis;overflow:hidden;white-space:nowrap">{$list['content']}</div>
+                                            </td>  
+                    			            <td><a href="__CONTROLLER__/mod/id/{$list['id']}">修改</a>&nbsp;&nbsp;<a href="__CONTROLLER__/del/id/{$list['id']}" onclick="return confirm('你确定要删除吗？')">删除</a></td>
+                    		      	  	</tr>
+                    				</foreach>
+                    	        </tbody>
+                            </table>
+                        <a href="__CONTROLLER__/add" class="btn btn-primary" type="submit">添&nbsp;&nbsp;加</a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+	</div>
+	<script type="text/javascript">
+	alert($('#mod'));
+	</script>
+</block>

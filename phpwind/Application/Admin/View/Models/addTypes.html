@@ -1,0 +1,129 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+<script src="__PUBLIC__/admin/js/jquery.js"></script>
+<div class="wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading">
+                <a href="__CONTROLLER__/typesList">车型列表</a>&nbsp;>>&nbsp;添加车型
+            </header>
+            <div class="panel-body">
+                <form action="__CONTROLLER__/insertType" class="form-horizontal adminex-form" id="myform" method="post">
+                    <div class="col-sm-2"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">品牌</label>
+                        <div class="col-sm-4">
+                            <select name="brand" id="brand" class="form-control m-bot15">
+                                <option value="-1">--请选择品牌--</option>
+                                <foreach name="brands" item="brand">
+                                    <option value="{$brand['id']}">{$brand['brand']}</option>
+                                </foreach>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-2"></div>
+					<div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">车系</label>
+                        <div class="col-sm-4">
+                            <select name="series" id="series" class="form-control">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-2"></div>
+					<div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">车型</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="types" class="form-control" name="types">
+                        </div>
+                        <span class="col-sm-2 control-msg" id="tMsg"></span>
+                    </div>
+                    <div class="col-sm-4"></div>
+					<div class="col-sm-4 panel-body">
+						<button type="submit" class="btn btn-primary">添加</button>
+                    </div>
+                   </form>
+            </div>
+		</section>
+
+		</div>
+    </div>
+</div>
+<script>
+    var bName = false;
+    var sName = false;
+    var tName = false;
+    //当品牌下拉框的值为-1时,不可添加车型
+    if($('#brand').val() == -1){
+        $("input[id='types']").attr('disabled','disabled');
+        bName = false;
+    }
+    //当品牌下拉框中的值发生改变时,判断品牌下拉框中的值及获取该品牌下的所有车系
+    $('#brand').change(function(){
+        if($('#brand').val() == -1){
+            $("input[id='types']").attr('disabled','disabled');
+            bName = false;
+        }else{
+            //当车系下拉框的值为-1时,不可添加车型
+            if($('#series').val() == -1){
+                $("input[id='types']").attr('disabled','disabled');
+                sName = false;
+            }
+            //当车系下拉框中的值发生改变时,判断其中的值
+            $('#series').change(function(){
+                if($('#series').val() == -1){
+                    $("input[id='types']").attr('disabled','disabled');
+                    sName = false;
+                }else{
+                    $("input[id='types']").removeAttr('disabled');
+                    sName = true;
+                }
+            });
+
+            //获取品牌的id
+            var data = {brandId:$('#brand').val()};
+            //将获取到的所有车系放到select中
+            $.get('getSeries',data,function(d){
+                $('#series').html(d);
+            });
+            bName = true;
+        }
+    });
+    
+    //判断车型文本框中是否为空
+    $('#types').blur(function(){
+        checkType();
+    });
+    function checkType(){
+        if($('#types').val() == ''){
+            $('#tMsg').html('车型不能为空').css('color','red');
+            tName = false;
+        }else{
+            // $('#tMsg').html('输入正确').css('color','green');
+            // tName = true;
+            //获取文本框中的值
+            var data = {typeName:$('#types').val(),sId:$('#series').val()};
+
+            $.get("checkTypes",data,function(d){
+                if(d == 2){
+                    $('#tMsg').html('车型已存在！').css({color:'red'});
+                    tName = false;
+                }else{
+                    $('#tMsg').html('输入正确！').css({color:'green'});
+                    tName = true;
+                }
+            });
+        }
+    }
+
+    $('form').submit(function() {
+        checkType();
+        if(sName && bName && tName){
+            return true;
+        }else{
+            return false;
+        }
+    });  
+    
+</script>
+</block>

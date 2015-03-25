@@ -1,0 +1,45 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+<div class="wrapper">
+    <div class="row">
+        <div class="col-sm-12">
+        <section class="panel">
+        <header class="panel-heading">
+            技师列表
+            <a href="__CONTROLLER__/addServiceman"><button class="btn btn-primary pull-right"><i class="fa fa-plus">&nbsp;添加</i></button></a>&nbsp;&nbsp;
+            <a href="__CONTROLLER__/selectServiceman">&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-primary pull-right"><i class="fa fa-edit">&nbsp;配备</i></button></a>
+        </header>
+        <div class="panel-body">
+        <div class="adv-table">
+        <table  class="display table table-bordered table-striped" id="dynamic-table">
+
+            <tr>
+                <th class="col-sm-2">ID</th>
+                <th class="col-sm-2">技师名</th>
+                <th class="hidden-sm col-sm-2">手机号</th>
+                <th class="col-sm-2">操作</th>
+            </tr>
+            
+            <tbody>
+            <foreach name="serviceman" item="data">
+                <tr class="gradeX">
+                    <td>{$data['id']}</td>
+                    <td>{$data['name']}</td>
+                    <td class="hidden-sm">{$data['telephone']}</td>
+                    <td><a href="__CONTROLLER__/mod/id/{$data['id']}">编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="__CONTROLLER__/able/id/{$data['id']}">
+                    <if condition="$data['status'] eq '0'">禁用
+                    <else />启用
+                    </if></a></td>
+                </tr>
+            </foreach>
+            </tbody>
+            
+        </table>
+        </div>
+        </div>
+        </section>
+        </div>
+    </div>
+</div>
+</block>

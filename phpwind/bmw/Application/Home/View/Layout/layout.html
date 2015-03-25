@@ -1,0 +1,125 @@
+<html>
+	<head>
+		<meta charset='utf-8' />
+		<title>{$result[0]['title']}</title>
+		<meta name="keywords" content="{$result[0]['keywords']}">
+		<meta name="description" content="{$result[0]['description']}">
+		<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;"/>
+		<meta name="apple-mobile-web-app-capable" content="yes"/>
+		<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+		<meta name="format-detection" content="telephone=no"/>
+		<link rel="stylesheet" type="text/css" href="__PUBLIC__/home/css/lanrenzhijia.css" />
+		<link rel="stylesheet" type="text/css" href="__PUBLIC__/home/css/pho.css" />
+		<link rel="stylesheet" type="text/css" media="all" href="__PUBLIC__/home/css/style.css"/>
+		<link rel="stylesheet" href="__PUBLIC__/home/css/ary.css"/>
+		
+		<script src='__PUBLIC__/home/js/ajax.js'></script>
+		<script src="__PUBLIC__/home/My97DatePicker/WdatePicker.js"></script>
+		<script src="__PUBLIC__/home/js/area.js"></script>
+		<script src="__PUBLIC__/home/js/jquery-1.9.1.min.js"></script>
+  		<script src="__PUBLIC__/home/js/jquery.js"></script>
+  		<script src="__PUBLIC__/home/js/jquery.leanModal.min.js"></script>
+		<script src="__PUBLIC__/home/js/ary.js"></script>
+		<script src="__PUBLIC__/home/js/respond.js"></script>
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.2"></script>
+		<link rel="stylesheet" href="__PUBLIC__/home/css/gerenzhongxin.css">
+
+	    <link rel="stylesheet" href="__PUBLIC__/home/bootstrap/css/bootstrap.min.css" media="screen" >
+	   	<script src="__PUBLIC__/home/bootstrap/js/bootstrap.min.js"></script>
+
+    <style>
+		.demo-nav.fixed.fixed-top{z-index:8;background:#fff;width:100%;padding:0;border-bottom:solid 4px #28adcc;-webkit-box-shadow:0 3px 6px rgba(0, 0, 0, .175);box-shadow:0 3px 6px rgba(0, 0, 0, .175);}
+    </style>
+		<block name='mycss'></block>
+	</head>
+<body>
+<block name='kog'>
+</block>
+
+<!-- 代码 begin -->
+	<!-- 代码 开始 -->
+	<div class="box">
+		<div class="t_news">
+			<b style='width:40px'>公告:</b>
+			<b style='width:80%'><marquee onMouseOver="this.stop()" onMouseOut="this.start()" scrolldelay ="200">未来三天将会有活动出现,大家注意查看……</marquee></b>
+		</div>
+	</div>
+	<block name='head'></block>
+	<block name='main-content'></block>
+	<div class='bottom'>
+		<img src="__PUBLIC__/home/imgs/log.png" />
+		<a class="flatbtn" href="__APP__/Make/index">立即预约</a>
+		<if condition="$_SESSION['phone'] == ''">	
+
+		<a  href="#loginmodal" class="flatbtn" id="modaltrigger">个人中心</a>
+
+			
+		<else />
+		
+		<a class="flatbtn"  href="__APP__/order/order">我的订单</a>
+		</if>
+
+		
+	</div>
+
+	<script type="text/javascript">
+
+	$(function(){
+  	$('#loginform').submit(function(e){
+  		var p = $("#username").val();
+  		var c = $("#code").val();
+  		
+  		if(/^(1(([35][0-9])|(47)|[8][0126789]))\d{8}$/.test(p)){
+  			return true;
+  		}else{
+  			return false;
+  		}
+
+    
+  	});
+  
+  	$('#modaltrigger').leanModal({ top: 110, overlay: 0.45, closeButton: ".hidemodal" });
+	});
+	
+	//p ==""?$("#getcode").attr("disabled", "true"):$("#getcode").removeAttr("disabled");
+
+	$('#getcode').click(function(){
+		var p = $("#username").val();
+		var curCount=60;
+		var len = $("#username").val().length
+		if(/^(1(([35][0-9])|(47)|[8][0126789]))\d{8}$/.test(p)){
+			$.get("__APP__/Sms/sendMessage",{"phone":p},function(data){
+			});
+		$("#sp").html("");
+
+			function SetRemainTime() {
+		        if (curCount == 0) {                  
+		            window.clearInterval(InterValObj);//停止计时器  
+		            $("#getcode").removeAttr("disabled");//启用按钮  
+		            $("#getcode").val("重新获取验证码");  
+		           // code = ""; //清除验证码。如果不清除，过时间后，输入收到的验证码依然有效      
+		        }else {  
+
+		            curCount--;  
+		            $("#getcode").val(curCount + "秒后重新获取");
+		        }  
+	    	}
+		
+
+			
+			$("#getcode").val(curCount + "秒后重新获取");
+			$("#getcode").attr("disabled", "true");
+			InterValObj = window.setInterval(SetRemainTime, 1000); //启动计时器，1秒执行一次  
+	        //向后台发送处理数据
+	        
+		}else{
+			//$("#getcode").attr("disabled", "true");
+			$("#sp").html("手机号不正确");
+		}
+
+	});
+</script>
+	<!-- 代码 end -->
+	<block name='myjs'></block>
+</body>
+</html>

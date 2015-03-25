@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" />
+		<title>宇瑞安|4s到家汽车保养|选择车型</title>
+		<meta name="keywords" content="汽车保养上门服务，4s店上门保养，宝马4s点保养" />
+		<meta name="description" content="4s店汽车保养上门服务" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />		
+		<link href="__PUBLIC__/home/css/bootstrap.min.css" rel="stylesheet" />
+		<link href="__PUBLIC__/home/css/bwm.css" rel="stylesheet" />
+		<script src="__PUBLIC__/home/js/jquery.js"></script>
+	</head>
+	<body>			
+		<div class="container">
+			<div class="center">
+				<h1>
+					<span class="red">4s</span>
+					<span class="white">到家汽车保养</span>
+				</h1>
+				<h4 class="blue">&copy; 宇瑞安</h4>
+			</div>
+			<div class="content">						
+				<div class="top">
+					<h4 class="center blue msg">请选择您的汽车品牌</h4>				
+					<foreach name="brands" item="brand">
+						<div class="brand">
+							<button type="button" class="btn btn-sm btn-block" style="margin-right:10px;margin-bottom:10px;">
+								{$brand}</button>            
+							<foreach name="serieses" item="series">
+								<div class="series">						
+									<if condition=" $series[0] eq $brand">
+										<button type="button" class="btn btn-sm btn-block" style="margin-right:10px;margin-bottom:10px;">
+								{$series[1]}</button>
+										<div class="type">
+											<foreach name="types" item="type">
+												<if condition="$series[1] eq $type[0]">
+													<button type="button" class="btn btn-sm btn-block" style="margin-right:10px;margin-bottom:10px;">
+								{$type[1]}</button>
+												</if>
+											</foreach>
+										</div>
+									</if>
+								</div>  
+							</foreach> 
+						</div> 
+					</foreach>									                   
+				</div>
+				<div class="bottom"></div>
+			</div>
+		</div>		
+	</body>
+<script type="text/javascript">
+	$(".series").hide();
+	$(".type").hide();
+	$(".brand").click(function(e){
+		$(".brand").hide();
+		$(this).show();
+		$(this).children().show();
+		$(".type").hide();			
+		$(".header").html("请选择您的汽车系列");
+		e.stopPropagation();
+		//setCookie("brand",$(this).children("p").html(),1);
+	});
+	$(".series").click(function(e){		
+		$(".series").hide();
+		$(this).show();
+		$(this).children().show();
+		$(".header").html("请选择您的汽车型号");
+		e.stopPropagation();
+		//setCookie("series",$(this).children("p").html(),1);
+	});
+	$(".type").click(function(){
+		//setCookie("type",$(this).children("p").html(),1);
+		location.href="../Appointment/inputInfo";
+	})
+
+	function stopBubble(e){
+		if(e && e.stopPropagation){
+			e.stopPropagation();
+		}else{
+			window.event.cancelBubble=true;
+		}
+		return false;
+	}
+
+	function setCookie(name, value, iDay){
+			var oDate=new Date();	
+			oDate.setDate(oDate.getDate()+iDay);
+			document.cookie=name+'='+value+';expires='+oDate;
+		}
+
+		function getCookie(name){
+			//'username=abc; password=123456; aaa=123; bbb=4r4er'
+			var arr=document.cookie.split('; ');
+			var i=0;	
+			//arr->['username=abc', 'password=123456', ...]	
+			for(i=0;i<arr.length;i++){
+				//arr2->['username', 'abc']
+				var arr2=arr[i].split('=');		
+				if(arr2[0]==name){
+					return arr2[1];
+				}
+			}	
+				return '';
+		}
+
+		function removeCookie(name){
+			setCookie(name, '1', -1);
+		}						
+
+</script>
+</html>

@@ -1,0 +1,52 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+<div class="wrapper">
+    <div class="row">
+        <div class="col-sm-12">
+        <section class="panel">
+        <header class="panel-heading">
+            后台人员列表
+        </header>
+        <div class="panel-body">
+        <div class="adv-table">
+        <table  class="display table table-bordered table-striped" id="dynamic-table">
+
+            <tr>
+                <th class="col-sm-2">ID</th>
+                <th class="col-sm-2">权限</th>
+                <th class="col-sm-2">用户名</th>
+                <th class="hidden-sm col-sm-2">手机号</th>
+                <th class="col-sm-4">操作</th>
+            </tr>
+            
+            <tbody>
+            <foreach name="manager" item="manager">
+                <tr class="gradeX">
+                    <td>{$manager['id']}</td>
+                    <td>
+                        <if condition="$manager['auth'] eq '0'">超级管理员
+                            <elseif condition="$manager['auth'] eq '1'" />管理员
+                            <elseif condition="$manager['auth'] eq '2'" />客服
+                            <elseif condition="$manager['auth'] eq '3'" />维修人员
+                        </if>
+                    </td>
+                    <td>{$manager['name']}</td>
+                    <td class="hidden-sm">{$manager['telephone']}</td>
+                    <td><a href="__CONTROLLER__/mod/id/{$manager['id']}">修改密码</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <if condition="$Think.session.auth eq '0'"><a href="__CONTROLLER__/auth/id/{$manager['id']}">更改权限</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    </if><a href="__CONTROLLER__/able/id/{$manager['id']}">
+                    <if condition="$manager['status'] eq '0'">禁用
+                    <else />启用
+                    </if></a></td>
+                </tr>
+            </foreach>
+            </tbody>
+            
+        </table>
+        </div>
+        </div>
+        </section>
+        </div>
+    </div>
+</div>
+</block>

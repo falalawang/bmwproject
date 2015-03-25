@@ -1,0 +1,34 @@
+<?php
+namespace Home\Controller;
+use Think\Controller;
+
+class AppointmentController extends Controller{
+	public function selectCarType(){
+		$models = M("models");
+		$Types = $models -> select();
+		foreach ($Types as $key => $value) {
+			$brand[$key]=$value['brand'];			
+			$series[$key]=$value['brand'].",".$value['series'];
+		}		
+		$brands=array_unique($brand);
+		$serieses=array_unique($series);
+		foreach ($serieses as $key=> $value) {
+			$serieses[$key]=explode(",", $value);
+			
+		}
+		$this->assign('brands',$brands);
+		$this->assign('serieses',$serieses);
+		$this->assign('types',$Types);
+		$this -> display();
+	}
+	public function test(){
+		echo $_COOKIE['brand'];
+		echo $_COOKIE['series'];
+		echo $_COOKIE['type'];
+	}
+	public function inputInfo(){
+		
+		$this->display();
+	}
+}	
+?>

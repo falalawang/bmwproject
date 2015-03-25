@@ -1,0 +1,152 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+<style type="text/css"> 
+.window{ 
+    width:250px; 
+    background-color:#d0def0; 
+    position:absolute; 
+    padding:2px; 
+    margin:5px; 
+    display:none; 
+} 
+.content{ 
+    height:150px; 
+    background-color:#FFF; 
+    font-size:14px; 
+    overflow:auto; 
+} 
+.title{ 
+    padding:2px; 
+    color:#0CF; 
+    font-size:14px; 
+} 
+.title img{ 
+    float:right; 
+} 
+ </style> 
+
+<script src="__PUBLIC__/admin/js/jquery.js"></script>
+<script type="text/javascript" language="javascript">
+    $(document).ready(function () {
+
+        $('.addressD').click(function(){
+            $(this).next().css({'position':'absolute','z-index':10,'padding':'2px','margin-left':'20px'}).slideToggle("slow");
+            myClose();
+            return false;           
+        });
+
+        $('.modStatus').click(function(){
+            $(this).next().css({'position':'absolute','z-index':10,'padding':'2px','margin-left':'20px'}).slideToggle("slow");
+            myClose();
+            return false; 
+        });
+    }); 
+    function myClose(){
+        $(".close").click(function(){ 
+                $(this).parent().parent().parent().hide("slow"); 
+        }); 
+    }
+</script> 
+    <div class="row">
+        <div class="col-sm-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    订单列表
+                    <span class="tools pull-right">
+                        <a href="javascript:;" class="fa fa-chevron-down"></a>
+                    </span>
+                </header>
+                <div class="panel-body">
+                    <div class="adv-table">
+                        <table  class="display table table-bordered table-striped" id="dynamic-table">
+                            <thead>
+                                <tr>
+                                    <th width='6%'>编号</th>
+                                    <th width='5%'>地址</th>
+                                    <th width="15%">车型</th>
+                                    <th width="8%">服务</th>
+                                    <th width="6%">价格</th>
+                                    <th width="5%">预约时间</th>
+                                    <th width="6%">vin码</th>
+                                    <th width="6%">状态</th>
+                                    <th width="6%">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <foreach name="orders" item="order">
+                                    <tr class="gradeX">
+                                        <td width="6%">{$order['count']}</td>
+                                        <td width="5%">
+                                            <a href="#" class="addressD">地址</a>
+                                            <div class="panel panel-info" style="display:none;">
+                                                <div class="panel-heading">
+                                                    <h3 class="panel-title">联系地址<span class="close" style="float:right;cursor:pointer;">X</span></h3>
+                                                </div>
+                                                <div class="panel-body">
+                                                    联系人：{$order['name']}<br />
+                                                    电话：{$order['telephone']}<br />
+                                                    地址：{$order['address']}
+                                                </div>
+                                            </div>
+                                        </td>
+                                        
+                                        <td width="15%">
+                                            ({$order['brand']}){$order['series']}{$order['types']}
+                                        </td>
+                                        <td width="8%">{$order['combo']}</td>
+                                        <td width="6%">{$order['lastPrice']}</td>
+                                        <td width="5%">
+                                            {$order['orderDate']|date="Y/m/d",###}&nbsp;{$order['orderTime']}
+                                        </td>
+                                        <td width="6%">{$order['vin']}</td>
+                                        <td width="6%">
+                                            <if condition="$order['orderStatus'] eq '1'">
+                                                <font color='red'>未审核</font>
+                                            <elseif condition="$order['orderStatus'] eq '2'" />
+                                                <a href="#" class="modStatus"><font color='green'>已审核</font></a>
+                                            <elseif condition="$order['orderStatus'] eq '3'" />
+                                                <a href="#"  class="modStatus"><font color='green'>已出发</font></a>
+                                            <elseif condition="$order['orderStatus'] eq '4'" />
+                                                <a href="#"  class="modStatus"><font color='green'>已付款</font></a>
+                                            <elseif condition="$order['orderStatus'] eq '5'" />
+                                                <a href="#"  class="modStatus"><font color='green'>已完成</font></a>
+                                            <elseif condition="$order['orderStatus'] eq '6'" />
+                                                <font color='green'>已评价</font>
+                                            </if>
+                                            <input type="hidden" class="orderId" value="{$order['id']}" />
+                                            <div class="panel panel-info" style="display:none;">
+                                                <div class="panel-heading">
+                                                    <h3 class="panel-title">修改状态<span class="close" style="float:right;cursor:pointer;">X</span></h3>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <form action="__CONTROLLER__/modStatus" method="post">
+                                                        <input type="text" name="id" value="{$order['id']}" />
+                                                        <div id="myForm"></div>
+                                                        <input type="submit" value="提交" />
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td width="6%">
+                                            <if condition="$order['orderStatus'] eq '1'">
+                                                <a href="__CONTROLLER__/pass/id/{$order['id']}" title="审核" alt="审核"><i class="fa fa-frown-o"></i></a>
+                                            </if>
+                                            <a href="__CONTROLLER__/mod/id/{$order['id']}" title="编辑" alt="编辑"><i class="fa fa-edit"></i></a>
+                                            <a href="__CONTROLLER__/cancelOrder/id/{$order['id']}" title="取消" alt="取消"><i class="fa fa-trash-o"></i></a>
+                                        </td>
+                                    </tr>
+                                </foreach>
+                            </tbody>             
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <script>   
+        $('.modStatus').click(function(){
+            var data = {id:$(this).next().val()};
+            alert(data.id);
+        });
+    </script>
+</block>

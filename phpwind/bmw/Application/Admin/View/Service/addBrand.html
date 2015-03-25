@@ -1,0 +1,47 @@
+<extend name="Layout:layout"/>
+<block name="main-content">
+                <script src="__PUBLIC__/Admin/js/core/jquery.js"></script>
+                <script src="__PUBLIC__/Admin/js/core/ajax.js"></script>     
+            	<div class="mws-panel grid_8">
+                	<div class="mws-panel-header">
+                    	<span>品牌管理</span>
+                    <div class="mws-panel-body no-padding">
+                    	<form class="mws-form" action="__CONTROLLER__/insert" method="post" enctype="multipart/form-data" id="myform">
+                    		<div class="mws-form-inline">
+                    			<div class="mws-form-row">
+                    				<label class="mws-form-label">品牌</label>
+                    				<div class="mws-form-item">
+                    					<input type="text" class="small" name='brands' id='brand'><span id="sty"></span>
+                    				</div>
+                    			</div>
+                       		</div>
+                    		<div class="mws-button-row">
+                    			<input type="submit" value="添加" class="btn btn-danger">
+                    			<input type="reset" value="重置" class="btn ">
+                    		</div>
+                    	</form>
+                    </div>    	
+                </div>
+                <script>
+                        $("#brand").blur(function(){
+                            $.get("__CONTROLLER__/aa",{"brand":$("#brand").val()},
+                               function(data){
+                                    $a=eval(data);
+                                    myform.onsubmit=function(){
+                                        if($a){
+                                            return false;
+                                        }else{
+                                            return true;
+                                        }
+                                    }
+                                    if($a){
+                                        $("#sty").html('该品牌已存在');
+                                        $("#sty").css("color","red");
+                                    }else{
+                                        $("#sty").html('该品牌可以添加');
+                                        $("#sty").css("color","green");
+                                    }  
+                            });
+                        })
+                </script>             
+</block>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" />
+		<title>宇瑞安|4s到家汽车保养|选择地址</title>
+		<meta name="keywords" content="汽车保养上门服务，4s店上门保养，宝马4s点保养" />
+		<meta name="description" content="4s店汽车保养上门服务" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link href="__PUBLIC__/home/css/bootstrap.min.css" rel="stylesheet" />
+		<link href="__PUBLIC__/home/css/bwm.css" rel="stylesheet" />
+		<script src="__PUBLIC__/home/js/jquery.js"></script>
+	</head>
+	<body>
+		<div class="container">
+			<div class="center">
+				<h1>
+					<span class="red">4s</span>
+					<span class="white">到家汽车保养</span>
+				</h1>
+				<h4 class="blue">&copy; 宇瑞安</h4>
+			</div>
+			<div id="province" class="content">				
+				<div class="top">
+					<h4 class="center blue msg">请选择您所在的省份(直辖市)</h4><hr>			
+						<foreach name="provinces" item="province">
+						<div class="row">
+							<div class="province">
+								<button type="button" class="btn btn-sm btn-default col-xs-12 col-sm-12" style="margin-bottom:10px;" onclick="getProvince(this)">{$province}</button>
+								<foreach name="citys" item="city">
+								<if condition="$city[0] eq $province">								
+									<div class="city">
+										<button type="button" class="btn btn-sm btn-default col-xs-12 col-sm-12" style="margin-bottom:10px;" onclick="getCity(this)">{$city[1]}</button>
+										<foreach name="countys" item="county">
+										<if condition="$county[0] eq $city[1]">	
+											<div class="county">
+												<button type="button" class="btn btn-sm btn-default col-xs-12 col-sm-12" style="margin-bottom:10px;" onclick="getCounty(this)">{$county[1]}</button>
+											</div></if>	
+										</foreach>		
+									</div></if>
+								</foreach>
+							</div></div>
+						</foreach>
+					<div class="msg row"><h4 class="center blue">请填写您的具体地址信息</h4><input type="text" name="street" id="street" style="height:30px;" class="col-xs-12 col-sm-12" />
+					</div><hr />
+					<div class="center">
+					<button type="button" class="msg btn btn-md btn-primary" style="margin-bottom:10px;" onclick="send()">提交</button></div><br />
+				</div><!-- /widget-main -->
+				
+				<div class="bottom navbar-fixed-bottom"></div>				
+			</div>
+
+		<script type="text/javascript">
+			if("ontouchend" in document) document.write("<script src='__PUBLIC__/home/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+		</script>
+
+		<!-- inline scripts related to this page -->
+
+		<script type="text/javascript">
+			$(".msg:eq(1)").hide();
+			$(".msg:eq(2)").hide();
+			$(".msg:eq(3)").hide();
+			$(".city").hide();
+			$(".county").hide();
+			$(".province").click(function(e){
+				$(".province").hide();
+				$(this).show();
+				$(this).children().show();
+				$(".county").hide();			
+				$(".msg:eq(0)").html("请选择您所在的城市");
+				e.stopPropagation();
+			});
+			$(".city").click(function(e){		
+				$(".city").hide();
+				$(this).show();
+				$(this).children().show();				
+				$(".msg:eq(0)").html("请选择您所在的区域");
+				e.stopPropagation();
+				$(".msg:eq(1)").show();
+				$(".msg:eq(2)").show();
+				$(".msg:eq(3)").show();
+			});			
+			$(".county").click(function(e){
+				$(".county").hide();
+				$(this).show();
+				e.stopPropagation();
+			});
+
+			function getProvince(obj){
+				province=obj.innerHTML;
+			}
+			function getCity(obj){
+				city=obj.innerHTML;
+			}
+			function getCounty(obj){
+				county=obj.innerHTML;
+			}
+
+			function send(){
+				var street=$("#street").val();
+				var telephone=$("#telephone").val();
+				var data={province:province,city:city,county:county,street:street};
+				if($("#street").val()){
+					$.get("addAddress",data,function(){
+						location.href="../Appointment/inputInfo";
+					});
+				}
+			}
+
+			function stopBubble(e){
+				if(e && e.stopPropagation){
+					e.stopPropagation();
+				}else{
+					window.event.cancelBubble=true;
+				}
+				return false;
+			}
+
+
+
+		</script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<?php
+	namespace Admin\controller;
+	use Think\controller;
+
+	class UserController extends controller{
+		public function userList(){
+			$user = M("user_detail");
+			$count = $user->count();
+			$Page = new \Think\Page($count,10);
+			$users = $user->limit($Page->firstRow.','.$Page->listRows)->select();
+			$show = $Page->show();
+			$this->assign("show",$show);
+			$this->assign("users",$users);
+			$this->display();
+
+		}
+		public function userAdd(){
+			
+			$this->display();
+
+		}
+		public function insert(){
+			$user = M("user_detail");
+			//dump($users);
+			//exit;
+			if($user->create()){
+				$res=$user->add();
+				if($res){
+					$this->success("添加成功！","userList");
+				}else{
+					$this->error("添加失败！");
+				}
+
+			}else{
+
+				$this->error("添加失败！");
+			}
+
+		}
+		public function mod(){
+			$id = I("get.id");
+			$user = M("user_detail");
+			$data = $user -> find($id);
+			$this -> assign("user",$data);
+
+			$this -> display();
+		}
+		public function update(){
+			$user = M("user_detail");
+			$users= $user -> create();
+			//dump($users);
+			//exit;
+			if($user -> create()){
+				if($user -> save()){
+					$this -> success("修改成功","userList");
+				}else{
+					$this -> error("修改失败");
+				}
+			}else{
+				$this -> error("失败");
+			}
+			
+			//dump($_POST);
+		}
+		public function del(){
+			$id = I("get.id");
+			$user = M("user_detail");
+			$res = $user->delete($id);
+			if($res){
+				$this->success("删除成功！");
+
+			}else{
+				$this->error("删除失败！");
+
+			}
+
+
+		}
+		public function customerList(){
+			$admin = M('admin');
+			$count = $admin->count();
+			$Page = new \Think\Page($count,10);
+			$admins = $admin->where("auth='0'")->limit($Page->firstRow.','.$Page->listRows)->select();
+			$show = $Page->show();
+			$this->assign("admins",$admins);
+			$this->assign("show",$show);
+
+			$this->display();
+
+		}
+
+	}
+
+
+
+
+?>

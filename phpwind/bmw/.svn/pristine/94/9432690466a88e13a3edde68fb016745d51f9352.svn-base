@@ -1,0 +1,82 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+
+	<div class="mws-panel grid_8">
+                	<div class="mws-panel-header">
+                    	<span style="float:left"><i class="icon-table"></i> 客服人员列表 </span>
+                            <span  style="float:right"><input type="text" id="result" name="search" value="">
+                            <button id="but" class="btn" >
+                                <i class="icol-magnifier-zoom-in"></i>
+                            </button></span>
+                        
+                        
+                        
+                     
+                    </div>
+                    <div class="mws-panel-body no-padding">
+						
+                        <table class="mws-datatable-fn mws-table">
+                            <thead>
+                                <tr>
+                                    <th>姓名</th>
+                                    <th>电话</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="t3">
+                                <foreach name="admins" item="admin">
+                                    <tr>
+                                        <td id="t1">{$admin['username']}</td>
+                                        <td id="t2">{$admin['phone']}</td>
+                                        <td style="text-align:center"><a  href="__CONTROLLER__/mod/id/{$admin['id']}"><button><i class="icol-pencil"></i></button></a> | <a href="__CONTROLLER__/del/id/{$admin['id']}"><button><i class="icol-cross"></i></button></a>|<a href="__CONTROLLER__/auth/id/{$admin['id']}"><button><i style="color:red">修改权限</i></button></a></td>
+                                    </tr>
+                                </foreach>
+
+								<tr><td colspan="5" style="background:#35353a;text-align:center">{$show}</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+        <script src = "__PUBLIC__/admin/js/jquery.js"></script>
+     <script type="text/javascript">
+    
+
+    
+        $("#but").click(function(){
+            //alert($("#result").val())
+            $.ajax({
+                
+                type: "POST",
+                url: "__APP__/user/search",
+                data: {"name":$("#result").val()},
+                dataType:"json",
+                success: function(msg){
+                    //alert(msg.username);
+                    //$("#t1").replaceWith(msg.username);
+                    //$("#t2").replaceWith(msg.phone);
+                    $("#t3").replaceWith("<tbody><tr><td>"+msg.username+"</td><td>"+msg.phone+"</td><td style='text-align:center'><a  href='__CONTROLLER__/mod/id/"+msg.id+"'><button><i class='icol-pencil'></i></button></a>|<a href='__CONTROLLER__/del/id/"+msg.id+"'><button><i class='icol-cross'></i></button></a>|<a href='__CONTROLLER__/auth/id/"+msg.id+"'><button><i style='color:red'>修改权限</i></button></a></td></tr><tr><td colspan='5' style='background:#35353a;text-align:center'><a href='__CONTROLLER__/userList'><button>返回首页</button></a></td></tr></tbody>");
+                }
+
+            });
+        } ) 
+        $("#next").click(function(){
+            $.ajax({
+                
+                type: "POST",
+                url: "__APP__/user/user",
+                data: {"name":$("#result").val()},
+                dataType:"json",
+                success: function(msg){
+                    //alert(msg.username);
+                    //$("#t1").replaceWith(msg.username);
+                    //$("#t2").replaceWith(msg.phone);
+                    $("#t3").replaceWith();
+                }
+
+            });
+        });       
+    </script>
+				
+
+                
+</block>

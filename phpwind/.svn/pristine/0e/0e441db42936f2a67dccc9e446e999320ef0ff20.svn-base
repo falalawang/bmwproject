@@ -1,0 +1,105 @@
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" />
+		<title>宇瑞安|4s到家汽车保养|选择地址</title>
+		<meta name="keywords" content="汽车保养上门服务，4s店上门保养，宝马4s点保养" />
+		<meta name="description" content="4s店汽车保养上门服务" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link href="/thinkphp/Public/home/css/bootstrap.min.css" rel="stylesheet" />
+		<link href="/thinkphp/Public/home/css/bwm.css" rel="stylesheet" />
+		<script src="/thinkphp/Public/home/js/jquery.js"></script>
+	</head>
+	<body>
+		<div class="container">
+			<div class="center">
+				<h1>
+					<span class="red">4s</span>
+					<span class="white">到家汽车保养</span>
+				</h1>
+				<h4 class="blue">&copy; 宇瑞安</h4>
+			</div>
+			<div id="province" class="content">				
+				<div class="top">
+					<h4 class="center blue msg">请选择您所在的省份(直辖市)</h4><hr>			
+						<?php if(is_array($provinces)): foreach($provinces as $key=>$province): ?><div class="province">
+								<button type="button" class="btn btn-sm btn-block" style="margin-right:10px;margin-bottom:10px;">
+								<?php echo ($province); ?></button>
+								<?php if(is_array($citys)): foreach($citys as $key=>$city): if($city[0] == $province): ?><div class="city">
+										<button type="button" class="btn btn-sm btn-block" style="margin-right:10px;margin-bottom:10px;">
+										<?php echo ($city[1]); ?></button>
+										<?php if(is_array($countys)): foreach($countys as $key=>$county): if($county[0] == $city[1]): ?><div class="county">
+												<button type="button" class="btn btn-sm btn-block" style="margin-right:10px;margin-bottom:10px;"><?php echo ($county[1]); ?></button>
+											</div><?php endif; endforeach; endif; ?>										
+									</div><?php endif; endforeach; endif; ?>
+							</div><?php endforeach; endif; ?>
+					
+				</div><!-- /widget-main -->
+				<div class="center bottom">
+					<a href="../Appointment/inputInfo" style="color:#fff">
+						提交</a>
+				</div>				
+			</div>
+		<script type="text/javascript">
+			if("ontouchend" in document) document.write("<script src='/thinkphp/Public/home/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+		</script>
+
+		<!-- inline scripts related to this page -->
+
+		<script type="text/javascript">
+			$(".city").hide();
+			$(".county").hide();
+			$(".province").click(function(e){
+				$(".province").hide();
+				$(this).show();
+				$(this).children().show();
+				$(".county").hide();			
+				$(".msg").html("请选择您所在的城市");
+				e.stopPropagation();
+				setCookie("province",$(this).children("button").html(),1);
+			});
+			$(".city").click(function(e){		
+				$(".city").hide();
+				$(this).show();
+				$(this).children().show();
+				$(".msg").html("请选择您所在的区域");
+				e.stopPropagation();
+				setCookie("city",$(this).children("button").html(),1);
+			});			
+			$(".county").click(function(){
+				setCookie("county",$(this).children("button").html(),1);
+			})
+
+			function stopBubble(e){
+				if(e && e.stopPropagation){
+					e.stopPropagation();
+				}else{
+					window.event.cancelBubble=true;
+				}
+				return false;
+			}
+			
+
+
+			function setCookie(name, value, iDay){
+			var oDate=new Date();
+			oDate.setDate(oDate.getDate()+iDay);
+			document.cookie=name+'='+value+';expires='+oDate;
+			}
+
+			
+			/*function add(){
+		        //ThinkAjax.sendForm(表单ID,URL,回调函数,信息显示的地方);
+		        ThinkAjax.sendForm('frm','/thinkphp/index.php/Manage/addtwo',wc);   
+		    }
+
+		    function wc(data,status){
+		        if(status!=1){
+		            alert('发送失败');
+		        }else{
+		            $('list').innerHTML+='标题'+data.title+',信息'+data.message;   
+		        }   
+		    }*/
+		</script>
+</body>
+</html>

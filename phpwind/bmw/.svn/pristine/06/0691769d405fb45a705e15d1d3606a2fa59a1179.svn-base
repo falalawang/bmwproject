@@ -1,0 +1,23 @@
+<?php
+namespace Admin\Controller;
+use Think\Controller;
+class EvaluationController extends Controller {
+    public function evaluationList(){
+        $message=M('user_evaluation');
+        $messages=$message->where("status='0'")->select();
+        foreach($messages as $k=>$v){
+            $str=$v['project'];
+            $a=explode('-',$str);
+            $keeps = array();
+            foreach($a as $b){
+                $keep=M('keep');
+                $tmp=$keep->where("id=$b")->find();  
+				$keeps[] = $tmp['project'];                          
+            } 
+			$keeps = implode('、', $keeps);
+            $messages[$k]['project']=$keeps;
+        }
+        $this -> assign("message", $messages);
+        $this->display();
+    }
+}

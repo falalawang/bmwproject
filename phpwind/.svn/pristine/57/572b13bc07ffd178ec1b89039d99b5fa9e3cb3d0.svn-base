@@ -1,0 +1,29 @@
+<extend name="Layout:order" />
+<block name="layoutBack">
+      <a class="navbar-brand" href="__APP__/Order/inputInfo">
+      <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span> 预约保养</a>
+</block>
+<block name="content">
+	<div class="container">
+		<h3 class="text-center">请选择您的汽车品牌</h3>
+		<foreach name="brands" item="brand">
+			<div class="brand row">
+				<button type="button" class="btn btn-sm btn-default col-xs-12 col-sm-12" style="margin-bottom:10px;" onclick="getBrand(this)">{$brand}</button>
+				<foreach name="serieses" item="series">
+					<div class="series">
+						<if condition=" $series[0] eq $brand">
+							<button type="button" class="btn btn-sm btn-default col-xs-12 col-sm-12" style="margin-bottom:10px;" onclick="getSeries(this)">{$series[1]}</button>
+							<div class="type">
+								<foreach name="types" item="type">
+									<if condition="($series[1] eq $type[1]) and ($brand eq $type[0])">
+										<button type="button" class="btn btn-sm btn-default col-xs-12 col-sm-12" style="margin-bottom:10px;" onclick="getType(this)">{$type[2]}</button>
+									</if>
+								</foreach>
+							</div>
+						</if>
+					</div>
+				</foreach>
+			</div>
+		</foreach>
+	</div>
+</block>

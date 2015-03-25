@@ -1,0 +1,85 @@
+<html>
+  <head>
+    <title>排班查看</title>
+    <meta charset=utf-8>
+    <link rel="stylesheet" href="__PUBLIC__/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/home/css/pho.css">
+    <script src="__PUBLIC__/home/js/jquery.js"></script>
+	
+  </head>
+
+  <body>
+  <!-- Button trigger modal -->
+
+    <div class='contentb'>
+	
+    	<div class="xmap">
+			您当前所在位置：首页&nbsp;->&nbsp;个人信息
+		</div>
+      <foreach name='order' item='orders'>
+	  <div style='border:1px solid #ccc;border-radius:5px;padding:5px;background:#fff'>
+	  <table class='ta'>
+		<tr>
+			<td>技师姓名：</td>
+			<td><span style='color:#28abcc'>{$orders.name}<span></td>
+		</tr>
+		<tr>
+			<td>订单状态：</td>
+			<td><span style='color:#28abcc'>{$orders.status}<span></td>
+		<tr>
+			<td>预约时间：</td>
+			<td><span style='color:#28abcc'>{$orders.date}&nbsp;&nbsp;{$orders.keep_time}<span></td>
+		</tr>
+		
+		<tr>
+			<td>客户手机：</td>
+			<td><span style='color:#28abcc'>{$orders.phone}<span></td>
+		</tr>
+		<tr>
+			<td colspan='2'><button type="button" class='btu' data-toggle="modal" data-target="#myModal">订单详情</button></td>
+		</tr>
+	  </table>
+        </div>
+        <!-- Button trigger modal -->
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">订单详情</h4>
+      </div>
+      <div class="modal-body">
+        <div>车型：{$orders.brand}&nbsp;&nbsp;{$orders.series}&nbsp;&nbsp{$orders.models}</div>
+        <div>保养项目：{$orders.combo}</div>
+        <div>客户电话：{$orders.phone}</div>
+        <div>保养地址：{$orders.address}</div>
+        <div>预约时间：{$orders.date}&nbsp;&nbsp;{$orders.keep_time}</div>
+        <div>保养总价：{$orders.price}</div>
+        <div>保养车牌号：{$orders.LPN}</div>
+        <form action="__APP__/Work/update" method="post">
+        <div>订单状态：
+        <select name="status">
+              <option value="已提交">已提交</option>
+              <option value="已确认">已确认</option>
+              <option value="已完成">已完成</option>
+        </select>
+        </div>
+      </div>
+      <input type='hidden' name='id' value='{$orders.id}'>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <input type="submit" class="btn btn-primary" value='确定修改'>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<hr/>
+      
+    </div>
+	</foreach>
+  </body>
+    <script src="__PUBLIC__/bootstrap/js/bootstrap.min.js"></script>
+</html>

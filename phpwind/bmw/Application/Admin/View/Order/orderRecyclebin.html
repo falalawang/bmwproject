@@ -1,0 +1,42 @@
+<extend name='Layout:layout' />
+<block name='main-content'>
+	<div class="mws-panel grid_8">
+                	<div class="mws-panel-header">
+                    	<span><i class="icon-table"></i>订单管理&nbsp;-->&nbsp;回收站</span>
+                    </div>
+					<div class="mws-panel-body no-padding">
+                        <table class="mws-table">
+                            <thead>
+                                <tr>
+                                    <th>订单编号</th>
+                                    <th>电话</th>
+                                    <th>保养时间</th>
+                                    <th>保养总价</th>
+                                    <th>车牌号</th>
+                                    <th>评价</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+								<foreach name='orders' item='order'>
+									<tr>
+										<td>{$order['id']}</td>
+										<td>{$order['phone']}</td>
+										<td>{$order['keep_time']}</td>
+										<td>{$order['price']}</td>
+										<td>{$order['LPN']}</td>
+										<td>{$order['text']}</td>
+										<td><a class='btn btn-small' href='__CONTROLLER__/updateb/id/{$order["id"]}'><i class="icon-share-2"></i></a><a class='btn btn-small' href='__CONTROLLER__/deleteb/id/{$order["id"]}'><i class="icon-trash"></i></a></td>
+									</tr>
+								</foreach>
+								<if condition="($pag LT 2)">
+								<else />
+								<tr>
+									<td style='background:#35353a;text-align:center' colspan='7'>{$show}</td>
+								</tr>
+								</if>
+							</tbody>
+                        </table>
+                    </div>
+    </div>
+</block>

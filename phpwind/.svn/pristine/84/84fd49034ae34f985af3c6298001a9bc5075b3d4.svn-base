@@ -1,0 +1,4 @@
+label{font-style:normal;font-weight: normal;}
+.red{color: #DD5A43;}
+.white{color: white;}
+.bottom{background: #222222;color: #EEE;padding: 10px;}

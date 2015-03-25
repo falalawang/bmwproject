@@ -1,0 +1,37 @@
+<?php
+namespace Home\Controller;
+use Think\Controller;
+
+class LoginController extends Controller{
+	public function login(){		
+		$this -> display();
+	}
+	public function checkLogin(){
+		$tel=$_GET['telephone'];
+		$technician=M("technician");
+		$map['telephone']=$tel;
+		$res=$technician->where($map)->find();
+		if($res){//判断是否是顾客(可能是技师)
+			echo "true";  //技师返回"true"
+		}else{
+			echo "false";  //顾客返回"false"
+		}
+
+		$customer=M("customer");
+		$cus=$customer->where($map)->find();
+		if($cus){
+			cookie('uid',$cus['id']);
+		}else{
+			if($customer->create($_GET)){
+				$customer->add();
+				echo "添加成功";
+			}else{
+				echo "添加失败";				
+			}
+		}
+	}
+
+	
+
+}
+?>

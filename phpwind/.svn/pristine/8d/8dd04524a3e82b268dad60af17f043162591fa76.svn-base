@@ -1,0 +1,160 @@
+	$("#test").hide();			//保养套餐模版隐藏
+	$(".selectCombo").hide();	//选套餐提示隐藏
+	function checkCombo(obj){
+		$(".selectCombo").show();//当单击某个车型时,选套餐提示显示
+		var typeId=obj.value;	//拿到顾客选定的车型
+		var data={typeId:typeId};//发送ajax请求,得到对应的套餐价格信息
+		$.get("inputInfo",data,function(d){
+			LowPrice=0;
+			HighPrice=0;
+			$("#combo").html("");
+			for(x in d){		//遍历返回的套餐价格信息,将其放入套餐模版,复制模版放入套餐提示下面
+				var comboName=d[x].comboName;
+				var lowPrice=d[x].lowPrice;
+				var highPrice=d[x].highPrice;
+				if(highPrice){
+					var str="价格:"+lowPrice+"-"+highPrice+"元";
+				}else{
+					var str="价格:"+lowPrice+"元";
+				}
+				$("#test span:eq(0)").html(comboName);//将提交订单需要的信息放入隐藏表单里
+				$("#test input:eq(0)").val(comboName);
+				$("#test input:eq(1)").val(lowPrice);
+				$("#test input:eq(2)").val(highPrice);
+				$("#test span:eq(1)").html(str);
+				$("#test label").clone().appendTo("#combo").show();
+			}
+		});
+	}
+	
+
+	$("#combo").on("click","input",function(){		//点击套餐触发的事件	
+		
+		var l=$("#combo").children(".packages").children("input:checked").next();
+		var h=$("#combo").children(".packages").children("input:checked").next().next();
+		var n=l.length;
+		var LowPrice=0;
+		var HighPrice=0;
+		var str;
+		if(n==0){
+			str="0元";
+		}
+		
+		for (var i = 0; i < n; i++) {
+			var low=parseInt(l.eq(i).val());				//得到低价
+			LowPrice+=low;						//低价累加
+			if(h.eq(i).val()){						//如果高价存在,得到高价
+				var high=parseInt(h.eq(i).val());
+			}else{								//如果高价不存在,将低价赋给高价
+				var high=low;
+			}
+			HighPrice+=high;					//高价累加
+			if(LowPrice != HighPrice){			//如果高价不等于低价,输出一个区间价
+				str=LowPrice+"-"+HighPrice+"元";
+			}else{								//如果高价等于低价,输出低价
+				str=LowPrice+"元";
+			}
+		
+		}
+		
+			
+			$("#lastPrice").html(str);			//将输出的价格放到页面
+			$("#LastPrice").val(str);
+		
+	});
+
+
+	$(".time").hide();				//隐藏时间段
+	$(".date").click(function(){	//单击日期触发的事件
+	    $(".time").slideUp();		//显示该日期对应时间段的状态信息
+	    $(this).next().slideToggle();//其他日期的时间段状态信息隐藏
+	    setCookie('date',$(this).html(),1);//将选择的日期放入cookie中
+	});
+	$(".Time").click(function(){	//单击时间触发事件
+	    setCookie('time',$(this).html(),1);//将选定的时间段放入cookie中
+	    $(".Time").css("background","#fff");
+	    $(this).css("background","#FEF9F5");
+	});
+
+  	$("#save").click(function(){	//保存选择的日期和时间段,并放到页面上
+    	$("#orderdate").val(getCookie('date'));
+    	$("#ordertime").val(getCookie('time'));
+    	var app=getCookie('date')+" "+getCookie('time');
+    	$("#appointment").html(app);
+  	});
+
+  	$("#submit").click(function(){	//提交订单之前做的判断
+	  	if($("#tel").val() && $("#carType").val() && $("#orderdate").val() && $("#ordertime").val() && $("#user").val() && $("#code").val() && $("#carNumber").val()){		//判断加*是否为空,为空不能提交
+	  		
+	  		$("#orderdate").removeAttr("disabled");
+	  		$("#ordertime").removeAttr("disabled");
+	  	}else{
+	  		if(!$("#tel").val()){
+	  			$("#tel").attr("placeholder","!请输入手机号");
+	  		}
+	  		if(!$("#code").val()){
+	  			$("#code").attr("placeholder","!请输入动态密码");
+	  		}
+	  		if(!$("#user").val()){
+	  			$("#user").attr("placeholder","!请输入姓名");
+	  		}
+	  		if(!$("#carNumber").val()){
+	  			$("#carNumber").attr("placeholder","!请输入车牌号");
+	  		}
+	  		return false;
+	  	}
+  	});
+
+
+  function setCookie(name, value, iDay){
+      var oDate=new Date();
+      oDate.setDate(oDate.getDate()+iDay);
+      document.cookie=name+'='+value+';expires='+oDate;
+      }
+
+      function getCookie(name){
+      //'username=abc; password=123456; aaa=123; bbb=4r4er'
+      var arr=document.cookie.split('; ');
+      var i=0;
+      //arr->['username=abc', 'password=123456', ...]
+      for(i=0;i<arr.length;i++){
+        //arr2->['username', 'abc']
+        var arr2=arr[i].split('=');
+        if(arr2[0]==name){
+          return arr2[1];
+        }
+      }
+        return '';
+    }
+    $("#btn").attr("disabled","disabled");	//触发发送验证码按钮默认禁用
+    $("#tel").keyup(function(){				//输入手机号时鼠标抬起触发的事件
+		var tel=document.getElementById("tel");
+		//当输入了11位合法手机号时,触发发送验证码按钮,变换背景色提示用户发送验证码,取消禁用
+		if(tel.value.length==11){			
+			$("#btn").css({ "color": "#fff", "background": "#3296b1" });
+			$("#btn").removeAttr("disabled");
+		}
+	});
+		
+	function sendMessage(){						//单击触发发送验证码按钮触发事件
+		$("#btn").attr("disabled","disabled");	//触发事件之后按钮设为禁用
+			if($("#btn").html()=="获取动态密码"){//判断是否倒计时完成,完成可再次触发事件
+				$("#btn").html(120);
+				time = setInterval("dec()",1000);
+				var tel=$("#tel").val();
+				var data={telephone:tel};
+				$.get("sendMessage",data);	//发送ajax请求,发送随机验证码
+			}
+
+		}
+
+	function dec(){					//倒计时
+		if($("#btn").html()==0){	//倒计时完成
+			$("#btn").html("获取动态密码");
+			$("#btn").removeAttr("disabled");//取消禁用
+			clearInterval(time);
+		}else{						//倒计时未完成
+			$time=$("#btn").html()-1;
+			$("#btn").html($time);
+		}
+	}

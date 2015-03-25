@@ -1,0 +1,48 @@
+<extend name='Layout:layout'/>
+<block name='mws-container'>
+ <div id="mws-container" class="clearfix">
+        
+            <!-- Inner Container Start -->
+            <div class="container">
+                <div class="mws-panel grid_9">         
+                <div class="mws-panel-header">
+                        <span>修改用户信息</span>
+                    </div>
+                    <div class="mws-panel-body no-padding">
+                        <form class="mws-form" action="__CONTROLLER__/update" method='post'>
+                            <fieldset class="mws-form-inline">
+                                <legend></legend>
+                                <div class="mws-form-row bordered" style='letter-spacing:3px;'>
+                                    用户名：
+                                        <input type="text" name='userid' readonly class="large" size='35' value='{$user['userid']}'>
+                                </div>
+                                <div class="mws-form-row bordered">
+                                    修改密码：
+                                        <input type="text" name='password' class="large" size='35'value=''>
+                                </div>
+                                <div class="mws-form-row bordered">
+                                    确认密码：
+                                        <input type="text" name='password1' class="large" size='35'value=''>
+                                </div>
+                                <div class="mws-form-row bordered">
+                                       用户权限：
+                                        <select name='status' disabled class="large" >
+                                            <option value='0'>{$user['statu']}</option>
+                                            
+                                        </select>
+                                    
+                                </div>
+                                <div class="mws-form-row bordered">
+                                    修改昵称：
+                                        <input type="text" name='username' class="large" size='35' value='{$user['username']}'>
+                                </div>
+                            </fieldset>
+                            
+                            <div class="mws-button-row">
+                                <input type="submit" value="确认" class="btn btn-danger">
+                                <input type="reset" value="重置" class="btn ">
+                            </div>
+                        </form>
+                    </div>      
+                </div>
+</block>                

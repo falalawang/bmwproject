@@ -1,0 +1,79 @@
+<extend name='Layout:layout'/>
+<block name='mws-container'>
+    <div id="mws-container" class="clearfix">
+        
+            <!-- Inner Container Start -->
+            <div class="container">
+            
+                
+                
+                <div class="mws-panel grid_8">
+                    <div class="mws-panel-header">
+                        
+                        <span><i class="icon-table"> 用户管理</i>
+                        <b style='float:right'>
+
+                        <form action='__CONTROLLER__/index' method='get'>
+                            <label>搜 索: <input aria-controls="DataTables_Table_0" name='userid' type="text" placeholder='输入要搜索的用户名' size=18></label>
+                            <input type="submit" class="btn" value='搜索'>
+                        </form>
+                        
+                        </b>
+                        &nbsp;&nbsp;<a href="__CONTROLLER__/add" class="btn">添加用户</a>
+
+                        </span>
+                    </div>
+                    <div class="mws-panel-body no-padding">
+                        <table class="mws-table">
+                            <thead>
+                               
+                            <thead>
+                                <tr>
+                                    <th>编号</th>
+                                    <th>账号</th>
+                                    <th>权限</th>
+                                    <th>昵称</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody style='text-align:center;'>
+                                <foreach name='user' item='user'>
+                                    <tr>
+                                        <td>{$user['id']}</td>
+                                        <td>{$user['userid']}</td>
+                                        <td>
+                                            <if condition="$user['status'] eq 0 ">超级管理员
+                                            <elseif condition="$user['status'] eq 1"/>管理员
+                                            <elseif condition="$user['status'] eq 2"/>客服
+                                            <else />技师
+                                            </if>
+                                        </td>
+                                        
+                                        <td>{$user['username']}</td>
+                                        <td>
+                                            <a href="__APP__/User/edit/id/{$user.id}" class="btn">修改</a>
+                                            <a href="__APP__/User/del/id/{$user.id}" onclick="return confirm('你确定要删除吗？')" class="btn">删除</a>
+                                        </td>
+                                    </tr>
+                                </foreach>
+                                <tr>
+                                    
+                                    <td colspan='5'>
+                                        <div class="right">{$show}</div>
+                                    </td>
+                                
+                                </tr> 
+                                {$trs}  
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+
+                
+                
+            </div>
+    </div>
+</block>
+                                       
+</block>

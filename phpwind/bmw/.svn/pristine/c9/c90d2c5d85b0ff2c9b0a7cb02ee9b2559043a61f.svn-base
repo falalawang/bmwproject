@@ -1,0 +1,32 @@
+<extend name="Layout:layout"/>
+<block name="main-content">     
+            <div class="mws-panel grid_8">
+                <div class="mws-panel-header">
+                   <span><i class="icon-table"></i>服务列表
+				   </span>
+                    </div>
+                    <div class="mws-panel-body no-padding">
+                        <table class="mws-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>服务名称</th>
+									<th>操作</th>
+                                </tr>
+                            </thead>
+							<foreach name='project' item='projects'>
+                            <tbody>
+                                <tr align='center'>
+                                    <td>{$projects.id}</td>
+                                    <td>{$projects.project}</td>
+									<td>
+										<a href="__APP__/Service/addService">添加服务</a>
+                                        <a href="__APP__/Service/delService/id/{$projects.id}">删除服务</a>
+									</td>
+                                </tr>
+                            </tbody>
+							</foreach>
+                        </table>
+                    </div>
+                </div>
+</block>

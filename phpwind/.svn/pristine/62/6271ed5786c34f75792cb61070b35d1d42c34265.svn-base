@@ -1,0 +1,22 @@
+<?php
+namespace Home\Controller;
+use Think\Controller;
+
+class LoginController extends Controller{
+	public function login(){		
+		$this -> display();
+	}
+	public function checkLogin(){
+		$usermodel=M("usermodel");
+		$usermodels=$usermodel->select();
+		if(!$usermodels){
+			echo "false";
+		}else{
+			echo "true";
+		}
+	}
+
+	
+
+}
+?>

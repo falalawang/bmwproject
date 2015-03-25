@@ -1,0 +1,63 @@
+<extend name="Layout:layout"/>
+ <block name="mws-container">
+<div class="clearfix" id="mws-container">       
+            <!-- Inner Container Start -->
+            <div class="container">
+                <!-- Panels Start -->               
+                <div class="mws-panel grid_8">
+                    <div class="mws-panel-header">
+                        <span  class="left block "><i class="icon-table "></i> 订单操作记录表
+                        </span>
+                        <form action="__CONTROLLER__/index" method="get">
+                        <div class="right block">
+                            <label>
+                                <input type="text" placeholder="请输入帐号" name="userid" aria-controls="DataTables_Table_1">
+                                <input type="submit" class="btn" value="查询帐号">
+                            </label>
+                        </div>
+                        </form>
+  
+                    </div>
+                    <div class="mws-panel-body no-padding">
+                        <table class="mws-table" style="text-align:center">
+                            <thead>
+                                <tr>
+                                    <th>编号</th>
+                                    <th>帐号</th>
+                                    <!-- <th>昵称</th> -->
+                                    <th>操作记录</th>
+                                    <th>时间</th>
+                                   
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <foreach name="operatecord" item="operatecord" key="k">
+                                     <tr>
+                                        <td>{$count+$k+1}</td>
+                                        <td>{$operatecord['name']['userid']}</td>
+                                        <!-- <td>{$operatecord['name']['username']}</td> -->
+                                        <td>{$operatecord['operation']}</td>
+                                        <td>{$operatecord.otime|date="Y-m-d  H:i:s",###}</td>
+                                    </tr>
+                                </foreach>
+                                <tr>
+                                    
+                                    <td colspan="5">
+                                        <div class="right">{$show}</div>
+                                    </td>
+                                
+                                </tr>   
+                            </tbody>
+                        </table>
+                        
+                    </div>
+                
+                
+                <!-- Panels End -->
+            </div>
+            <!-- Inner Container End -->         
+        </div>
+ </block>
+<block name="js">
+
+</block>

@@ -1,0 +1,54 @@
+
+<extend name="Layout:layout"/>
+ <block name="mws-container">
+<div class="clearfix" id="mws-container">       
+            <!-- Inner Container Start -->
+            <div class="container">
+                <!-- Panels Start -->               
+                <div class="mws-panel grid_8">
+                    <div class="mws-panel-header">
+                        <span  class="left block "><i class="icon-table "></i> 服务车排班列表
+                        </span>
+                        <form action="__CONTROLLER__/carorder" method="get">
+                        <div class="right block ">
+                            <input type="text" style="width:300px" placeholder='请输入(4s店|服务车|人员)信息' name="shop" >
+                            <input type="submit"  class="btn" value="查询">
+                        </div> 
+                        </form>
+                    </div>
+                    <div class="mws-panel-body no-padding">
+                        <table class="mws-table" style="text-align:center">
+                            <thead>
+                                <tr>
+                                    <th>城市</th>
+                                    <th>客户信息</th>
+                                    <th>4S店</th>
+                                    <th>服务车</th>
+                                    <th>服务人员</th>
+                                    <th>日期</th>
+                                    <th>时间</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <foreach name="carorder" item="carorder">
+                                     <tr>
+                                        <td>{$carorder['city']}</td>
+                                        <td>{$carorder['carmodel']}</td>
+                                        <td>{$carorder['shop']['shopname']}</td>
+                                        <td>{$carorder['car']['carname']}</td>
+                                        <td>{$carorder['car']['technicians']}</td>
+                                        <td>{$carorder['hopedata']}</td>
+                                        <td>{$carorder['hopetime']}</td>
+                                    </tr>
+                                </foreach>
+                                <tr>
+                                    <td colspan="7">
+                                        <div class="right">{$show}</div>
+                                    </td>
+                                </tr>   
+                            </tbody>
+                        </table>
+                    </div>
+            </div>
+        </div>
+ </block>

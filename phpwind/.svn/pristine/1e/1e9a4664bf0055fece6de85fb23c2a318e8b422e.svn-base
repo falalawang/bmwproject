@@ -1,0 +1,32 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+	<div class="row">
+        <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading">
+                网站开关
+            </header>
+            <div class="panel-body">
+                <form action="__CONTROLLER__/updateSwitch" class="form-horizontal adminex-form" method="post">
+                	<input type="hidden" name="id" value="{$sw[0]['id']}" />
+                    <div style="margin-bottom:30px; padding:10px;">
+                    	<if condition="$sw[0]['webStatus'] eq '1'">
+                    		<div class="col-sm-4"></div>
+                        	<div class="col-sm-2"><input type="radio" name="webStatus" value="1" checked />开</div>
+                        	<div class="col-sm-2"><input type="radio" name="webStatus" value="0" />关</div>
+                        <else />
+                        	<div class="col-sm-4"></div>
+                        	<div class="col-sm-2"><input type="radio" name="webStatus" value="1" />开</div>
+                        	<div class="col-sm-2"><input type="radio" name="webStatus" value="0" checked />关</div>
+                        </if>
+                    </div>
+                    <div class="col-sm-5"></div>
+                    <div class="col-sm-2 panel-body">
+						<button type="submit" class="btn btn-primary">修改</button>
+                    </div>
+                </form>
+            </div>
+	    </section>
+	    </div>
+    </div>
+</block>

@@ -1,0 +1,52 @@
+<?php
+namespace Admin\Controller;
+use Think\Controller;
+class IndexController extends Controller{
+	
+	//登陆页面显示
+	public function index(){
+		$backstage = M('backstage');
+		$res = $backstage -> select();
+        $this -> display();
+    }
+	
+	public function login(){
+		$verify = new \Think\Verify();
+		$code = $_POST['code'];
+		if(!$verify -> check($code)){
+			$this -> error('验证码错误!');
+			exit();
+		}
+		$_POST['password'] = md5($_POST['password']);
+		$info = M('backstage');
+		$infos = $info -> where("name = '{$_POST['name']}' and password = '{$_POST['password']}'") -> select();
+		if($infos){
+			session('name',$infos[0]['name']);	
+			$this -> success('登陆成功!','main');
+			
+		}else{
+			$this -> error('登陆失败!');
+		}
+		$this -> display();
+	}
+	
+	//后台主页
+	public function main(){
+		$this -> display();
+	}
+	
+	//验证码
+	public function code(){
+		$config = array('fontSize' => 14,    // 验证码字体大小  
+						'imageW' => 140,	//验证码的宽度
+						'imageH' => 35,		//验证码的高度
+						'length' => 4,  	// 验证码位数  
+						'useNoise' => false, // 关闭验证码杂点
+						);
+		$Verify = new \Think\Verify($config);
+		$Verify->fontttf = '5.ttf';
+		$Verify->entry();
+	}
+	
+	
+}

@@ -1,0 +1,29 @@
+<extend name='Layout:layout'/>
+<block name='mws-container'>
+	<div id="mws-container" class="clearfix">
+            <div class="container">
+            	<div class="mws-panel grid_8">
+                	<div class="mws-panel-header">
+                    	<span>修改城市</span>
+                    </div>
+                    <div class="mws-panel-body no-padding">
+                    	<form class="mws-form" action="__CONTROLLER__/update" method='post'>
+                    		<div class="mws-form-inline">
+                    			<div class="mws-form-row">
+                    				<label class="mws-form-label">城市</label>
+                    				<div class="mws-form-item">
+                    					<input type="text" name='city' class="small" value='{$Think.get.city}'>
+                    					<input type='hidden' name='id' value='{$Think.get.id}'>
+                    				</div>
+                    			</div>
+                    		</div>
+                    		<div class="mws-button-row">
+                    			<input type="submit" value="修改" class="btn btn-danger">
+                    			<input type="reset" value="重置" class="btn ">
+                    		</div>
+                    	</form>
+                    </div>    	
+                </div>
+            </div>
+        </div>
+</block>

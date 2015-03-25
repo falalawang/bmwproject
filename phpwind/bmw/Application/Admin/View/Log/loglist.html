@@ -1,0 +1,39 @@
+<extend name='Layout:layout' />
+<block name='main-content'>
+<div class="mws-panel grid_8">
+                	<div class="mws-panel-header" style='text-align:right'>
+                    	<span style='float:left'><i class="icon-table"></i>订单管理&nbsp;-->&nbsp;订单列表</span>
+                        <form action='__CONTROLLER__/delete' method='post'>
+                        <input style='width:150px;height:25px' type='text' name='search' placeholder='搜索' />
+                        </form>
+                    </div>
+					<div class="mws-panel-body no-padding">
+                        <table class="mws-table">
+                            <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>用户</th>
+                                    <th>具体操作</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+								<foreach name='logs' item='log'>
+									<tr>
+										<td>{$log['id']}</td>
+										<td>{$log['username']}</td>
+										<td>{$log['log']}</td>
+										<td style='text-align:center'><a class='btn btn-small' href='__CONTROLLER__/delete/id/{$log["id"]}'><i class="icon-trash"></i></a></td>
+									</tr>
+								</foreach>
+								<if condition="($pag LT 2)">
+								<else />
+								<tr>
+									<td style='background:#35353a;text-align:center' colspan='7'>{$show}</td>
+								</tr>
+								</if>
+                            </tbody>
+                        </table>
+                    </div>
+</div>		
+</block>

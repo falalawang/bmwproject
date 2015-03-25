@@ -1,0 +1,101 @@
+<extend name='Layout:layout'/>
+<block name='kog'>
+	<div id="loginmodal" style="display:none;">
+
+	  <p>请登录</p>
+      <input placeholder='*手机号' type="text" name="phone" id="username" maxlength="11" class="txtfield" value="" ><span id="sp" style="font-size:12px;color:red"></span>
+      <br />
+      <input placeholder='*验证码' type="text" name="code" class="txtfiel" id="code" maxlength="4" value="" ><input type="button" id="getcode" class="flatbtn-w" value="获取验证码" >
+      <br />
+      <input type="submit" name="loginbtn" id="loginbtn" class="flatbtn-blu hidemodal" value="确定" tabindex="3">
+  </div>
+</block>
+<block name='main-content'>
+	<form action='__CONTROLLER__/three' method='post' onsubmit = "return fun()">
+	<div class='contentb'>
+		<table class='tab'>
+		<foreach name='prices' item='price'>
+			<tr style='line-height:30px'>
+				<td>
+					<div class = "pre"><input type='checkbox' name='pric[]' value="{$price['combo']}" id='pri' /><span id='pre'>{$price['combo']}</span><span >{$price['low_price']}</span><span><if condition="$price['high_price'] neq 0">~</if></span><span><if condition="$price['high_price'] neq 0">{$price['high_price']}</if></span></div>
+				</td>
+			</tr>
+		</foreach>
+		</table>
+		<div><h2>你的服务费是:</h2><b style="color:red;font-size:20px" id="service">200</b>￥</div>
+		<input type='hidden' id='pr' name='price' value='200' /><br />
+		<input type='hidden' value="{$zhi['brand']}" name='brand'/>
+		<input type='hidden' value="{$zhi['series']}" name='series'/>
+		<input type='hidden' value="{$zhi['models']}" name='models'/>
+		<button class='inp' type='submit'>下一页</button>
+		</form>
+	</div>
+	
+	<script>
+
+	$(".pre input[name='pric[]']").click(function () {
+		// $("#total2").html() = GetCount($(this));
+		if($(this).attr("checked")){
+			$(this).attr("checked",false);
+		}else{
+			$(this).attr("checked",true);
+		}
+		getCount();
+		//alert(conts);
+	});
+	function getCount(){
+		var counts = 200;
+		var heigh = 200;
+		$(".pre input[name='pric[]']").each(function(){
+			//alert(typeof($(this)));
+			if($(this).attr("checked")){
+				//alert($(this).length);
+				for(var i = 0;i < $(this).length;i++){
+					//alert(i);
+					counts += parseInt($(this).next("span").next().html());
+					if($(this).next("span").next().next().next().html() == 0){
+						heigh += parseInt($(this).next("span").next().html());
+					}else{
+						heigh += Number($(this).next("span").next().next().next().html());
+					}
+				}
+			}
+		});
+		if(counts == heigh){
+			$("#service").html(counts);
+			$('#pr').val(counts);
+		}else{
+			$("#service").html(counts+'~'+heigh);
+			$("#pr").val(counts+'~'+heigh);
+		}
+		
+	}
+		function fun(){
+			var y = $("#service").html();
+			if(y == 200){
+				alert('请选择保养项目');
+				return false;
+			};
+		}
+		
+	</script>
+	<script type="text/javascript">
+	$('#modaltrigger').leanModal({ top: 110, overlay: 0.45, closeButton: ".hidemodal" });
+		//});
+	$('#loginbtn').click(function(){
+			var p = $("#username").val();
+			var c = $("#code").val();
+
+			if(p !="" && c !=""){
+				$.get('__APP__/Sms/checka',{'phone':p,'code':c},function(data){
+					//alert(data)；
+					//if(eval(data)){
+						//alert('验证失败');
+					//	window.location.reload();
+					//}
+					window.location.reload();
+				})
+			}
+	});
+</script>
+</block>

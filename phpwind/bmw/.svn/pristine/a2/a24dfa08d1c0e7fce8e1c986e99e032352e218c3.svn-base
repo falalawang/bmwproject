@@ -1,0 +1,43 @@
+<extend name='Layout:layout'/>
+<block name='main-content'>
+	<form action='__CONTROLLER__/two' method='post' onsubmit='return fun()'>
+	<div class='content'>
+		<div id='one'>
+			<select name='brand' id='brand' class='sel'>
+				<option>请选择品牌</option>
+				<foreach name='brands' item='brand'>
+				<option value="{$brand['id']}">{$brand['brands']}</option>
+				</foreach>
+			</select>
+			<select name='series' id='series' class='sel'>
+				<option>请选择车型</option>
+			</select>
+			<select name='models' id='models' class='sel'>
+				<option>请选择车系</option>
+			</select>
+			<input type='submit' name='sub' value='下一步' class='inp' />
+		</div>
+		
+	</div>
+	</form>
+	<script>
+		$('#brand').get(0).onblur = function(){
+			var brand = $('#brand').val();
+			$.get("__CONTROLLER__/serie?id="+brand,function(data){
+			  $('#series').get(0).innerHTML = data;
+			})
+		};
+		$('#series').get(0).onblur = function(){
+			var serie = $('#series').val();
+			$.get("__CONTROLLER__/model?id="+serie,function(data){
+			  $('#models').get(0).innerHTML = data;
+			})
+		};
+		function fun(){
+			if($('#models').val() == '请选择车系'){
+				alert('请您正确操作');
+				return false;
+			}			
+		}
+	</script>
+</block>

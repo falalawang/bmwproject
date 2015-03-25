@@ -1,0 +1,75 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+	<!-- Main Container Start -->
+                <!-- Panels Start -->
+                
+            	<div id="rely" class="mws-panel grid_8">
+                	<div class="mws-panel-header">
+                    	<span style="float:left">自动回复设置 </span><button class="btn" id="auto" style="float:right">查看自动回复</button>
+                    </div>
+                    <div class="mws-panel-body no-padding">
+                    	<form class="mws-form" action="__CONTROLLER__/insert" method="post">
+                    		<div class="mws-form-inline">
+                    			<div class="mws-form-row">
+                    				<label class="mws-form-label">关键词：</label>
+                    				<div class="mws-form-item">
+                    					<input type="text" name="keyword" class="small" required>
+                    				</div>
+                    			</div>
+
+                    			<div class="mws-form-row">
+                    				<label class="mws-form-label">回复内容：</label>
+                    				<div class="mws-form-item">
+                    					<textarea rows="" cols="" class="large" name="content" required></textarea>
+                    				</div>
+                    			</div>
+                    		</div>
+                    		<div class="mws-button-row" style="text-align:center">
+                    			<input type="submit" value="增加" class="btn btn-danger">
+                    			<input type="reset" value="重置" class="btn ">
+                    		</div>
+                    	</form>
+                    </div>    	
+                </div>
+                <div class="mws-panel grid_8" style="display:none">
+         		
+                    <div class="mws-panel-body no-padding">
+                    	<foreach name="wechats" item="wechat">
+                    	<form action="__CONTROLLER__/mod" method="post">
+                    		<div class="mws-form-inline">
+                    			<div class="mws-form-row">
+                    				<label class="mws-stat-value">关键词：</label>
+                    				<div class="mws-form-item">
+                    					<input type="text" name="keyword" value="{$wechat.keyword}" class="small">
+                    					<input type="hidden" name="id" value="{$wechat.id}">
+
+                    				</div>
+                    			</div>
+
+                    			<div class="mws-form-row">
+                    				<label class="mws-stat-value">回复内容：</label>
+                    				<div class="mws-form-item">
+                    					<textarea rows="5" cols="100" style="resize:none" class="large" name="content">{$wechat.content}</textarea>
+                    				</div>
+                    			</div>
+                    		</div>
+                    		<div class="mws-button-row" style="text-align:center">
+                    			<input type="submit" value="修改" class="btn btn-danger">
+                    			<input type="reset" value="重置" class="btn btn-danger">
+
+                    		</div>
+                    		 </form>
+                    	</foreach>
+                    </div>
+                    	
+                </div>
+                <script src = "__PUBLIC__/admin/js/jquery.js"></script>
+
+                <script>
+                	$("#auto").click(function(){
+                		$("#rely").siblings().slideToggle();
+					});
+                </script>
+
+        <!-- Main Container End -->
+</block>

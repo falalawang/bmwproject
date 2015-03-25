@@ -1,0 +1,140 @@
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" />
+		<title>宇瑞安|4s到家汽车保养|选择车型</title>
+		<meta name="keywords" content="汽车保养上门服务，4s店上门保养，宝马4s点保养" />
+		<meta name="description" content="4s店汽车保养上门服务" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link href="/thinkphp/Public/home/css/bootstrap.min.css" rel="stylesheet" />
+		<script src="/thinkphp/Public/home/js/jquery.js"></script>
+	</head>
+	<style type="text/css">
+		body{background: #1D2024;}
+		.content{max-width: 350px;margin: 0 auto;}
+		.center{text-align: center;}
+		.red{color: #DD5A43;}
+		.blue{color: #478FCA;}
+		.white{color: white;}
+		form{margin-top: 20px;}
+		.top{max-width: 350px;background: #fff;padding: 16px 36px 36px;border:5px solid #597597}
+		.bottom{background: #597597;height: 50px;color: #FE9;line-height: 50px;font-size: 15px;}
+	</style>
+	<body>
+		<button type="button" id="ccity" onclick="selectCounty(this)" class="btn btn-sm city" style="margin-right:10px;margin-bottom:10px;display:none"></button>
+		<button type="button" id="ccounty" class="btn btn-sm county" style="margin-right:10px;margin-bottom:10px;display:none"></button>
+		<div class="container">
+			<div class="center">
+				<h1>
+					<span class="red">4s</span>
+					<span class="white">到家汽车保养</span>
+				</h1>
+				<h4 class="blue">&copy; 宇瑞安</h4>
+			</div>
+			<div id="province" class="content">				
+				<div class="top">
+					<h4 class="center blue">请选择您所在的省份(直辖市)</h4><hr>
+					<form>												
+						<div class="btn-group">	
+							<?php if(is_array($provinces)): foreach($provinces as $key=>$province): ?><button type="button" class="btn btn-sm province" style="margin-right:10px;margin-bottom:10px;">
+									<?php echo ($province); ?></button><?php endforeach; endif; ?>
+						</div>
+					</form>	
+				</div><!-- /widget-main -->
+				<div class="center bottom">
+					<!--<a href="#" onclick="show_box('city'); return false;" >
+						请选择您所在的城市</a>-->
+				</div>				
+			</div>
+			<div id="city" class="content">
+				<div class="top">
+					<h4 class="center blue">请选择您所在的城市</h4>
+					<div class="btn-group">
+					<span class="City">
+						
+					</span>	
+					</div>
+				</div><!-- /widget-main -->
+				<div class="center bottom">
+					<a href="#" onclick="show_box('province'); return false;">返回上一级</a>
+				</div>					
+			</div>
+			<div id="county" class="content">
+				<div class="top">
+					<h4 class="center blue">请选择您所在的区域</h4>
+					<div class="btn-group">
+					<span class="County"></span>	
+					</div>
+				</div>
+				<div class="center bottom">
+					<a href="#" onclick="show_box('city'); return false;">返回上一级</a>
+				</div>
+			</div><!-- /widget-body -->
+		</div>
+
+		<script type="text/javascript">
+			if("ontouchend" in document) document.write("<script src='/thinkphp/Public/home/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+		</script>
+
+		<!-- inline scripts related to this page -->
+
+		<script type="text/javascript">
+			$("#city").hide();
+			$("#county").hide();
+			function show_box(id) {
+				 if(id=="city"){
+				 	$("#province").hide();
+				 	$("#county").hide();
+				 	//alert($(this).children("button"));
+				 }else{
+				 	$("#city").hide();
+				 }
+				 $("#"+id).show();
+			}
+			
+
+			$(".province").click(function(){
+				$("#province").hide();
+				$("#city").show();
+				var data = {province:$(this).html().trim()};
+				$.get("selectCity",data,function(d){
+					for(x in d){
+						$("#ccity").clone().appendTo(".City").html(d[x].city).show();
+					}
+				});	
+			});
+
+			function selectCounty(obj){
+				$("#city").hide();
+				$("#county").show();
+				var data = {city:obj.innerHTML};
+				$.get("selectCounty",data,function(d){
+					for(y in d){
+						$("#ccounty").clone().appendTo(".County").html(d[y].county).show();
+					}
+				});	
+			}
+
+
+			function setCookie(name, value, iDay){
+			var oDate=new Date();
+			oDate.setDate(oDate.getDate()+iDay);
+			document.cookie=name+'='+value+';expires='+oDate;
+			}
+
+			
+			/*function add(){
+		        //ThinkAjax.sendForm(表单ID,URL,回调函数,信息显示的地方);
+		        ThinkAjax.sendForm('frm','/thinkphp/index.php/Manage/addtwo',wc);   
+		    }
+
+		    function wc(data,status){
+		        if(status!=1){
+		            alert('发送失败');
+		        }else{
+		            $('list').innerHTML+='标题'+data.title+',信息'+data.message;   
+		        }   
+		    }*/
+		</script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+body{background: #fff;}
+.bg{background: #efefef;margin-bottom: 10px;padding: 10px; }
+.red{color: #DD5A43;}
+.blue{color: #478FCA;}
+.white{color: white;}
+.bottom{background: #597597;height: 50px;color: #FE9;line-height: 50px;font-size: 15px;}

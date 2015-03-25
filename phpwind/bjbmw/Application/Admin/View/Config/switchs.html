@@ -1,0 +1,65 @@
+<extend name="Layout:layout"/>
+<block name="css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/custom-plugins/picklist/picklist.css" media="screen">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/plugins/select2/select2.css" media="screen">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/plugins/ibutton/jquery.ibutton.css" media="screen">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/plugins/cleditor/jquery.cleditor.css" media="screen">
+</block>
+<block name="mws-container">
+    <div id="mws-container" class="clearfix">
+            
+                <!-- Inner Container Start -->
+                <div class="container">
+                    <div class="mws-panel grid_8">
+                            <div class="mws-panel-header">
+                                <span><i class="icon-ok"></i> 网站配置</span>
+                            </div>
+                            <div class="mws-panel-body no-padding">
+                                <form action="__CONTROLLER__/swiupdate"  method="post" class="mws-form" id="mws-validate" novalidate="novalidate">
+                                    <div style="display:none;" class="mws-form-message error" id="mws-validate-error"></div>
+                                    <div class="mws-form-inline">
+                                        <div class="mws-form-row">
+                                        <label class="mws-form-label">网站开启/关闭</label>
+                                        <div class="mws-form-item">
+                                            <ul class="mws-form-list inline">
+                                                <li>开启</li>
+                                                <li><input value="1" {$config['status']?'checked':''}  name="status" type="radio">
+                                                <input type="hidden" name="id" value="{$config.id}">
+                                                </li>
+                                                <li>关闭</li>
+                                                <li><input value="0" {$config['status']?"":'checked'} name="status" type="radio"/></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                   
+                                           
+                                       
+                                    </div>
+                                    <div class="mws-button-row">
+                                        <input type="submit" value="提交" class="btn btn-danger">
+                                        
+                                    </div>
+                                </form>
+
+                            </div>
+                    </div>
+                </div>
+    </div>
+</block>
+<block name="js">
+    <script src="__PUBLIC__/Admin/jui/js/globalize/globalize.js"></script>
+    <script src="__PUBLIC__/Admin/jui/js/globalize/cultures/globalize.culture.en-US.js"></script>
+
+    <!-- Plugin Scripts -->
+    <script src="__PUBLIC__/Admin/custom-plugins/picklist/picklist.min.js"></script>
+    <script src="__PUBLIC__/Admin/plugins/autosize/jquery.autosize.min.js"></script>
+    <script src="__PUBLIC__/Admin/plugins/select2/select2.min.js"></script>
+    <script src="__PUBLIC__/Admin/plugins/ibutton/jquery.ibutton.min.js"></script>
+    <script src="__PUBLIC__/Admin/plugins/cleditor/jquery.cleditor.min.js"></script>
+    <script src="__PUBLIC__/Admin/plugins/cleditor/jquery.cleditor.table.min.js"></script>
+    <script src="__PUBLIC__/Admin/plugins/cleditor/jquery.cleditor.xhtml.min.js"></script>
+    <script src="__PUBLIC__/Admin/plugins/cleditor/jquery.cleditor.icon.min.js"></script>
+
+    <!-- Demo Scripts (remove if not needed) -->
+    <script src="__PUBLIC__/Admin/js/demo/demo.formelements.js"></script>
+ </block>

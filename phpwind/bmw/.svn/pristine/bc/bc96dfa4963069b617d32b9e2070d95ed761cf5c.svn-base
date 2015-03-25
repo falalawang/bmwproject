@@ -1,0 +1,57 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+
+   
+        
+        <!-- Main Container Start -->
+
+        
+        	<!-- Inner Container Start -->
+            <div class="container">
+                <!-- Panels Start -->
+
+            	<div class="mws-panel grid_8">
+                	<div class="mws-panel-header">
+                    	<span>Columned Form</span>
+                    </div>
+                    <div class="mws-panel-body no-padding" style="text-align:center">
+                    	<form class="mws-form" action="__APP__/user/insert" method="post">
+                           
+                                            <p><div class="mws-form-col-2-8">
+                                                用&nbsp;&nbsp;户&nbsp;&nbsp;名：<input type="text" name="username">
+                                            </div></p>
+                                            <p><div class="mws-form-col-2-8" >
+                                                电&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;话：<input type="text" name="phone">
+                                            </div></p>
+                                            <p><div class="mws-form-col-2-8">
+                                                密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码：<input type="password" name="password">
+                                            </div></p>
+                                            <p><div class="mws-form-col-2-8">
+                                            确认密码：<input type="password" name="repassword">
+                                            </div></p>
+                                            <p><div class="mws-form-row bordered">
+                                            权&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;限：
+                                                <select name="auth">
+                                                    <option value="0" selected>客服人员权限</option>
+                                                    <option value="1">管理员权限</option>
+                                                </select>
+                                            </div></p>
+
+
+                    		<div class="mws-button-row" style="text-align:center">
+                    			<input type="submit" value="添加" class="btn btn-danger">
+                    			<input type="reset" value="重置" class="btn ">
+                    		</div>
+                        </form>
+                    </div>
+                </div>
+                
+            </div>
+            <!-- Inner Container End -->
+                       
+            
+        <!-- Main Container End -->
+        
+
+	
+</block>

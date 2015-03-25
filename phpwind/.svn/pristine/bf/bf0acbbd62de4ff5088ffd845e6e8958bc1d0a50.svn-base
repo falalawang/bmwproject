@@ -1,0 +1,121 @@
+<?php
+namespace Admin\Controller;
+use Think\Controller;
+class ComboController extends CommonController{
+    
+    //修改套餐
+	public function modCombo(){
+
+		//查询出所有品牌
+		$models = M('models');
+		$model = $models -> select();
+		foreach($model as $key=>$value){
+			//将所有的品牌放到一个数组中
+			$brands[$key] = $value['brand'];
+		}
+		//移除品牌数组中的重复值
+		$brand = array_unique($brands);
+
+		//将所有的品牌发送到模板
+		$this -> assign('brands',$brand);
+
+		$this -> display();                                 
+	}
+
+	//查询指定品牌下的所有车系
+	public function selectSerie(){
+		$brand = $_GET['brand'];
+		$models = M('models');
+		$model = $models -> field('series') -> where("brand='$brand'") -> select();
+
+		$str = "<option value='-1'>--请选择车系--</option>";
+		foreach($model as $k=>$value){
+			
+			foreach($value as $v){
+				$str .="<option value='$v'>$v</option>";
+			}	
+		}
+		echo trim($str);
+	}
+
+	//查询指定品牌和车系下的车型
+	public function selectType(){
+		$brand = $_GET['brand'];
+		$serie = $_GET['series'];
+
+		$models = M('models');
+		$model = $models -> field('id,types') -> where("brand='$brand' and series='$serie'") -> select();
+
+		$str = "<option value='-1'>--请选择车型--</option>";
+		foreach($model as $v){	
+			$str .="<option value=".$v['id'].">".$v['types']."</option>";
+		}
+		echo trim($str);
+	}
+
+	//查询指定品牌、车型和车系对应的所有套餐
+	public function selectCombo(){
+		$typeId = $_GET['typeId'];
+
+		$combos = M('combo');
+		$combo = $combos -> field('id,comboName')
+						 -> where("typeId=$typeId")
+						 -> select();
+		$str = "<option value='-1'>--请选择套餐--</option>";
+		foreach($combo as $v){
+			$str .="<option value=".$v['id'].">".$v['comboName']."</option>";
+		}
+		echo trim($str);
+	}
+
+	//确定价格
+	public function selectPrice(){
+		$comboId = $_GET['comboId'];
+		$prices = M('combo');
+		$price = $prices -> field('lowPrice,highPrice')
+						 -> where("id=$comboId")
+						 -> select();
+
+		foreach($price as $v){
+			if(!empty($v['highPrice'])){
+				echo $str = $v['lowPrice'].'-'.$v['highPrice'];
+			}else{
+				echo $str = $v['lowPrice'];
+			}
+		}
+	}
+
+	//修改价格操作
+	public function updatePrice(){
+		//得到车型及套餐对应的id
+		$data['id'] = $_POST['combo'];
+		//得到价格
+		$price = $_POST['price'];
+		//将价格中的元字截取
+		$p = strstr($price,'元',true);
+		//以-来分隔价格字符串
+		$prices = explode('-',$p);
+		//统计数组的长度,来判断是否有最高价格
+		$num = count($prices);
+		if($num == 1){
+			$data['lowPrice'] = $prices[0];
+		}else{
+			$data['lowPrice'] = $prices[0];
+			$data['highPrice'] = $prices[1];
+		}
+		
+		$combo = M('combo');
+		if($combo -> create($_POST)){
+			if($combo -> save()){
+				$this -> success('修改成功');
+			}
+		}
+	}
+
+	//套餐列表
+	public function comboList(){
+		
+	}
+
+}
+?>

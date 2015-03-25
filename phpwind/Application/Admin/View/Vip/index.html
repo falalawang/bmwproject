@@ -1,0 +1,146 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+<script src="__PUBLIC__/admin/js/jquery.js"></script>
+    <div class="wrapper">
+        <div class="row">
+            <div class="col-md-3">
+            </div>
+            <div class="col-md-6">
+                <section class="panel">
+                    <header class="panel-heading custom-tab dark-tab">
+                        <span class="nav nav-tabs" style="color:white">修改密码</span> 
+                    </header>
+                    <div class="panel-body">
+                        <div class="tab-pane" id="about2">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <section class="panel">
+                                        <div class="panel-body">
+                                            <form class="form-horizontal" id="myForm" role="form" method="post" action="__CONTROLLER__/mod">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-sm-4 control-label">原&nbsp;密&nbsp;码：</label>
+                                                    <div class="col-lg-5">
+                                                        <input type="password" class="form-control" name="oPwd" id="pwd" placeholder="请输入原密码" />                
+                                                    </div>
+                                                    <label class="control-msg" id='pwdMsg'>原密码</label>
+                                                </div>   
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-sm-4 control-label">新&nbsp;密&nbsp;码：</label>
+                                                    <div class="col-lg-5">
+                                                        <input type="password" name="nPwd" class="form-control" id="pwd1" placeholder="请输入新密码" />                
+                                                    </div>
+                                                    <label class="control-msg" id='pwd1Msg'>新密码</label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-sm-4 control-label">重复密码：</label>
+                                                    <div class="col-lg-5">
+                                                        <input type="password" name="rePwd" class="form-control" id="pwd2" placeholder="请再次输入密码" />
+                                                    </div>
+                                                    <label class="control-msg" id='pwd2Msg'>确认密码</label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-lg-offset-5 col-lg-12">
+                                                        <button type="submit" class="btn btn-primary">修改</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+        <script>
+            var pwd = $('#pwd');
+            var pwd1 = $('#pwd1');
+            var pwd2 = $('#pwd2');
+
+            var pwdMsg = $('#pwdMsg');
+            var pwd1Msg = $('#pwd1Msg');
+            var pwd2Msg = $('#pwd2Msg');
+            
+            var isPwd = false;
+            var isPwd1 = false;
+            var isPwd2 = false;
+
+            //验证原密码是否输入正确
+            pwd.blur(function(){
+                checkPwd();
+            });
+
+            function checkPwd(){
+                //获取input表单中的值
+                if(pwd.val() == ''){
+                    pwdMsg.html('原密码不能为空');
+                    pwdMsg.css('color','red');
+                }else{
+                    $.ajax({
+                            "type":"GET",
+                            "url":"__CONTROLLER__/checkPassword",
+                            data: "oPwd="+pwd.val(),
+                            success: function(d){
+                                if(d == 1){
+                                    pwdMsg.html('原密码正确');
+                                    isPwd = true;
+                                    pwdMsg.css('color','green');
+                                }else{
+                                    pwdMsg.html('原密码不正确');
+                                    pwdMsg.css('color','red');
+                                    isPwd = false;
+                                }
+                            }
+                    });
+                }
+            }
+
+            pwd1.blur(function(){
+                checkPwd1();
+            });
+
+            //验证密码
+           function checkPwd1(){
+                if(pwd1.val() == ''){
+                    pwd1Msg.html('密码不能为空').css('color','red');
+                }else if(pwd1.val().length < 5){
+                    pwd1Msg.html('密码的长度不能小于5位').css('color','red');
+                }else{
+                    isPwd1 = true;
+                    pwd1Msg.html('密码可用').css('color','green');                   
+                }
+            }
+
+            pwd2.blur(function(){
+                checkPwd2();
+            });
+           
+            //验证确认密码
+            function checkPwd2(){
+                if(pwd2.val() == ''){
+                    pwd2Msg.html('确认密码不能为空').css('color','red');
+                }else if(pwd1.val() == pwd2.val()){
+                    isPwd2 = true;
+                    pwd2Msg.html('密码一致').css('color','green');
+                }else{
+                    pwd2Msg.html('密码不一致').css('color','red');
+                }
+            }
+
+            $('#myForm').submit(function(){
+                checkPwd();
+                checkPwd1();
+                checkPwd2();
+                if(isPwd && isPwd1 && isPwd2){
+                    return true;
+                }else{
+                    return false;
+                }
+            });
+
+        </script>
+</block>

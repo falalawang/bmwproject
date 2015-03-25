@@ -1,0 +1,53 @@
+<?php
+namespace Admin\Controller;
+use Think\Controller;
+
+class ModelsController extends Controller{
+	//显示添加页面
+	public function add(){
+		$this -> display();
+	}
+	
+	//插入到数据库
+	public function insert(){
+		$model = M('models');
+		$models = $model -> add($_POST);
+		if($models){
+			$this -> success('OK','modelsList');
+		}else{
+			$this -> error('No');
+		}
+	}
+	
+	//显示车型列表
+	public function modelsList(){
+		$list = M('models');
+		$lists = $list -> select();
+		$this -> assign('list',$lists);
+		$this -> display();
+	}
+	
+	//修改车型信息
+	public function update(){
+		$id = $_GET['id'];
+		$model = M('models');
+		$models = $model -> where("id={$id}") -> select();
+		$this -> assign('model',$models);
+		$this -> display();
+	}
+	
+	//删除车型
+	public function delete(){
+		$id = $_GET['id'];
+		$model = M('models');
+		if($model -> delete($id)){
+			$this -> success('删除成功！');
+		}else{
+			$this -> error('删除失败！');
+		}
+	}
+	
+
+
+}
+?>

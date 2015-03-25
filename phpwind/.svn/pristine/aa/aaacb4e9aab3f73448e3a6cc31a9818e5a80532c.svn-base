@@ -1,0 +1,64 @@
+<?php
+namespace Home\Controller;
+use Think\Controller;
+
+class AppointmentController extends Controller{
+	public function inputInfo(){
+		$uid=cookie('uid');
+		$models=M("models");
+		$combo=M("combo");
+		$userModel=M("user_model");//用户车型表
+		$userModels=$userModel->where("uid=$uid")->select();
+		foreach ($userModels as $key => $value) {
+			$typeId=$value['typeId'];
+			$userTypes[$key]=$models->find($value['typeId']);//拿到用户具体的车型数据(包括id)
+			$combos[$key]=$combo->where("typeId=$typeId")->select();//拿到用户每辆车各自对应的套餐信息(它的typeId与上面的id对应),不需要分配到模版,通过从模版发送过来的ajax请求判断,再返回对应套餐信息
+		}
+		//var_dump($combos);
+		$userAddress=M("user_address");
+		$userAddresses=$userAddress->where("uid=$uid")->select();//拿到用户具体的地址信息(包括街道,姓名,														//手机号,uid,城市名)
+
+		if(isset($_GET['typeId'])){
+			$typeId=$_GET['typeId'];
+			foreach ($combos as $key =>$value) {
+				foreach ($combos[$key] as $k => $val) {								
+					if($val['typeId'] == $typeId){
+						$com[$k]['comboName']=$val['comboName'];
+						$com[$k]['lowPrice']=$val['lowPrice'];
+						$com[$k]['highPrice']=$val['highPrice'];
+					}
+				}
+			}
+			$this->ajaxReturn($com);
+		}
+		
+		$this->assign("userTypes",$userTypes);				
+		$this->assign("userAddresses",$userAddresses);
+		$city=M("city");
+        $c=$city->select();
+        foreach ($c as $key=> $value) {
+            $provinces[$key]=$value['province'];
+            $citys[$key]=$value['province'].",".$value['city'];
+            $countys[$key]=$value['city'].",".$value['county'];
+        }
+        $provinces=array_unique($provinces);
+        $ccitys=array_unique($citys);
+        $ccountys=array_unique($countys);
+
+
+        foreach ($ccitys as $key=> $value) {
+            $ccitys[$key]=explode(",", $value);
+        }
+        foreach ($ccountys as $key=> $value) {
+            $ccountys[$key]=explode(",", $value);
+        }
+        $this->assign("provinces",$provinces);
+        $this->assign("citys",$ccitys);
+        $this->assign("countys",$ccountys);
+        $this->display();
+	}
+	public function submitOrder(){
+		var_dump($_POST);
+	}
+}	
+?>

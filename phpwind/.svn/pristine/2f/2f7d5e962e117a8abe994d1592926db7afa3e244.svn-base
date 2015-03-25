@@ -1,0 +1,74 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+<script src="__PUBLIC__/admin/js/jquery.js"></script>
+<div class="row">
+        <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading">
+                修改套餐价格
+            </header>
+            <div class="panel-body">
+                <form action="__CONTROLLER__/updatePrice" class="form-horizontal adminex-form" method="post">
+                    <div class="col-sm-2"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">车型：</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" name="car" id="price" value="{$data[0]['brand']},{$data[0]['series']},{$data[0]['types']}" readonly="readonly" />
+                        </div>
+                        <div class="col-sm-5"></div>
+                    </div>
+                    <div class="col-sm-2"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">套餐：</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" name="comboName" id="price" value="{$data[0]['comboName']}" readonly="readonly" />
+                        </div>
+                        <div class="col-sm-5"></div>
+                    </div>
+                    <div class="col-sm-2"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">价格(元)：</label>
+                        <div class="col-sm-6">
+                            <div class="col-sm-3">
+                            <input size="" type="text" class="form-control" name="lowPrice" id="price" value="" /></div>
+                            <div class="col-sm-3">
+                            <input size="" type="text" class="form-control" name="highPrice" id="price" value="">
+                            </div>
+                            <div class="col-sm-6">
+                            <code>提示:若不是价格区间,请填入第一个框内</code>
+                            </div>
+                    </div>
+                    <div class="col-sm-5"></div>
+                    </div>
+                        <div class="col-sm-5"></div>
+                        <div class="col-sm-4 panel-body">
+                            <button type="submit" class="btn btn-primary">修改</button>
+                        </div>
+                        <input type="hidden" name="id" value="{$data[0]['id']}" />                
+                </form>
+            </div>
+        </section>
+        </div>
+</div>
+<script>
+    //当点击修改按钮时,去除只读属性
+    $('#mod').click(function(){
+        $(this).prev().removeAttr('readonly');
+    });
+
+    //当确定套餐后,查询其价格
+    $('#combo').change(function(){
+        if($('#combo').val() == '-1'){
+            var html = '请选择套餐';
+            $('#price').val(html);
+        }else{
+            //根据typeId和套餐获得对应的id
+            $comboId = $('#combo').val();
+            var data = {comboId:$comboId};
+            $.get('__CONTROLLER__/selectPrice',data,function(d){
+                $('#price').val(d+'元');
+            });
+        }
+    });
+</script>
+</block>

@@ -1,0 +1,39 @@
+<extend name="Layout:layout"/>
+<block name="main-content">
+                <script src="__PUBLIC__/Admin/js/core/jquery.js"></script>
+                <script src="__PUBLIC__/Admin/js/core/ajax.js"></script>                     
+            	<div class="mws-panel grid_8">
+                	<div class="mws-panel-header">
+                    	<span style='float:left'><i class="icon-table"></i> 品牌管理 -> 品牌列表&nbsp;&nbsp;</span>
+                        </form>
+                     </div>
+                    <div class="mws-panel-body no-padding">
+                        <table class="mws-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>品牌</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+							<foreach name='brands' item='brands'>
+                            <tbody>
+                                <tr>
+                                    <td align='center'>{$brands.id}</td>
+                                    <td align='center'>{$brands.brand}</td>
+                                			
+									<td align='center'>
+										<a href="__APP__/Service/delBrand/id/{$brands.id}">删除</a>
+										<a href="__APP__/Service/addBrand">添加</a>
+									
+                                </tr>
+                          
+							</foreach>
+								<tr>
+									<td style='background:#35353a;text-align:center' colspan='7'>{$show}</td>
+								</tr>
+								  </tbody>
+                        </table>
+                    </div>
+                </div>
+</block>

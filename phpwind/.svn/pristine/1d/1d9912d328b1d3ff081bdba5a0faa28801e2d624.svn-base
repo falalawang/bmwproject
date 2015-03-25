@@ -1,0 +1,203 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+
+<script src="__PUBLIC__/admin/js/jquery.js"></script>
+<script type="text/javascript" language="javascript">
+    $(document).ready(function () {
+
+        $('.addressD').click(function(){
+            $(this).next().css({'position':'absolute','z-index':10,'padding':'2px','margin-left':'20px'}).slideToggle("slow");
+            myClose();
+            return false;           
+        });
+
+        $('.modStatus').click(function(){
+
+            $(this).next().next().css({'position':'absolute','z-index':10,'padding':'2px','margin-left':'-180px'}).slideToggle("slow");
+            myClose();
+            return false; 
+        });
+    }); 
+    function myClose(){
+        $(".close").click(function(){ 
+            $(this).parent().parent().parent().hide("slow"); 
+        }); 
+    }
+</script> 
+<div class="wrapper">
+    <div class="row">
+        <div class="col-sm-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    订单列表
+                </header>
+                <div class="panel-body">
+                    <div class="adv-table">
+                        <table  class="display table table-bordered table-striped" id="dynamic-table">
+                            <thead>
+                                <tr>
+                                    <th width='6%'>编号</th>
+                                    <th width='5%'>地址</th>
+                                    <th width="15%">车型</th>
+                                    <th width="6%" class="hidden-sm">总价格</th>
+                                    <th width="5%">预约时间</th>
+                                    <th width="6%" class="hidden-sm">车牌号</th>
+                                    <th width="6%" class="hidden-sm">vin码</th>
+                                    <th width="5%" class="hidden-sm">状态</th>
+                                    <th width="7%">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <foreach name="orders" item="order">
+                                    <tr class="gradeX">
+                                        <td width="6%">{$order['count']}</td>
+                                        <td width="5%">
+                                            <a href="#" class="addressD">地址</a>
+                                            <div class="panel panel-info" style="display:none;">
+                                                <div class="panel-heading">
+                                                    <h3 class="panel-title">联系地址<span class="close" style="float:right;cursor:pointer;">X</span></h3>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <table border='0'>
+                                                        <tr>
+                                                            <td>联系人：</td>
+                                                            <td>{$order['user']}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>电&nbsp;&nbsp;&nbsp;&nbsp;话：</td>
+                                                            <td>{$order['telephone']}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>地&nbsp;&nbsp;&nbsp;&nbsp;址：</td>
+                                                            <td>{$order['address']}</td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        
+                                        <td width="15%">
+                                            {$order['carType']}
+                                        </td>
+                                        
+                                        <td width="6%"  class="hidden-sm">{$order['lastPrice']}</td>
+                                        <td width="5%">
+                                            {$order['orderDate']}&nbsp;{$order['orderTime']}
+                                        </td>
+                                        <td width="6%" class="hidden-sm">{$order['carNumber']}</td>
+                                        <td width="6%" class="hidden-sm">{$order['vin']}</td>
+                                        <td width="5%"  class="hidden-sm">
+                                            <!--订单的id-->
+                                            <input type='hidden' value="{$order['id']}" name="id" class="orderId" />
+                                                <if condition="$order['orderStatus'] heq '1'">
+                                                    <font color='red'>未审核</font>
+                                                <elseif condition="$order['orderStatus'] heq '2'" />
+                                                    <font color='green'>审核通过</font>
+                                                <elseif condition="$order['orderStatus'] heq '3'" />
+                                                    <font color='green'>技师已出发</font>
+                                                <elseif condition="$order['orderStatus'] heq '4'" />
+                                                    <font color='green'>已付款</font>
+                                                <elseif condition="$order['orderStatus'] heq '5'" />
+                                                    <font color='green'>已完成,待评价</font>
+                                                <elseif condition="$order['orderStatus'] heq '6'" />
+                                                    <font color='green'>已评价</font>
+                                                </if>
+                                        </td>
+                                        <td width="7%">
+                                            <if condition="$order['orderStatus'] heq '1'">
+                                                <a href="__CONTROLLER__/pass/id/{$order['id']}"title="审核" alt="审核" onclick="return check()"><i class="fa fa-smile-o"></i></a>&nbsp;
+                                            </if>
+                                            <if condition="$order['serverCarId'] eq '0'">
+                                                <a href="__APP__/Tech/index/id/{$order['id']}"title="分配服务车" alt="分配服务车"><i class="fa fa-truck"></i></a>&nbsp;
+                                            </if>
+                                            <a href="__CONTROLLER__/mod/id/{$order['id']}" title="编辑" alt="编辑"><i class="fa fa-edit"></i></a>
+                                            &nbsp;<a href="__CONTROLLER__/cancelOrder/id/{$order['id']}" title="取消" alt="取消" onclick="return check1()"><i class="fa fa-trash-o"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="9" class="hidden-sm">
+                                            <input type="hidden" class="id" size="4" value="{$order['id']}" style="float:left;" />
+                                            <!--定义一个变量 只当变量为0时显示确定按钮-->
+                                            <b style="float:left;">服务：</b>
+                                            <php>$num = 1;</php>
+                                            <foreach name="order.combo" item="c" key='k'>
+                                                <if condition="$order['interval'][$k] eq 1">
+                                                    <span style="float:left;">{$c}:{$order['price'][$k]}元;&nbsp;</span>
+                                                    <input type="text" class="p" size="5" style="float:left;">&nbsp;
+                                                    <if condition="$num eq 1">
+                                                        <button class="yes">确定</button>
+                                                    </if>
+                                                    <php>$num++;</php>
+                                                <else/>
+                                                    <input type="hidden" class="one" value="{$order['price'][$k]}" /><span style="float:left;">{$c}:{$order['price'][$k]}元;&nbsp;</span>
+                                                </if>          
+                                            </foreach>
+                                        </td>
+                                    </tr>
+                                </foreach>
+                            </tbody>             
+                        </table>
+                        <div style="float:right;">{$show}</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+    <script>
+        //验证审核
+        function check(){
+            var nv=confirm('您确定要审核此订单么？');
+            if(nv){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        //验证取消订单
+        function check1(){
+            var nv=confirm('您确定要取消此订单么？');
+            if(nv){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        $('.select').change(function(){
+            var data = {orderStatus:$(this).val(),orderId:$(this).prev().val()};
+            $.get('updateStatus',data,function(d){
+                if(d==1){
+                    location.href="__CONTROLLER__/index";
+                }
+            });
+        });
+        //点击确定按钮时
+        $('.yes').click(function(){
+            //获得此按钮的所有input同辈元素
+            var num = $(this).siblings('input.p').length;
+            var sum = 0;
+            for(n = 0 ; n < num; n++){
+                s = $(this).siblings('input.p').eq(n).val();
+                //算出之和                
+                sum = s*1+sum;
+            }
+            //获取单个价格的值
+            var one = $(this).siblings('input.one').val();
+            var last = 0;
+            //判断订单中是否有单个价格,若有则与输入框中的值相加,若没有则存入输入框中的值
+            if(one){
+                last = sum*1+one*1;
+            }else{
+                last = sum;
+            }
+            //获取订单的id
+            var orderId = $(this).siblings('input.id').val();
+            var data = {id:orderId,lastPrice:last};
+            $.get('__CONTROLLER__/modLastPrice',data,function(d){
+                if(d==1){
+                    location.href = "__CONTROLLER__/index";
+                }
+            });
+        });
+    </script>
+</block>

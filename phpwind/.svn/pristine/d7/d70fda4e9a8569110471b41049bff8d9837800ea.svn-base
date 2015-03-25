@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" />
+		<title>宇瑞安|4s到家汽车保养|输入个人信息</title>
+		<meta name="keywords" content="汽车保养上门服务，4s店上门保养，宝马4s点保养" />
+		<meta name="description" content="4s店汽车保养上门服务" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link href="__PUBLIC__/home/css/bootstrap.min.css" rel="stylesheet" />
+		<link href="__PUBLIC__/home/css/bwm.css" rel="stylesheet" />
+	</head>
+<body>
+<div>
+	<div style="text-align:center">
+	<h1><span class="red">4s</span>
+		<span class="blue">到家汽车保养</span>
+	</h1>
+	<h4 class="blue">&copy; 宇瑞安</h4>
+	</div>
+	<div class="content">
+		<div class="top">
+		<h4 class="center blue msg">请输入您的信息</h4><hr>
+		<form role="form" action="submitOrder" method="post">
+			<label class="blue msg" style="line-height:35px;">*联系信息</label>
+			<a href="../Manage/addressManage">
+				<button type="button" class="btn btn-sm btn-default pull-right" style="margin-bottom:10px;">+添加地址</button>
+			</a>
+			<div>
+			<if condition="$city neq null and $street neq null">
+			<div class="row">
+				<div class="col-lg-12" style="margin-bottom:10px;">
+				<div id="addressCity">
+				<input type="radio" id="address" name="address" value="{$city} {$street}" checked><input type="hidden" name="city" value="{$city}"><input type="hidden" name="street" value="{$street}">&nbsp&nbsp{$city}&nbsp&nbsp{$street}</div>
+				</div>
+			</div></if>
+			<if condition="$userAddresses neq null">
+			<foreach name="userAddresses" item="userAddress" key="i">
+			<if condition="$i eq 0">
+				<div class="row">
+					<div class="col-lg-12" style="margin-bottom:10px;">
+					<div id="addressCity">
+					<input type="radio" id="address" name="address" value="{$userAddress}" checked>&nbsp&nbsp{$userAddress}</div>
+					</div>
+				</div>
+			<else />
+				<div class="row">
+					<div class="col-lg-12" style="margin-bottom:10px;">
+					<div id="addressCity">
+					<input type="radio" id="address" name="address" value="{$userAddress}">&nbsp&nbsp{$userAddress}</div>
+					</div>
+				</div>
+			</if>
+			</foreach></div>
+			</if>
+			<label class="blue msg" style="line-height:35px;">*您的车型</label>
+			<a href="../Manage/carTypeManage">
+				<button type="button" class="btn btn-sm btn-default pull-right" style="margin-bottom:10px;">+添加车型</button>
+			</a>
+			<if condition="$brand neq null and $series neq null and $type neq null">
+			<div class="row">
+				<div class="col-lg-12" style="margin-bottom:10px;">
+					<input type="radio" name="typeId" onclick="checkCombo(this)" value="{$typeId}">&nbsp&nbsp{$brand}&nbsp{$series}&nbsp{$type}
+					<input type="hidden" id="carType" name="carType" value="{$brand},{$series},{$type}">
+				</div>
+			</div></if>
+			<if condition="$userTypes neq null">
+			<div class="row">
+				<foreach name="userTypes" item="userType" key="i">
+					<div class="col-lg-12" style="margin-bottom:10px;">
+					<input type="radio" onclick="checkCombo(this)"  name="typeId" value="{$userType['id']}">&nbsp&nbsp{$userType['brand']}&nbsp{$userType['series']}&nbsp{$userType['types']}
+					<input type="hidden" id="carType" name="carType" value="{$userType['brand']},{$userType['series']},{$userType['types']}">
+					</div>
+				</foreach>
+			</div>
+			</if>
+			<label class="blue massage">*请选择您需要的保养套餐<small>&nbsp&nbsp您的车型有以下套餐可以选择:</small></label>
+			<div class="row" id="combo"></div>
+
+		  	<label class="blue msg">*车牌号</label>
+			<div class="row">
+			<div class="col-xs-5 col-sm-2" style="margin-bottom:10px;">
+			<select class="form-control" style="height:35px;" id="carF" name="carF">
+			    <option>京</option><option>津</option><option>沪</option>
+			    <option>晋</option><option>豫</option><option>冀</option>
+			    <option>蒙</option><option>云</option><option>陕</option>
+			    <option>辽</option><option>吉</option><option>黑</option>
+			    <option>闽</option><option>湘</option><option>贵</option>
+			    <option>皖</option><option>粤</option><option>川</option>
+			    <option>鲁</option><option>新</option><option>青</option>
+			    <option>苏</option><option>藏</option><option>浙</option>
+			    <option>琼</option><option>赣</option><option>宁</option>
+			    <option>鄂</option><option>渝</option><option>桂</option>
+			    <option>甘</option>
+			</select></div>
+			<div class="col-xs-7 col-sm-10">
+			<input class="form-control" type="text" style="height:35px;" placeholder="您的车牌号" name="carNumber" id="carNumber">
+		  	</div>
+		  	</div>
+		  	<label class="blue msg">vin码</label>
+			<div class="row">
+			<div class="col-lg-12" style="margin-bottom:10px;">
+			<input class="form-control" style="height:35px;" type="text" placeholder="您的vin码" name="vin">
+		  	</div></div>
+			<label class="blue msg">*请选择您要预约的日期</label>
+			<div class="row"><div class="col-xs-12">
+			<label class="red msg col-xs-12 col-sm-6" style="line-height:35px;">温馨提示:您可预约未来六天您方便的的时间</label>
+			<div class="">
+			<button type="button" id="appointment" class="btn btn-default form-control"  data-toggle="modal" data-target="#myModal">单击此处选择您要预约的时间</button>
+			</div>
+      <input type="text" class="col-xs-12 col-sm-6 hidden" style="height:35px;margin-bottom:10px;" name="orderDate" value="{$time|date='Y-m-d',###}" id="orderdate" disabled="disabled">
+			<input type="text" class="col-xs-12 col-sm-6 hidden" style="height:35px;margin-bottom:10px;" name="orderTime" value="8:00-10:00" id="ordertime" disabled="disabled">
+			</div></div>
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+		    <div class="modal-content">
+		    <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">请选择您要预约的时间</h4>
+		    </div>
+		    <div class="modal-body">
+        <div class="row">
+        <foreach name="status" item="statu" key="i">
+          <div>
+          <button type="button" class="date btn btn-default col-xs-12 col-sm-12">{$i}</button>
+          <div class="time">
+          <foreach name="statu" item="k" key="j">
+          <if condition="$k eq 0">
+            <button type="button" class="Time btn btn-default col-xs-6 col-sm-6" ><if condition="$j eq 0">08:00-10:00<elseif condition="$j eq 1"/>10:00-12:00<elseif condition="$j eq 2"/>14:00-16:00<elseif condition="$j eq 3"/>16:00-18:00<else /></if></button>
+          <else />
+            <button type="button" class="Time btn btn-default col-xs-6 col-sm-6" disabled="disabled"><if condition="$j eq 0">08:00-10:00<elseif condition="$j eq 1"/>10:00-12:00<elseif condition="$j eq 2"/>14:00-16:00<elseif condition="$j eq 3"/>16:00-18:00<else /></if></button>
+          </if>
+          </foreach>
+          </div>
+          </div>
+        </foreach>
+		    </div></div>
+		    <div class="modal-footer">
+	        		<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+	        		<button type="button"  id="save" class="btn btn-primary" data-dismiss="modal">保存</button>
+	      		</div>
+		    </div>
+		</div>
+		</div>
+		<label class="blue msg" style="line-height:35px;">*您的姓名</label>
+			<div class="row">
+				<div class="col-lg-12" style="margin-bottom:10px;">
+				<if condition="$userName eq null">
+				<input  class="form-control" type="text" id="user" name="user" value="">
+				<else />
+				{$userName}<input type="hidden" id="user" name="user" value="{$userName}">
+				</if>
+				</div><!-- /.col-lg-12 -->
+			</div>
+		<label class="blue msg" onclick="showAddress()">*手机验证</label>
+		<div class="row">
+			<div class="col-sm-12 col-xs-12">
+				<input type="text" class="form-control" id="tel" name="telephone" placeholder="您的手机号" style="margin-bottom:10px;" /></div>
+				<div class="col-xs-6">
+				<input type="text" id="code" name="code" class="form-control" placeholder="动态密码" style="height:30px;" maxlength="4" /></div>
+				<div class="col-xs-6">
+				<button type="button" id="btn" class="pull-right btn btn-sm btn-default form-control" onclick="sendMessage()" style="width:90px;">获取动态密码</button></div>
+			
+		</div>
+		  	<label class="blue msg" onclick="showAddress()">备注</label>
+			<div class="row">
+			<div class="col-xs-12 col-sm-12" style="margin-bottom:10px;">
+			<input class="form-control" style="height:35px;" type="text" placeholder="可填写其他信息或需求" name="remark" value=""></div>
+		  	</div><br>
+		
+		</div>
+		<div class="bottom navbar-fixed-bottom col-xs-12 col-sm-12">
+			<h5 class="red col-sm-6 col-xs-6" style="margin-top:10px;">&nbsp应付总额:<small id="lastPrice">0元</small></h5>
+		  	<input type="hidden" id="LastPrice" name="lastPrice" value="">
+		  	<input type="submit" value="提交订单" class="btn btn-default btn-sm col-sm-6 col-xs-6" style="margin-top:10px;" id="submit">
+		</div>
+		</form>
+	</div>
+</div>
+<div id="test">
+	<div class="col-sm-6 packages" style="margin-bottom:10px;">
+	<input type="checkbox" id="selectCombo" name="packages[]" class="col-sm-1" onclick="recordCombo(this)"><input type="hidden"><input type="hidden"><span class="col-sm-6"></span><span class="col-sm-5"></span>
+	</div>
+</div>
+</body>
+	<script src="__PUBLIC__/home/js/jquery.js"></script>
+	<script src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+	<script src="__PUBLIC__/home/js/city.js"></script>
+<script type="text/javascript">
+	$("#test").hide();
+	$(".massage").hide();
+	function checkCombo(obj){
+		$(".massage").show();
+		var typeId=obj.value;
+		var data={typeId:typeId};
+		$.get("inputInfo",data,function(d){
+			$("#combo").html("");
+			for(x in d){
+				var comboName=d[x].comboName;
+				var lowPrice=d[x].lowPrice;
+				var highPrice=d[x].highPrice;
+				if(highPrice){
+					var str="价格:"+lowPrice+"-"+highPrice+"元";
+				}else{
+					var str="价格:"+lowPrice+"元";
+				}
+				$("#test span:eq(0)").html(comboName);
+				$("#test input:eq(0)").val(comboName);
+				$("#test input:eq(1)").val(lowPrice);
+				$("#test input:eq(2)").val(highPrice);
+				$("#test span:eq(1)").html(str);
+				$("#test div").clone().appendTo("#combo").show();
+			}
+		});
+	}
+	var lowPrice=0;
+	var highPrice=0;
+	function recordCombo(obj){
+
+		var low=parseInt(obj.nextSibling.value);
+		lowPrice+=low;
+		if(obj.nextSibling.nextSibling.value){
+			var high=parseInt(obj.nextSibling.nextSibling.value);
+		}else{
+			var high=low;
+		}
+		highPrice+=high;
+		if(lowPrice != highPrice){
+			var str=lowPrice+"-"+highPrice+"元";
+		}else{
+			var str=lowPrice+"元";
+		}
+		$("#lastPrice").html(str);
+		$("#LastPrice").val(str);
+	}
+
+
+	$(".time").hide();
+  $(".date").click(function(){
+      $(".time").slideUp();
+      $(this).next().slideToggle();
+      setCookie('date',$(this).html(),1);
+  });
+  $(".Time").click(function(){
+    setCookie('time',$(this).html(),1);
+  });
+
+  $("#save").click(function(){
+    $("#orderdate").val(getCookie('date'));
+    $("#ordertime").val(getCookie('time'));
+    var app=getCookie('date')+" "+getCookie('time');
+    $("#appointment").html(app);
+  });
+
+  $("#submit").click(function(){
+  	if($("#code").val()==getCookie('code')){
+	  	if($("#carType").val() && $("#tel").val() && $("#user").val() && $("#carF").val() && $("#carNumber").val() && $("#orderdate").val() && $("#ordertime").val()  && $("#selectCombo").val() && $("#address").val()){
+	  		return true;
+	  	}else{
+	  		return false;
+	  	}
+	  }else{
+	  	return false;
+	  }
+  });
+
+
+  function setCookie(name, value, iDay){
+      var oDate=new Date();
+      oDate.setDate(oDate.getDate()+iDay);
+      document.cookie=name+'='+value+';expires='+oDate;
+      }
+
+      function getCookie(name){
+      //'username=abc; password=123456; aaa=123; bbb=4r4er'
+      var arr=document.cookie.split('; ');
+      var i=0;
+      //arr->['username=abc', 'password=123456', ...]
+      for(i=0;i<arr.length;i++){
+        //arr2->['username', 'abc']
+        var arr2=arr[i].split('=');
+        if(arr2[0]==name){
+          return arr2[1];
+        }
+      }
+        return '';
+    }
+
+    function checkLogin(){
+			var tel=document.getElementById("tel");
+			var code=$("#code").val();
+			if(tel.value.length==11 && code){
+				var data={telephone:tel.value,code:code};
+				$.get("checkLogin",data);
+			}else{
+				return false;
+			}
+		}
+		$("#btn").attr("disabled","disabled");
+		$("#tel").keyup(function(){
+			var tel=document.getElementById("tel");
+			if(tel.value.length==11){
+				$("#btn").css({ "color": "#fff", "background": "#3296b1" });
+				$("#btn").removeAttr("disabled");
+			}
+		});
+		function sendMessage(){
+			$("#btn").attr("disabled","disabled");
+			if($("#btn").html()=="获取动态密码"){
+				$("#btn").html(60);
+				time = setInterval("dec()",1000);
+				var tel=$("#tel").val();
+				var data={telephone:tel};
+				$.get("sendMessage",data);
+			}
+
+		}
+
+		function dec(){
+			if($("#btn").html()==0){
+				$("#btn").html("获取动态密码");
+				$("#btn").removeAttr("disabled");
+				clearInterval(time);
+			}else{
+				$time=$("#btn").html()-1;
+				$("#btn").html($time);
+			}
+		}
+</script>
+</html>

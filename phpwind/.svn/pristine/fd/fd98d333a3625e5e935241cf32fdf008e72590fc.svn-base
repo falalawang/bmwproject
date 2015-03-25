@@ -1,0 +1,26 @@
+<extend name="Layout:layout" />
+<block name="layoutBack">
+  <a class="navbar-brand" href="__CONTROLLER__/index"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span> 我的地址</a>
+</block>
+
+<block name="layoutMain">
+  <div class="container">
+  <br>
+    <foreach name="address" item="valAddr">
+    <a class="text-muted" href="__CONTROLLER__/editAddress/id/{$valAddr['id']}">
+    <div class="row">
+      <div class="col-xs-10">
+        {$valAddr['city']}
+        <br>
+        {$valAddr['street']}
+      </div>
+      <div class="col-xs-2 text-right">
+        <span class="glyphicon glyphicon-menu-right" style="line-height:40px;" aria-hidden="true"></span>
+      </div>
+    </div>
+    </a>
+      <hr>
+    </foreach>
+    <a href="./addAddress" class="btn btn-default btn-block">添加地址</a>
+  </div>
+</block>

@@ -1,0 +1,35 @@
+<?php
+namespace Admin\Controller;
+use Think\Controller;
+class IndexController extends Controller{
+	
+	//登录页面显示
+	public function index(){
+        $this -> display();
+    }
+	
+	public function doLogin(){
+        $name = I('post.name');
+        $password = md5(I('post.password'));
+		$backstage = M('backstage');
+        $result = $backstage -> field("id,name,auth") -> where("name='$name' and password='$password'")->select();
+        if(!empty($result)){
+            $this -> success('登录成功','main');
+        }else{
+            $this -> error('登录失败','index');
+        }
+	}
+	
+	public function logout(){
+		session('[destroy]');
+		session_destroy();
+		$this -> redirect('index');
+	}
+	
+	//后台首页
+	public function main(){
+		$this -> display();
+	}
+	
+	
+}

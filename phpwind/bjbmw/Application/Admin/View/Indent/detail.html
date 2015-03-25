@@ -1,0 +1,296 @@
+<extend name='Layout:layout'/>
+
+<block name='mws-container'>
+    <div id="mws-container" class="clearfix">
+            <div class="container">   
+                <div class="mws-panel grid_8">
+                    <div class="mws-panel-header">
+                        <span><i class="icon-table">定单详情</i></span>
+                    </div>
+                    <div class="mws-panel-body no-padding">
+                        <table class="mws-table">
+                            <thead>
+                                <tr>
+                                    <th width='300'>名称</th>
+                                    <th>内容</th>
+                                </tr>
+                            </thead>
+                            <tbody align='center'>
+                                <tr>
+                                    <td>订单号</td>
+                                    <td>{$order.ordernumber}</td>
+                                </tr>
+                                <tr>
+                                    <td>名字</td>
+                                    <td>{$order.clientname}</td>
+                                </tr>
+                                <tr>
+                                    <td>电话</td>
+                                    <td>{$order.tel}</td>
+                                </tr>
+                                <tr>
+                                    <td>预约日期</td>
+                                    <td>{$order.hopedata}</td>
+                                </tr>
+                                <tr>
+                                    <td>预约时间</td>
+                                    <td>{$order.hopetime}</td>
+                                </tr>
+                                <tr>
+                                    <td>地址</td>
+                                    <td>{$order.address}</td>
+                                </tr>
+                                <tr>
+                                    <td>车型</td>
+                                    <td>{$order.carmodel}</td>
+                                </tr>
+                                <tr>
+                                    <td>VIN码</td>
+                                    <td>{$order.vin}</td>
+                                </tr>
+                                <tr>
+                                    <td>保养项</td>
+                                    <td>
+                                        <foreach name='res' item='res'>
+                                            {$res.service}&nbsp;&nbsp;&nbsp;&nbsp;
+                                        </foreach>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>服务车</td>
+                                    <td>{$order.carname}</td>
+                                </tr>
+                                <tr>
+                                    <td>价格</td>
+                                    <td>{$order.oldprice}</td>
+                                </tr>
+                                <tr>
+                                    <td>最终价格</td>
+                                    <td>{$order.finalprice}</td>
+                                </tr>
+                                <tr>
+                                    <td>状态</td>
+                                    <td>
+                                        <if condition="$order.status eq 0">已取消
+                                        <elseif condition="$order.status eq 1"/>已提交
+                                        <elseif condition="$order.status eq 2"/><font style='red'>已确定</font>
+                                        <elseif condition="$order.status eq 3"/>已出发
+                                        <elseif condition="$order.status eq 4"/>已接车
+                                        <elseif condition="$order.status eq 5"/>已完成
+                                        <elseif condition="$order.status eq 6"/>已付款
+                                        <elseif condition="$order.status eq 7"/>已评论
+                                        </if> 
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="container" id='mod'>
+                <div class="mws-panel grid_8">
+                    <div class="mws-panel-header">
+                        <span>选择修改类型</span>
+                    </div>
+                    <div class="mws-panel-body no-padding">
+                        <form class="mws-form" action="__CONTROLLER__/update" method='post'>
+                            <div class="mws-form-inline">
+                                <div class="mws-form-row">
+                                    <label class="mws-form-label">修改类型</label>
+                                    <div class="mws-form-item">
+                                        <select class="large" id='model'>
+                                            <option>请选择</option>
+                                            <option value='0'>订单其他信息</option>
+                                            <option value='1'>客户车信息</option>       
+                                        </select>
+                                </div>
+                            </div>
+                         
+                        </form>
+                    </div>      
+                </div>   
+            </div>
+
+            <div class="container" id='update' style='display:none'>
+                <div class="mws-panel grid_8">
+                    <div class="mws-panel-header">
+                        <span>修改订单</span>
+                    </div>
+                    <div class="mws-panel-body no-padding">
+                        <form class="mws-form" action="__CONTROLLER__/update" method='post'>
+                            <div class="mws-form-inline">
+                                <div class="mws-form-row">
+                                    <label class="mws-form-label">最终价格</label>
+                                    <div class="mws-form-item">
+                                        <input type="text" name='finalprice' class="small" value='{$order.finalprice}'>
+                                        <input type='hidden' name='id' value='{$order.id}'/>
+                                    </div>
+                                </div>
+                                <div class="mws-form-row">
+                                    <label class="mws-form-label">日期</label>
+                                    <div class="mws-form-item">
+                                        <input type="text" name='hopedata' class="small" value="{$order.hopedata}">
+                                    </div>
+                                </div>
+                                <div class="mws-form-row">
+                                    <label class="mws-form-label">时间</label>
+                                    <div class="mws-form-item">
+                                        <select class="large" name='hopetime'>
+                                            <option>请选择</option>
+                                            <option value='8:00-9:00'>8:00-9:00</option>
+                                            <option value='9:00-10:00'>9:00-10:00</option>
+                                            <option value='10:00-11:00'>10:00-11:00</option>
+                                            <option value='11:00-12:00'>11:00-12:00</option>
+                                            <option value='12:00-13:00'>12:00-13:00</option>
+                                            <option value='13:00-14:00'>13:00-14:00</option>
+                                            <option value='14:00-15:00'>14:00-15:00</option>
+                                            <option value='15:00-16:00'>15:00-16:00</option>
+                                            <option value='16:00-17:00'>16:00-17:00</option>
+                                            <option value='17:00-18:00'>17:00-18:00</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="mws-form-row">
+                                    <label class="mws-form-label">地点</label>
+                                    <div class="mws-form-item">
+                                        <input type="text" class="large" name='address' value='{$order.address}'>
+                                    </div>
+                                </div>
+                                <div class="mws-form-row">
+                                    <label class="mws-form-label">选择4S店</label>
+                                    <div class="mws-form-item">
+                                        <select class="large" name='shopid' id='shop'>
+                                            <option>请选择</option>
+                                            <foreach name='shop' item='shop'>
+                                            <option value='{$shop.id}'>{$shop.shopname}</option>
+                                            </foreach>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="mws-form-row">
+                                    <label class="mws-form-label">分配服务车</label>
+                                    <div class="mws-form-item">
+                                        <select class="large" name='carid' id='car'>
+                                            <option value='-1'>请选择</option>
+                                            
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="mws-form-row">
+                                    <label class="mws-form-label">订单状态</label>
+                                    <div class="mws-form-item">
+                                        <select class="large" name='status'>
+                                            <option value='-1'>请选择</option>
+                                            <option value='0'>取消</option>
+                                            <option value='2'>确定</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mws-button-row">
+                                <input type="submit" value="修改" class="btn btn-danger">
+                                <input type="reset" value="重置" class="btn ">
+                            </div>
+                        </form>
+                    </div>      
+                </div>   
+            </div>
+            <div class="container" id='carmodel' style='display:none'>
+                <div class="mws-panel grid_8">
+                    <div class="mws-panel-header">
+                        <span>修改订单</span>
+                    </div>
+                    <div class="mws-panel-body no-padding">
+                        <form class="mws-form" action="__CONTROLLER__/updatecar" method='post'>
+                            <div class="mws-form-inline">
+                                <div class="mws-form-row">
+                                    <label class="mws-form-label">选择车品牌</label>
+                                    <div class="mws-form-item">
+                                        <input type="hidden" name='orderid' value='{$order.id}'>
+                                        <select class="large" name='brandid' id='brand'>
+                                            <option>请选择</option>
+                                            <foreach name='brand' item='brand'>
+                                            <option value='{$brand.id}'>{$brand.brand}</option>
+                                            </foreach>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="mws-form-row">
+                                    <label class="mws-form-label">选择车系</label>
+                                    <div class="mws-form-item">
+                                        <select class="large" name='seriesid' id='series'>
+                                            <option>请选择</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="mws-form-row">
+                                    <label class="mws-form-label">选择车型</label>
+                                    <div class="mws-form-item">
+                                        <select class="large" name='id' id='mo'>
+                                            <option>请选择</option>
+                                        </select>
+                                        <input type="hidden" name='arr' value="{$order['services']}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mws-button-row">
+                                <input type="submit" value="修改" class="btn btn-danger">
+                                <input type="reset" value="重置" class="btn ">
+                            </div>
+                        </form>
+                    </div>      
+                </div>   
+            </div>
+    </div>
+</block>
+<block name='js'>
+    <script type="text/javascript">
+    var shop = document.getElementById('shop');
+    var car = document.getElementById('car');
+   
+    shop.onchange = function(){
+        $.ajax({"url":"__CONTROLLER__/change",
+                "type":"post",
+                "data":{'shopid':shop.value},
+                "success":function(data){
+                    car.innerHTML = data;
+                    }
+                });
+    }
+    // 
+    
+    $('#model').change(function(){
+        if($('#model').val()==0){
+            $('#update').css('display','block');
+            $('#carmodel').css('display','none');
+        }else if($('#model').val()==1){
+            $('#update').css('display','none');
+            $('#carmodel').css('display','block');
+        }else{
+
+        }
+    })
+
+    $('#brand').change(function(){
+        $.ajax({"url":"__CONTROLLER__/series",
+                "type":"post",
+                "data":{'brandid':$('#brand').val()},
+                "success":function(data){
+                    $('#series').html(data);
+                    }
+                });
+    })
+
+    $('#series').change(function(){
+        $.ajax({"url":"__CONTROLLER__/model",
+                "type":"post",
+                "data":{'seriesid':$('#series').val()},
+                "success":function(data){
+                    $('#mo').html(data);
+                    }
+                });
+    })
+
+
+    </script>
+</block>

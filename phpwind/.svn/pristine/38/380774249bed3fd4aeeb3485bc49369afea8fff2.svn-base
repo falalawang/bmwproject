@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="renderer" content="webkit">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>宇瑞安</title>
+  <meta type="keywords" content="宇瑞安,汽车保养">
+  <meta type="description" content="宇瑞安汽车保养服务">
+
+  <link rel="stylesheet" href="__PUBLIC__/tech/css/bootstrap.min.css">
+  <link rel="stylesheet" href="__PUBLIC__/tech/css/tech.css">
+</head>
+<body>
+
+<div class="navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    <block name="layoutBack"></block>
+    </div>
+    <div class="navbar-collapse collapse" role="navigation">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="__APP__/Login/logout">退出</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<block name="layoutJum"></block>
+<block name="layoutMain"></block>
+
+</body>
+<script src="__PUBLIC__/tech/js/jquery.js"></script>
+<script src="__PUBLIC__/tech/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    var JS_PUBLIC= "__PUBLIC__";
+    var JS_APP = "__APP__";
+    var JS_ROOT = "__ROOT__";
+</script>
+<script src="__PUBLIC__/tech/js/tech.js"></script>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" />
+		<title>宇瑞安|4s到家汽车保养|输入个人信息</title>
+		<meta name="keywords" content="汽车保养上门服务，4s店上门保养，宝马4s点保养" />
+		<meta name="description" content="4s店汽车保养上门服务" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link href="__PUBLIC__/home/css/bootstrap.min.css" rel="stylesheet" />
+		<link href="__PUBLIC__/home/css/bwm.css" rel="stylesheet" />
+		<script src="__PUBLIC__/home/js/jquery.js"></script>
+	</head>
+	<body>			
+		<div class="">
+			<div class="center">
+				<h1>
+					<span class="red">4s</span>
+					<span class="white">到家汽车保养</span>
+				</h1>
+				<h4 class="blue">&copy; 宇瑞安</h4>
+			</div>
+			<div class="content">
+				<div class="top">							
+					<h4 class="center blue msg">请输入您的信息</h4><hr>
+					<form role="form">
+						<div class="form-group">
+							<label class="blue msg">您的名字</label>				
+							<input type="text" class="form-control" placeholder="您的名字" />
+						</div>
+						<div class="form-group">
+							<label class="blue msg">您的手机号</label>
+							<input type="teleplone" class="form-control" placeholder="您的手机号" />
+						</div>					
+						<label class="blue msg" onclick="showAddress()">您的地址</label>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-lg-12 ">
+									<div class="form-control">陕西省西安市雁塔区太白南路168号</div>
+								</div>
+							</div><br />							
+							<a href="../Manage/addressManage">
+								<button type="button" class="btn btn-sm btn-block" style="margin-bottom:10px;">
+									添加地址</button>
+							</a>
+						</div>
+						<label class="blue msg" onclick="showCarType()">您的车型</label>
+						<div class="form-group">
+							<div class="row">
+							<foreach name="userTypes" item="userType">
+								<div class="col-lg-12" style="margin-bottom:10px;">
+									<b>{$userType['id']}</b>
+									<div class="form-control">
+									{$userType['brand']}&nbsp{$userType['series']}&nbsp{$userType['types']}</div>
+								</div><!-- /.col-lg-12 -->
+							</foreach>
+							</div><br />							
+							<a href="../Manage/carTypeManage">
+								<button type="button" class="btn btn-sm btn-block" style="margin-right:10px;margin-bottom:10px;">
+									添加车型</button><hr>
+							</a>
+						</div>
+						<a href="../Appointment/selectCombo">
+							<button type="button" class="btn btn-sm btn-block" style="margin-right:10px;margin-bottom:10px;">
+								下一步</button>
+						</a>
+					</form>										
+				</div>
+				<div class="bottom navbar-fixed-bottom"></div>
+			</div>
+		</div>		
+	</body>
+	<script type="text/javascript">
+	$("b").hide();
+	function showAddress(){
+		$("#address").toggle();
+	}
+	function showCarType(){
+		$("#carType").toggle();
+	}
+	function checkCarType(obj){
+		alert($(this).parent().next().html());
+		//setCookie("userType",obj.innerHTML,1);
+	}
+	//$("b:eq(1)").html();
+	function setCookie(name, value, iDay){
+			var oDate=new Date();	
+			oDate.setDate(oDate.getDate()+iDay);
+			document.cookie=name+'='+value+';expires='+oDate;
+		}
+
+		function getCookie(name){
+			//'username=abc; password=123456; aaa=123; bbb=4r4er'
+			var arr=document.cookie.split('; ');
+			var i=0;	
+			//arr->['username=abc', 'password=123456', ...]	
+			for(i=0;i<arr.length;i++){
+				//arr2->['username', 'abc']
+				var arr2=arr[i].split('=');		
+				if(arr2[0]==name){
+					return arr2[1];
+				}
+			}	
+				return '';
+		}
+
+		function removeCookie(name){
+			setCookie(name, '1', -1);
+		}						
+	</script>
+</html>

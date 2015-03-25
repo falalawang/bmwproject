@@ -1,0 +1,120 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+<style type="text/css"> 
+.modStatus{
+    color:green;
+}
+ </style> 
+<script src="__PUBLIC__/admin/js/jquery.js"></script>
+<script type="text/javascript" language="javascript">
+    $(document).ready(function () {
+
+        $('.addressD').click(function(){
+            $(this).next().css({'position':'absolute','z-index':10,'padding':'2px','margin-left':'20px'}).slideToggle("slow");
+            myClose();
+            return false;           
+        });
+
+        $('.modStatus').click(function(){
+
+            $(this).next().next().css({'position':'absolute','z-index':10,'padding':'2px','margin-left':'-180px'}).slideToggle("slow");
+            myClose();
+            return false; 
+        });
+    }); 
+    function myClose(){
+        $(".close").click(function(){ 
+            $(this).parent().parent().parent().hide("slow"); 
+        }); 
+    }
+</script> 
+<div class="wrapper">
+    <div class="row">
+        <div class="col-sm-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    已取消订单列表
+                </header>
+                <div class="panel-body">
+                    <div class="adv-table">
+                        <table  class="display table table-bordered table-striped" id="dynamic-table">
+                            
+                                <tr>
+                                    <th width='6%'>编号</th>
+                                    <th width='5%'>地址</th>
+                                    <th width="15%">车型</th>
+                                    <th width="6%">总价格</th>
+                                    <th width="5%">预约时间</th>
+                                    <th width="6%">车牌号</th>
+                                    <th width="6%">VIN码</th>
+                                    <th width="5%">状态</th>
+                                    <th width="7%">操作</th>
+                                </tr>
+                           
+                            <tbody>
+                                <foreach name="orders" item="order">
+                                    <tr class="gradeX">
+                                        <td width="6%">{$order['count']}</td>
+                                        <td width="5%">
+                                            <a href="#" class="addressD">地址</a>
+                                            <div class="panel panel-info" style="display:none;">
+                                                <div class="panel-heading">
+                                                    <h3 class="panel-title">联系地址<span class="close" style="float:right;cursor:pointer;">X</span></h3>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <table border='0'>
+                                                        <tr>
+                                                            <td>联系人：</td>
+                                                            <td>{$order['user']}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>电&nbsp;&nbsp;&nbsp;&nbsp;话：</td>
+                                                            <td>{$order['telephone']}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>地&nbsp;&nbsp;&nbsp;&nbsp;址：</td>
+                                                            <td>{$order['address']}</td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        
+                                        <td width="15%">
+                                            {$order['carType']}
+                                        </td>
+                                        
+                                        <td width="6%">{$order['lastPrice']}</td>
+                                        <td width="5%">
+                                            {$order['orderDate']|date="Y-m-d",###}&nbsp;{$order['orderTime']}
+                                        </td>
+                                        <td width="6%">{$order['carNumber']}</td>
+                                        <td width="6%">{$order['vin']}</td>
+                                        <td width="5%">
+                                            <font color='red'>已取消</font>
+                                        </td>
+                                        <td width="7%">
+                                            <a href="__CONTROLLER__/del/id/{$order['id']}" title="删除" alt="删除"><i class="fa fa-trash-o"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="9">
+                                            <input type="hidden" class="id" size="4" value="{$order['id']}" style="float:left;" />
+                                            <!--定义一个变量 只当变量为0时显示确定按钮-->
+                                            <b style="float:left;">服务：</b>
+                                            <foreach name="order.combo" item="c" key='k'>
+                                                <span style="float:left;">{$c}:{$order['price'][$k]}元;&nbsp;</span>       
+                                            </foreach>
+                                        </td>
+                                    </tr>
+                                </foreach>
+                            </tbody>             
+                        </table>
+                        <div style="float:right;">{$show}</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+</block>

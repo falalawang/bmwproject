@@ -1,0 +1,80 @@
+<?php
+namespace Admin\Controller;
+use Think\Controller;
+class ComboController extends CommonController{
+    
+    //修改套餐列表
+	public function comboList(){
+
+		//查询出所有品牌,车系,车型
+		$models = M('models');
+		$model = $models -> select();
+		foreach($model as $key=>$value){
+			//将所有的品牌放到一个数组中
+			$brands[$key] = $value['brand'];
+			//将所有的品牌与车系的组合放到一个数组中
+			$series[$key] = $value['brand'].",".$value['series'];
+			//将所有的车系与车型的组合放到一个数组中
+			$types[$key] = $value['series'].",".$value['types'];
+		}
+		//移除品牌数组中的重复值
+		$brand = array_unique($brands);
+		//移除车系数组中的重复值
+		$serie = array_unique($series);
+		//将品牌与车系分隔开
+		foreach($serie as $k=>$v){
+			$serie[$k] = explode(",",$v);
+		}
+		//将车系与车型分隔开
+		foreach($types as $k=>$v){
+			$types[$k] = explode(",",$v);
+		}
+		//将所有的品牌发送到模板
+		$this -> assign('brands',$brand);
+		//将所有的品牌和车系数组发送到模板
+		$this -> assign('series',$serie);
+		//将所有的车系和车型数组发送到模板
+		$this -> assign('types',$types);
+
+		$this -> display();                                 
+	}
+
+	//查询指定品牌下的所有车系
+	public function selectSerie(){
+		$brand = $_GET['brand'];
+		$models = M('models');
+		$model = $models -> field('series') -> where("brand='$brand'") -> select();
+
+		$str = "<option value='-1'>--请选择车系--</option>";
+		foreach($model as $k=>$value){
+			
+			foreach($value as $v){
+				$str .="<option value='$v'>$v</option>";
+			}	
+		}
+		echo trim($str);
+	}
+
+	//查询指定品牌和车系下的车型
+	public function selectType(){
+		$brand = $_GET['brand'];
+		$serie = $_GET['series'];
+		$models = M('models');
+		$model = $models -> field('id,types') -> where("brand='$brand' and series='$serie'") -> select();
+
+		$str = "<option value='-1'>--请选择车型--</option>";
+		foreach($model as $v){	
+			$str .="<option value=".$v['id'].">".$v['types']."</option>";
+		}
+		echo trim($str);
+	}
+
+	//修改操作
+	public function mod(){
+
+
+	}
+
+
+}
+?>

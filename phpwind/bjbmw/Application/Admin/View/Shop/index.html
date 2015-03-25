@@ -1,0 +1,49 @@
+<extend name='Layout:layout'/>
+<block name='mws-container'>
+	<div id="mws-container" class="clearfix">
+        
+        	<!-- Inner Container Start -->
+            <div class="container">
+            
+            	
+                
+            	<div class="mws-panel grid_8">
+                	<div class="mws-panel-header">
+                    	<span><i class="icon-table">4S列表</i><div style='float:right'><a href="__CONTROLLER__/add" class="btn"><i class="icol-accept" ></i>&nbsp;&nbsp;添加4S店</a></div></span>
+                    </div>
+                    <div class="mws-panel-body no-padding">
+                        <table class="mws-table">
+                            <thead>
+                                <tr>
+                                    <th>编号</th>
+                                    <th>4S店</th>
+                                    <th>所在城市</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody align='center'>
+	                            <foreach name='shop' item='shop'>
+	                                <tr>
+	                                    <td>{++$count}</td>
+                                        <td>{$shop.shopname}</td>
+	                                    <td>{$shop.ofcity}</td>
+	                                    <td>
+	                                    <a href="__CONTROLLER__/mod/id/{$shop.id}/ofcity/{$shop.ofcity}/shopname/{$shop.shopname}" class="btn"><i class="icol-arrow-refresh"></i></a>
+	                                    	<a href="__CONTROLLER__/del/id/{$shop.id}" onclick="return confirm('你确定要删除吗？')" class="btn"><i class="icol-cross"></i></a>
+	                                    </td>
+	                                </tr>
+	                            </foreach>
+                                    <tr>
+                                        <td colspan='4'><span style='float:right'>{$show}</span>        
+                                    </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+
+                
+                
+            </div>
+        </div>
+</block>

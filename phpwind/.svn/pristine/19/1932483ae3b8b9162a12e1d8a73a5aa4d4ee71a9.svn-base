@@ -1,0 +1,18 @@
+<?php
+namespace Admin\Controller;
+use Think\Controller;
+class LayoutController extends Controller{
+	public function layout(){
+		$this -> display();
+	}
+	
+	public function logout(){
+		session('[destroy]');
+		session_destroy();
+		$this -> redirect('/Index/index');
+	}
+	
+	
+}
+
+?>

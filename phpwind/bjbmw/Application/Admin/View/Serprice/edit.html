@@ -1,0 +1,66 @@
+<extend name='Layout:layout'/>
+<block name='mws-container'>
+<div id="mws-container" class="clearfix">
+        
+            <!-- Inner Container Start -->
+            <div class="container"><div class="mws-panel grid_8">
+                    <div class="mws-panel-header">
+                        <span>修改服务价格</span>
+                    </div>
+                    <div class="mws-panel-body no-padding">
+                        <form class="mws-form"  method='post' action="__CONTROLLER__/update">
+                            <fieldset class="mws-form-inline">
+                                <legend></legend>
+                                <div class="mws-form-row bordered"  style='letter-spacing:2px;'>
+                                    <h4>车型：{$price['brand']} &nbsp;{$price['series']} &nbsp;{$price['model']}</h4>
+                                </div>
+                                <div class="mws-form-row bordered" style='letter-spacing:13px;'>
+                                    机油机滤：
+                                        <input type="text" name='eoof'  class="large" size='35' value='{$price['eoof']}' >
+                                    <span style='letter-spacing:9px;'>微尘滤清器：</span>
+                                        <input type="text" name='microfil'  class="large" size='35' value='{$price['microfil']}' >
+                                </div>
+                                
+                                <div class="mws-form-row bordered" style='letter-spacing:9px;'>
+                                    后部制动片：
+                                        <input type="text" name='rearbpiece'  class="large" size='35' value='{$price['rearbpiece']}' >
+                                    <span style='letter-spacing:1px;'>后部制动盘及制动片：</span>
+                                        <input type="text" name='rearbdisc'  class="large" size='35' value='{$price['rearbdisc']}' >
+                                </div>
+                                
+                                <div class="mws-form-row bordered" style='letter-spacing:9px;'>
+                                    前部制动片：
+                                        <input type="text" name='fbpiece'  class="large" size='35' value='{$price['fbpiece']}' >
+                                    <span style='letter-spacing:1px;'>前部制动盘及制动片：</span>
+                                        <input type="text" name='frontbdisc'  class="large" size='35' value='{$price['frontbdisc']}' >
+                                </div>
+                                
+                                <div class="mws-form-row bordered" style='letter-spacing:18px;'>
+                                    火花塞：
+                                        <input type="text" name='ngk'  class="large" size='35' value='{$price['ngk']}' >
+                                    <span style='letter-spacing:11px;'>车辆检查：</span>
+                                        <input type="text" name='carcheck'  class="large" size='35' value='{$price['carcheck']}' >
+                                </div>
+                                <div class="mws-form-row bordered" style='letter-spacing:9px;'>
+                                    空气滤清器：
+                                        <input type="text" name='aircleaner'  class="large" size='35' value='{$price['aircleaner']}' >
+                                    <span style='letter-spacing:22px;'>雨刮片：</span>
+                                        <input type="text" name='nwb'  class="large" size='35' value='{$price['nwb']}' >
+                                    <input type="hidden" name='id'  class="large" size='35' value={$price['id']} >
+                                </div>
+                                
+                                
+                                
+                            </fieldset>
+                            <div class="mws-button-row">
+                                <input type="submit" value="确认" class="btn btn-danger">
+                                <input type="reset" value="重置" class="btn ">
+                            </div>
+                            
+                        </form>
+                    </div>      
+                </div>
+            </div>
+</div>
+            
+</block>                

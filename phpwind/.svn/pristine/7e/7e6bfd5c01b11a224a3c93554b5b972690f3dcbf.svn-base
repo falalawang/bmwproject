@@ -1,0 +1,191 @@
+<extend name="Layout:order" />
+<block name="content">
+<div class="container">
+	<h4 class="center blue">请输入您的信息</h4><hr>
+	<form role="form" action="submitOrder" method="post">
+		<div class="bg">
+			<label class="blue" style="height:30px;" id="ttt" value="111">*联系信息</label>
+			<a href="../Manage/addressManage">
+				<button type="button" class="btn btn-sm btn-default pull-right">+添加地址</button>
+			</a>
+			<div>
+			<if condition="$city neq null and $street neq null">
+			<div class="row" style="margin-bottom:10px;">
+				<div class="col-lg-12">
+				<label id="addressCity">
+				<input type="radio" id="address" name="address" value="{$city} {$street}" checked><input type="hidden" name="city" value="{$city}"><input type="hidden" name="street" value="{$street}">&nbsp&nbsp{$city}&nbsp&nbsp{$street}</label>
+				</div>
+			</div></if>
+			<if condition="$userAddresses neq null">
+			<foreach name="userAddresses" item="userAddress" key="i">
+			<if condition="$i eq 0 and $city eq null and $street eq null">
+				<div class="row" style="margin-bottom:10px;">
+					<div class="col-lg-12">
+					<label id="addressCity">
+					<input type="radio" id="address" name="address" value="{$userAddress}" checked>&nbsp&nbsp{$userAddress}</label>
+					</div>
+				</div>
+			<else />
+				<div class="row" style="margin-bottom:10px;">
+					<div class="col-lg-12">
+					<label id="addressCity">
+					<input type="radio" id="address" name="address" value="{$userAddress}">&nbsp&nbsp{$userAddress}</label>
+					</div>
+				</div>
+			</if>
+			</foreach>
+			</if></div>
+		</div>
+		<div class="bg">
+			<label class="blue" style="height:30px;">*您的车型</label>
+			<a href="../Manage/carTypeManage">
+				<button type="button" class="btn btn-sm btn-default pull-right">+添加车型</button>
+			</a>
+			<if condition="$brand neq null and $series neq null and $type neq null">
+			<div class="row" style="margin-bottom:10px;">
+				<label class="col-lg-12">
+					<input type="radio" id="carType" name="typeId" onclick="checkCombo(this)" value="{$typeId}">&nbsp&nbsp{$brand}&nbsp{$series}&nbsp{$type}<input type="hidden" name="carType" value="{$brand},{$series},{$type}">
+				</label>
+			</div>
+			</if>
+			<if condition="$userTypes neq null">
+			<div class="row" style="margin-bottom:10px;">
+				<foreach name="userTypes" item="userType" key="i">
+					<label class="col-lg-12" style="margin-bottom:10px;">
+					<input type="radio" onclick="checkCombo(this)"  name="typeId" value="{$userType['id']}">&nbsp&nbsp{$userType['brand']}&nbsp{$userType['series']}&nbsp{$userType['types']}
+					<input type="hidden" id="carType" name="carType" value="{$userType['brand']},{$userType['series']},{$userType['types']}">
+					</label>
+				</foreach>
+			</div>
+			</if>
+		</div>
+		<div class="bg selectCombo">
+			<small class="blue" style="margin-bottom:10px;">*请选择您需要的保养套餐,您的车型有以下套餐可以选择:</small>
+			<div class="row" id="combo"></div>
+		</div>
+		<div class="bg">
+		  	<label class="blue" style="height:25px;">*车牌号</label>
+			<div class="row" style="margin-bottom:10px;">
+			<div class="col-xs-4 col-sm-4" style="padding:0 5px 0 15px;">
+			<select class="form-control" id="carF" name="carF">
+			    <option>京</option><option>津</option><option>沪</option>
+			    <option>晋</option><option>豫</option><option>冀</option>
+			    <option>蒙</option><option>云</option><option>陕</option>
+			    <option>辽</option><option>吉</option><option>黑</option>
+			    <option>闽</option><option>湘</option><option>贵</option>
+			    <option>皖</option><option>粤</option><option>川</option>
+			    <option>鲁</option><option>新</option><option>青</option>
+			    <option>苏</option><option>藏</option><option>浙</option>
+			    <option>琼</option><option>赣</option><option>宁</option>
+			    <option>鄂</option><option>渝</option><option>桂</option>
+			    <option>甘</option>
+			</select></div>
+			<div class="col-xs-3 col-sm-3" style="padding:0 5px 0 5px;">
+			<select class="form-control" id="carC" name="carC">
+			    <option>A</option><option>B</option><option>C</option>
+			    <option>D</option><option>E</option><option>F</option>
+			    <option>G</option><option>H</option><option>I</option>
+			    <option>J</option><option>K</option><option>L</option>
+			    <option>M</option><option>N</option><option>O</option>
+			    <option>P</option><option>Q</option><option>R</option>
+			    <option>S</option><option>T</option><option>U</option>
+			    <option>V</option><option>W</option><option>X</option>
+			    <option>Y</option><option>Z</option>
+			</select></div>
+			<label class="col-xs-5 col-sm-" style="padding:0 15px 0 5px;">
+			<input class="form-control" type="text" placeholder="Number" name="carNumber" id="carNumber"  maxlength="5">
+		  	</label>
+		  	</div>
+		</div>
+		<div class="bg">
+		  	<label class="blue" style="height:25px;">vin码</label>
+			<div class="row" style="margin-bottom:10px;">
+			<label class="col-lg-12">
+			<input class="form-control" style="height:35px;" type="text" placeholder="若套餐价格是区间,请输入此项" name="vin">
+		  	</label></div>
+		</div>
+		<div class="bg">
+			<label class="blue" style="height:25px;">*请选择您要预约的日期</label>
+			<div class="row">
+			<div class="col-xs-12">			
+			<button type="button" id="appointment" class="btn btn-default form-control"  data-toggle="modal" data-target="#myModal">单击此处选择您要预约的时间</button>
+			<span class="red col-xs-12 col-sm-6" style="line-height:25px;">温馨提示:您可预约未来六天您方便的的时间</span>
+      		<input type="text" class="col-xs-12 col-sm-6 hidden" name="orderDate" value="" id="orderdate" disabled="disabled">
+			<input type="text" class="col-xs-12 col-sm-6 hidden" name="orderTime" value="" id="ordertime" disabled="disabled">
+			</div></div>
+		</div>
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+		    <div class="modal-content">
+		    <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">请选择您要预约的时间</h4>
+		    </div>
+		    <div class="modal-body">
+        	<div class="row">
+        		<foreach name="status" item="statu" key="i">
+          		<div>
+          		<button type="button" class="date btn btn-default col-xs-12 col-sm-12">{$i}</button>
+          		<div class="time">
+          			<foreach name="statu" item="k" key="j">
+          			<if condition="$k eq 0">
+            		<button type="button" class="Time btn btn-default col-xs-6 col-sm-6" ><if condition="$j eq 0">08:00-10:00<elseif condition="$j eq 1"/>10:00-12:00<elseif condition="$j eq 2"/>14:00-16:00<elseif condition="$j eq 3"/>16:00-18:00<else /></if></button>
+          			<else />
+            		<button type="button" class="Time btn btn-default col-xs-6 col-sm-6" disabled="disabled"><if condition="$j eq 0">08:00-10:00<elseif condition="$j eq 1"/>10:00-12:00<elseif condition="$j eq 2"/>14:00-16:00<elseif condition="$j eq 3"/>16:00-18:00<else /></if></button>
+          			</if>
+          			</foreach>
+          		</div>
+          		</div>
+        		</foreach>
+		    </div>
+		    </div>
+		    <div class="modal-footer">
+	        	<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+	        	<button type="button"  id="save" class="btn btn-primary" data-dismiss="modal">保存</button>
+	      	</div>
+		    </div>
+			</div>
+		</div>
+		<div class="bg">
+			<label class="blue" style="height:25px;">*您的姓名</label>
+			<div class="row" style="margin-bottom:10px;">
+				<label class="col-lg-12">				
+				<input  class="form-control" type="text" id="user" name="user" value="{$userName}">		
+				</label><!-- /.col-lg-12 -->
+			</div>
+		</div>
+		<div class="bg">
+			<label class="blue" style="height:25px;">*手机验证</label>
+			<div class="row" style="margin-bottom:10px;">
+			<label class="col-sm-12 col-xs-12">
+				<input type="text" class="form-control" id="tel" name="telephone" placeholder="您的手机号"   style="margin-bottom:10px;"/>
+			</label> 
+			<label class="col-xs-6" style="padding:0 5px 0 15px;">
+				<input type="text" id="code" name="code" class="form-control" placeholder="动态密码" maxlength="4" />
+			</label>
+			<label class="col-xs-6" style="padding:0 15px 0 5px;">
+				<button type="button" id="btn" class="pull-right btn btn-sm btn-default form-control" onclick="sendMessage()">获取动态密码</button>
+			</label>			
+			</div>
+		</div>
+		<div class="bg" style="margin-bottom:60px;">
+		  	<label class="blue" style="height:25px;">备注</label>
+			<div class="row" style="margin-bottom:10px;">
+			<label class="col-xs-12 col-sm-12">
+			<input class="form-control" type="text" placeholder="可填写其他信息或需求" name="remark" value=""></label>
+		  	</div>		
+		</div>
+		<div class="bottom navbar-fixed-bottom col-xs-12 col-sm-12">
+			<h5 class="red col-sm-8 col-xs-8" style="margin-top:15px;">应付总额:<span id="lastPrice">0元</span></h5>
+		  	<input type="hidden" id="LastPrice" name="lastPrice" value="">
+		  	<input type="submit" value="提交订单" class="btn btn-default btn-sm col-sm-4 col-xs-4" style="margin-top:10px;" id="submit">
+		</div>
+	</form>
+</div>
+<div id="test">
+	<label class="col-sm-6 col-xs-12 packages" style="margin-bottom:10px;">
+	<input type="checkbox" name="packages[]" class="col-sm-1 col-xs-1 selectCombo"><input type="hidden"><input type="hidden"><span class="col-sm-6 col-xs-5"></span><span class="col-sm-5 col-xs-6"></span>
+	</label>
+</div>
+
+</block>

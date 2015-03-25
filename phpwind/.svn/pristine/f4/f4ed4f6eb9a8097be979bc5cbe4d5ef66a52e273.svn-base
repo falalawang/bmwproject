@@ -1,0 +1,21 @@
+<?php
+namespace Admin\Controller;
+use Think\Controller;
+class LogController extends CommonController{
+	
+	//配置文件的设置
+	public function log(){
+		
+		$this -> display();
+		
+	}
+
+	//网站的开启和关闭
+	public function onOff(){
+
+		$this -> display();
+		
+	}
+
+}
+?>

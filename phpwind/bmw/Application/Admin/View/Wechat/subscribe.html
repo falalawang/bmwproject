@@ -1,0 +1,43 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+
+        
+        	<!-- Inner Container Start -->
+            <div class="container">
+    
+                
+                <!-- Panels Start -->
+                
+            	<div class="mws-panel grid_8">
+                	<div class="mws-panel-header">
+                    	<span style="float:left">修改关注回复</span>
+                    </div>
+                    <div class="mws-panel-body no-padding">
+                    	<form class="mws-form" action="__CONTROLLER__/modcontent" method="post">
+                    		<div class="mws-form-inline">
+
+                    			<div class="mws-form-row">
+                    				<label class="mws-form-label">关注回复内容：</label>
+                    				<div class="mws-form-item">
+                    					<textarea rows="" cols="" class="large" name="content" required>{$subs}</textarea>
+                    				</div>
+                                    <input type="hidden" value="{$id}" name="id">
+                    			</div>
+
+                    		</div>
+                    		<div class="mws-button-row">
+                    			<input type="submit" value="修改" class="btn btn-danger">
+                                <input type="reset" value="重置" class="btn btn-danger">
+                    			
+                    		</div>
+                    	</form>
+                    </div>    	
+                </div>
+                
+
+            </div>
+            <!-- Inner Container End -->
+                       
+            
+        <!-- Main Container End -->
+</block>

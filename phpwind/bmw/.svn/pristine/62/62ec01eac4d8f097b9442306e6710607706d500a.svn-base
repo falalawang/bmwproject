@@ -1,0 +1,33 @@
+<extend name="Layout:layout"/>
+<block name="main-content">              
+            	<div class="mws-panel grid_8">
+                	<div class="mws-panel-header">
+                    	<span><i class="icon-table"></i> 服务管理 -> 品牌列表</span>
+                    </div>
+                    <div class="mws-panel-body no-padding">
+                        <table class="mws-table">
+                            <thead>
+                                <tr>
+                                    <th>品牌</th>
+                                    <th>车系</th>
+									<th>车型</th>
+									<th>操作</th>
+                                </tr>
+                            </thead>
+							<foreach name='car' item='cars'>
+                            <tbody>
+                                <tr>
+                                    <td align='center'>{$cars.brand}</td>
+                                    <td align='center'>{$cars.series}</td>
+                                    <td align='center'>{$cars.models}</td>			
+									<td align='center'>
+										<a href="__APP__/Service/delBrand/id/{$cars.id}">删除</a>
+										<a href="__APP__/Service/addBrand">添加</a>
+									</td>
+                                </tr>
+                            </tbody>
+							</foreach>
+                        </table>
+                    </div>
+                </div>
+</block>

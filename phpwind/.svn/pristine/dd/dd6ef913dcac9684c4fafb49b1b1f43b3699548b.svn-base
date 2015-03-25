@@ -1,0 +1,16 @@
+<?php
+namespace Admin\Controller;
+use Think\Controller;
+
+class EvaluateController extends Controller{
+	public function evaluate(){
+		$evaluate = M('evaluate');
+		$evaluates = $evaluate -> select();
+		$this -> assign('evaluate',$evaluates);
+		$this -> display();
+	}
+
+	
+
+}
+?>

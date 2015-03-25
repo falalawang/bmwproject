@@ -1,0 +1,107 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+<style type="text/css"> 
+.window{ 
+    width:250px; 
+    background-color:#d0def0; 
+    position:absolute; 
+    padding:2px; 
+    margin:5px; 
+    display:none; 
+}
+.content{ 
+    height:150px; 
+    background-color:#FFF; 
+    font-size:14px; 
+    overflow:auto; 
+} 
+.title{ 
+    padding:2px; 
+    color:#0CF; 
+    font-size:14px; 
+} 
+.title img{ 
+    float:right; 
+} 
+ </style> 
+
+<script src="__PUBLIC__/admin/js/jquery.js"></script>
+<script type="text/javascript" language="javascript">
+    $(document).ready(function () {
+
+        $('.Replyed').click(function(){
+            $(this).next().css({'position':'absolute','z-index':10,'padding':'2px','margin-left':'0px'}).slideToggle("slow");
+            myClose();
+            return false;           
+        })
+    }); 
+    function myClose(){
+        $(".close").click(function(){ 
+                $(this).parent().parent().parent().hide("slow"); 
+        }); 
+    }
+</script>
+<div class="wrapper">
+    <div class="row">
+        <div class="col-sm-12">
+        <section class="panel">
+        <header class="panel-heading">
+            评价列表
+        </header>
+        <div class="panel-body">
+        <div class="adv-table">
+        <table  class="display table table-bordered table-striped" id="dynamic-table">
+        
+			<thead>
+			<tr>
+				<th>用户</th>
+                <th>订单号</th>
+				<th>评价</th>
+				<th>评语</th>
+				<th>日期</th>
+				<th>操作</th>
+			</tr>
+			</thead>
+			
+			<tbody>
+			<foreach name="evaluate" item="eva">
+				<tr class="gradeX">
+					<td>{$eva['telephone']}</td>
+                    <td>{$eva['orderId']}</td>
+					<td><if condition="$eva['grade'] eq '0'">非常满意
+					<elseif condition="$eva['grade'] eq '1'" />满意
+					<elseif condition="$eva['grade'] eq '2'" />一般
+					<elseif condition="$eva['grade'] eq '3'" />不满意
+					<elseif condition="$eva['grade'] eq '4'" />差
+				</if></td>
+					<td>{$eva['content']}</td>
+					<td>{$eva['vtime']|date="Y-m-d H:i:s",###}</td>
+					<td>
+						<if condition="$eva['reply']">
+							<a href="" class="Replyed">已回复</a>
+							<div class="panel panel-info" style="width:150px;display:none;">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">回复内容<span class="close" style="float:right;cursor:pointer;">x</span></h3>
+                                </div>
+                                <div class="panel-body">
+                                    {$eva['rtime']|date="Y-m-d H:i:s",###}<br />
+                                    {$eva['reply']}
+                                </div>
+                            </div>
+						<else />
+							<a href="__CONTROLLER__/reply/id/{$eva['id']}">回复</a>
+						</if>
+					</td>
+				</tr>
+			</foreach>
+			</tbody>
+		
+		
+        </table>
+        </div>
+        </div>
+        </section>
+        </div>
+    </div>
+</div>
+</block>

@@ -1,0 +1,29 @@
+<extend name='Layout:layout'/>
+<block name='main-content'>
+	<form action='__CONTROLLER__/three' method='post'>
+	<div class='content'>
+		<table class='tab'>
+		<foreach name='prices' item='price'>
+			<tr><td><input type='checkbox' name='pric[]' value="{$price['low_price']}" /></td><td><span>{$price['project']}</span>{$price['low_price']}</td></tr>
+		</foreach>
+		</table>
+		你的服务费是<span style='color:red' id='pr'>200</span>￥!<br />
+		<input type='hidden' value="{$zhi['brand']}" name='brand'/>
+		<input type='hidden' value="{$zhi['series']}" name='series'/>
+		<input type='hidden' value="{$zhi['models']}" name='models'/>
+		<input class='inp' type='submit' value='下一页' />
+	</div>
+	</form>
+	<script>
+		$('#pr').val(200);
+		var num = 200;
+		$('input').click(function(){
+			if($(this).get(0).checked == true){
+				num = num*1 +$(this).val()*1; 
+			}else{
+				num = num -$(this).val();
+			}
+			$('#pr').html(num);
+		});
+	</script>
+</block>

@@ -1,0 +1,44 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+  <div class="row">
+        <div class="col-sm-12">
+        <section class="panel">
+        <header class="panel-heading">
+            评价列表
+        </header>
+        <div class="panel-body">
+        <div class="adv-table">
+        <table  class="display table table-bordered table-striped" id="dynamic-table">
+        
+			<thead>
+			<tr>
+				<th>ID</th>
+				<th>用户</th>
+				<th>日期</th>
+				<th>评价</th>
+				<th>客服回复</th>
+				<th>操作</th>
+			</tr>
+			</thead>
+			
+			<tbody>
+			<foreach name="evaluate" item="eva">
+				<tr class="gradeX">
+					<td>{$eva['id']}</td>
+					<td>{$eva['uid']}</td>
+					<td>{$eva['vtime']}</td>
+					<td>{$eva['grade']}--{$eva['content']}</td>
+					<td>{$eva['reply']}___{$eva['rtime']}</td>
+					<td><a href="__CONTROLLER__/reply/id/{$eva['id']}">回复</a></td>
+				</tr>
+			</foreach>
+			</tbody>
+		
+		
+        </table>
+        </div>
+        </div>
+        </section>
+        </div>
+        </div>
+</block>

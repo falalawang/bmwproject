@@ -1,0 +1,28 @@
+<?php
+namespace Admin\Controller;
+use Think\Controller;
+class AddressController extends Controller{
+	
+	
+	public function index(){
+		$id = $_GET['id'];
+		$this -> assign('id',$id);
+		$this -> display();
+	}
+	public function detail(){
+		echo 111;
+		$a=$_POST;
+		dump($a);
+		die;
+		//echo json_encode($_POST);
+		$model = M();
+		$address = $model -> table('xdl_address as a,xdl_order as o')
+						-> field('a.name,a.telephone,a.address')
+						-> where("o.addressId=a.id and o.id=$id") -> select();
+		//dump($address);
+		echo json_decode($address);
+		dump($address);
+		$this->display();
+	}
+}
+?>

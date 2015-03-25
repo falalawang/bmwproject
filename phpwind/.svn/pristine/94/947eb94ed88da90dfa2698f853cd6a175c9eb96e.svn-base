@@ -1,0 +1,26 @@
+<?php
+namespace Admin\Controller;
+use Think\Controller;
+
+class EvaluateController extends Controller{
+	
+	//显示评价列表
+	public function evaluate(){
+		$evaluate = M('evaluate');
+		$evaluates = $evaluate -> select();
+		$this -> assign('evaluate',$evaluates);
+		$this -> display();
+	}
+
+	//回复列表
+	public function reply(){
+
+		//接收需要回复的id
+		$id = $_GET['id'];
+		
+		$this -> display();
+	}
+
+
+}
+?>

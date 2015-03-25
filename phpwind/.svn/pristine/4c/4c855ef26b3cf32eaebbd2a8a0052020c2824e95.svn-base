@@ -1,0 +1,18 @@
+<?php
+namespace Admin\Controller;
+use Think\Controller;
+class CommonController extends Controller{
+
+	public function _initialize(){
+		if(!isset($_SESSION['hid'])){
+			$this->error('没有登陆',U('Login/index'));
+		}
+
+		/*$AUTH = new \Think\Auth();
+        //类库位置应该位于ThinkPHP\Library\Think\
+        if(!$AUTH->check(MODULE_NAME.'/'.CONTROLLER_NAME.'/'.ACTION_NAME, session('hid'))){
+            $this->error('没有权限');
+        }*/
+
+	}
+}

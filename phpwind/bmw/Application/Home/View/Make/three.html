@@ -1,0 +1,143 @@
+<extend name='Layout:layout' />
+<block name='kog'>
+	<div id="loginmodal" style="display:none;">
+
+	  <p>请登录</p>
+      <input placeholder='*手机号' type="text" name="phone" id="username" maxlength="11" class="txtfield" value="" ><span id="sp" style="font-size:12px;color:red"></span>
+      <br />
+      <input placeholder='*验证码' type="text" name="code" class="txtfiel" id="code" maxlength="4" value="" ><input type="button" id="getcode" class="flatbtn-w" value="获取验证码" >
+      <br />
+      <input type="submit" name="loginbtn" id="loginbtn" class="flatbtn-blu hidemodal" value="确定" tabindex="3">
+  </div>
+</block>
+<block name='main-content'>
+	<div class='contentb'>
+		<form action='__CONTROLLER__/look' method='post'>
+			<input class='inpa' name='date' id="d11" type="text" placeholder='点击选择日期' onClick="WdatePicker()"/>
+			<select class='sela' name='keep_time' id='time'>
+				<option>请选择时间</option>
+				<option value='08:00-10:00' id='ond'>08:00-10:00</option>
+				<option value='10:00-12:00' id='two'>10:00-12:00</option>
+				<option value='14:00-16:00' id='three'>14:00-16:00</option>
+				<option value='16:00-18:00' id='four'>16:00-18:00</option>
+            </select><br />
+			<input type='hidden' value="{$zhi['brand']}" name='brand'/>
+			<input type='hidden' value="{$zhi['series']}" name='series'/>
+			<input type='hidden' value="{$zhi['models']}" name='models'/>
+			<input type='hidden' value="{$zhi['price']}" name='price'/>
+			<input id="lpn" class='inp' type='text' name='LPN' value="" placeholder='*您的车牌号后六位' />
+			<input class='inp' type='text' name='vin' placeholder='*您的VIN码' />
+			<input class='inp' type='hidden' name='combo' value="{$zhi['combo']}"/>
+			{$city}
+			<input type="text" id="suggestId" name='address' size="30" placeholder='*具体地址' class='inp' />
+			<!--<input type='text' name='address' placeholder='*街道' class='inp' /><br />-->
+			<div id="container" style="display:none"></div>
+			<input type='text' name='texts' placeholder='*备注' class='inp' /><br />
+			<input type='submit' value='提交' class='inp' />
+		</form>
+	</div>
+	<script>
+		
+		//var pre = "/^[A-Z]{1}[0-9]{5}$/";
+		//alert(/^[A-Z]{1}\d{5}$/g.test(p));
+		$("form").submit(function(){
+				var p = $("#lpn").val();
+
+			if(/^[A-Z]{1}\d{5}$/g.test(p)){
+				//alert("111111");
+				return true;
+			}else{
+				alert("车牌号格式不正确");
+				return false;
+
+			}
+		});
+
+		$('#d11').blur(function(){
+
+			var date = $('#d11').val();
+			
+			var dto = date+'08:00-10:00';
+			$.get('__CONTROLLER__/four',{'dto':dto},function(data){
+			if(data.a == 4){
+				$('#ond').attr({'disabled':'disabled'});
+			}},'json');
+			
+			var dtt = date+'10:00-12:00';
+			$.get('__CONTROLLER__/four',{'dtt':dtt},function(data){
+			if(data.b == 4){
+				$('#two').attr({'disabled':'disabled'});
+			}},'json');
+			
+			var dts = date+'14:00-16:00';
+			$.get('__CONTROLLER__/four',{'dts':dts},function(data){
+			if(data.c == 4){
+				$('#three').attr({'disabled':'disabled'});
+			}},'json');
+			
+			var dtf = date+'16:00-18:00';
+			$.get('__CONTROLLER__/four',{'dtf':dtf},function(data){
+			if(data.d == 4){
+				$('#four').attr({'disabled':'disabled'});
+			}},'json');
+		});
+	function G(id) {
+    return document.getElementById(id);
+}
+
+var map = new BMap.Map("container");
+var point = new BMap.Point(116.3964,39.9093);
+map.centerAndZoom(point,13);
+map.enableScrollWheelZoom();
+
+var ac = new BMap.Autocomplete(    //建立一个自动完成的对象
+    {"input" : "suggestId"
+    ,"location" : map
+});
+
+ac.addEventListener("onhighlight", function(e) {  //鼠标放在下拉列表上的事件
+var str = "";
+    var _value = e.fromitem.value;
+    var value = "";
+    if (e.fromitem.index > -1) {
+        value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+    }    
+    str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value;
+    
+    value = "";
+    if (e.toitem.index > -1) {
+        _value = e.toitem.value;
+        value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+    }    
+    str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value;
+});
+
+var myValue;
+ac.addEventListener("onconfirm", function(e) {    //鼠标点击下拉列表后的事件
+var _value = e.item.value;
+    myValue = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+    
+    setPlace();
+});
+
+	</script>
+	<script type="text/javascript">
+	$('#modaltrigger').leanModal({ top: 110, overlay: 0.45, closeButton: ".hidemodal" });
+		//});
+	$('#loginbtn').click(function(){
+			var p = $("#username").val();
+			var c = $("#code").val();
+
+			if(p !="" && c !=""){
+				$.get('__APP__/Sms/checka',{'phone':p,'code':c},function(data){
+					//alert(data)；
+					//if(eval(data)){
+						//alert('验证失败');
+					//	window.location.reload();
+					//}
+					//window.location.reload();
+				})
+			}
+	});
+</script>
+</block>

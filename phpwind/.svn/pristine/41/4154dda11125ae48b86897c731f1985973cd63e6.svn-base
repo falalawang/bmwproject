@@ -1,0 +1,134 @@
+<?php
+namespace Admin\Controller;
+use Think\Controller;
+class OrderController extends CommonController{
+	//订单列表
+	public function index(){
+		$model = M();
+		$order = $model -> table('xdl_order as o,xdl_address as a')
+						->field('o.id,o.brand,o.series,o.types,o.combo,o.lastPrice,o.vin,o.orderTime,o.orderDate,o.orderStatus,a.name,a.address,a.telephone')
+						-> where("o.orderStatus!='0' and o.addressId=a.id")
+						-> order('o.orderStatus asc')
+						-> select();
+		$count = 1;
+		foreach($order as $k=>$v){
+			$order[$k]['count']=$count;
+			$count++;
+
+		}
+		$this -> assign('orders',$order);
+		$this -> display();
+	}
+	//已取消的订单列表
+	public function cancel(){
+		$model = M();
+		$order = $model -> table('xdl_order as o')
+						-> where("o.orderStatus='0'")
+						-> select();
+		$count = 1;
+		foreach($order as $k=>$v){
+			$order[$k]['count']=$count;
+			$count++;
+
+		}
+		$this -> assign('orders',$order);
+		$this -> display();
+	}
+	//审核订单
+	public function pass(){
+		$id = I('get.id');
+		$data['id'] = $id;
+		$data['orderStatus'] = '2';
+		$order = M('order');
+		if($order -> create($data)){
+			if($order -> save()){
+				$this -> success('审核成功',U('Order/index'));
+			}else{
+				$this -> error('审核失败',U('Order/index'));
+			}
+		}else{
+			$this -> error('失败',U('Order/index'));
+		}
+
+	}
+	//编辑订单状态
+	public function modStatus(){
+		$order = M('order');
+		if($order -> create($_POST)){
+			if($order -> save()){
+				$this -> success('更新成功',U('Order/index'));
+			}else{
+				$this -> error('更新失败',U('Order/index'));
+			}
+		}else{
+			$this -> error('失败',U('Order/index'));
+		}
+	}
+	//修改订单
+	public function mod(){
+		$id = I('get.id');
+		$model = M();
+		$order = $model -> table('xdl_order as o,xdl_address as a')
+						->field('o.id,o.brand,o.series,o.types,o.combo,o.orderDate,o.orderTime,a.name,a.telephone,a.address')
+						-> where("o.id=$id and o.addressId=a.id")
+						-> select();
+		$this -> assign('order',$order);
+		$this -> display();
+	}
+	//更新订单
+	public function updateOrder(){
+		dump($_POST);
+	}
+	//取消订单
+	public function cancelOrder(){
+		$id = I('get.id');
+		$order = M('order');
+		$data['id'] = $id;
+		$data['orderStatus'] = '0';
+		if($order -> create($data)){
+			if($order -> save()){
+				$this -> success('取消成功',U('Order/index'));
+			}else{
+				$this -> error('取消失败',U('Order/index'));
+			}
+		}else{
+			$this -> error('失败',U('Order/index'));
+		}
+	}
+	//删除订单
+	public function del(){
+		$id = I('get.id');
+		$order = M('order');
+		if($order -> delete($id)){
+			$this -> success('删除成功',U('Order/cancel'));
+		}else{
+			$this -> error('删除失败',U('Order/cancel'));
+		}
+	}
+	//更新订单状态
+	public function updateStatus(){
+		//$id = $_GET['id'];
+		$orders = M('order');
+		$order = $orders -> where('id=1') -> field('orderStatus') -> select();
+		//dump($order);
+		// echo "<select name='orderStatus'>".
+		// 	for($m=2;$m<=6;$m++){
+  //               if($m=='2'){
+  //                   $name = '已审核';
+  //               }else if($m=='3'){
+  //                   $name = '已出发';
+  //               }else if($m=='4'){
+  //                   $name = '已付款';
+  //               }else if($m=='5'){
+  //                   $name = '已完成';
+  //               }else if($m=='6'){
+  //                   $name = '已评价';
+  //               }
+  //               $selected = ($m==$order[0]['Status']) ? 'selected' :'';
+  //               ."<option value=".$m $selected.">".$name."</option>."
+  //           }
+  //       ."</select>";
+		$this -> ajaxReturn($order);
+	}
+}
+?>

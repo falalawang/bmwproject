@@ -1,0 +1,13 @@
+<?php
+namespace Home\Controller;
+use Think\Controller;
+class IndexController extends Controller {
+    public function index(){
+    	$car = M('series_models');
+    	$data = $car -> group('brand')-> select();
+    	$datb = $car -> group('series')-> select();
+		$this -> assign('series',$data); 
+		$this -> assign('serie',$datb); 
+	    $this -> display();	
+	}
+}

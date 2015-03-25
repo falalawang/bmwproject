@@ -1,0 +1,57 @@
+<?php
+namespace Home\Controller;
+use Think\Controller;
+
+class LoginController extends Controller{
+	public function login(){		
+		$this -> display();
+	}
+	public function checkLogin(){
+		$tel=$_GET['telephone'];
+		$technician=M("technician");
+		$code=$_GET['code'];
+		if($code && ($code == session('code'))){
+			$map['telephone']=$tel;
+			$res=$technician->where($map)->find();
+			if($res){//判断是否是顾客(可能是技师)
+				echo "true";  //技师返回"true"
+			}else{
+				echo "false";  //顾客返回"false"
+			}
+
+			$customer=M("customer");
+			$cus=$customer->where($map)->find();
+			if($cus){
+				cookie('uid',$cus['id']);
+			}else{
+				if($customer->create($_GET)){
+					$customer->add();
+					$cu=$customer->where($map)->find();
+					cookie('uid',$cu['id']);
+				}
+			}
+		}
+	}
+
+	public function sendMessage(){
+		//session(array('code'=>'session_id','expire'=>60));
+		//$lifeTime = 60;//将session的时间设置为4个小时
+		//session_set_cookie_params($lifeTime);
+		$tel=$_GET['telephone'];
+		$str = '0123456789';
+		$str = str_shuffle($str);
+		$str = substr($str,3,5);
+		//echo $str;
+		session("code",$str);
+		//echo session('code');
+		$curl = new \Org\Util\Curl();//curl扩展 功能就是在脚本中发送http请求
+		//拼接短信接口接口url
+		$prefix = C('message.MessageUrl');//读取接口地址
+		$url = C('message.MessageUrl')."?action=send&account=".C('message.username')."&password=".C('message.password')."&mobile=".$tel."&content="."您的验证码是".$str."&AddSign=Y";
+		//发送请求
+		$res = $curl->get($url);
+		
+	}
+
+}
+?>

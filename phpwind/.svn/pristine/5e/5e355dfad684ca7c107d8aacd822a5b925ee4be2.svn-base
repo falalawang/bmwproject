@@ -1,0 +1,196 @@
+<?php
+namespace Admin\Controller;
+use Think\Controller;
+class ServerCarController extends CommonController{
+
+	//显示服务车列表
+	public function carList(){
+
+		//查询4S店名，服务车名，技师名
+		$data = M();
+		$datas = $data -> table("xdl_store,xdl_server_car,xdl_serviceman") -> where("xdl_server_car.storeId=xdl_store.id and xdl_serviceman.carId=xdl_server_car.id") -> select();
+		$this -> assign('data',$datas);
+		$this -> display();
+	}
+
+
+
+
+	//显示修改服务车的页面
+	public function mod(){
+
+		//获得要修改的服务车的id
+		$id = $_GET['id'];
+		$serverCar = M('server_car');
+		$serverCars = $serverCar -> where("id={$id}") -> select();
+		$serverCars[0]['techId'] = explode(',',$serverCars[0]['techId']);
+		//查出维修人员的信息
+		$manager = M('manager');
+		$managers = $manager -> where("auth='3'") -> select();
+
+		//把维修人员的信息和服务车的信息放到前台
+		$this -> assign('manager',$managers);
+
+		$this -> assign('data',$serverCars);
+		
+		$this -> display();
+	}
+
+	//修改服务车信息
+	public function update(){
+
+		$data = $_POST;
+		dump($data);exit();
+
+		$serverCar = M('server_car');
+		if($serverCar -> create($data)){
+			if($serverCar -> save()){
+				echo 11;
+			}else{
+				echo 22;
+			}
+		}else{
+			$this -> error('修改失败');
+		}
+	}
+
+
+
+
+
+
+
+
+	public function storeList(){
+		$store = M('store');
+		$stores = $store -> select();
+		$this -> assign('store',$stores);
+		$this -> display();
+	}
+
+	//添加4S店
+	public function addStore(){
+
+		$this -> display();
+	}
+
+	//添加4S店操作
+	public function insertStore(){
+
+		$data = $_POST;
+	//	dump($data);
+		$store = M('store');
+		if($store -> create($data)){
+			if($store -> add()){
+				$this -> success('添加成功');
+			}else{
+				$this -> error('添加失败');
+			}
+		}
+		
+	}
+
+	//服务车列表
+	public function serverCarList(){
+		$serverCar = M('server_car');
+		$serverCars = $serverCar -> select();
+		$this -> assign('serverCar',$serverCars);
+		$this -> display();
+	}
+	//添加服务车信息
+	public function addServerCar(){
+
+		$store = M('store');
+		$stores = $store -> select();
+		$this -> assign('store',$stores);
+		$this -> display();
+
+	}
+
+	//添加服务车操作
+	public function insertServerCar(){
+
+		$data = $_POST;
+
+		$data['storeId'] = $data['store'];
+
+		$serverCar = M('serverCar');
+		if($serverCar -> create($data)){
+			if($serverCar -> add()){
+				$this -> success('添加服务车成功');
+			}else{
+				$this -> error('添加服务车失败');
+			}
+		}else{
+			$this -> error('添加服务车失败');
+		}
+	}
+
+	//选择技师
+	public function selectServiceman(){
+
+		$serverCar = M('server_car');
+		$serverCars = $serverCar -> select();
+		$this -> assign('serverCar',$serverCars);
+		$this -> display();
+	}
+
+	//选择技师的操作
+	public function insertServiceman(){
+		dump($_POST);
+	}
+
+
+
+
+
+	//添加的信息插入数据库
+	public function insert(){
+
+		$data = $_POST;
+
+		$data['techId'] = implode(',',$data['techId']);
+		$serverCar = M('server_car');
+		if($serverCar -> create($data)){
+			if($serverCar -> add()){
+
+				$this -> success('添加成功','carList');
+			}else{
+				$this -> error('添加失败','addServerCar');
+			}
+		}else{
+			$this -> error('添加失败','addServerCar');
+		}
+
+	}
+
+	//删除服务车
+	public function del(){
+
+		$id = $_GET['id'];
+		$serverCar = M('server_car');
+		if($serverCar -> where("id={$id}") -> delete()){
+			$this -> success('删除成功');
+		}else{
+			$this -> error('删除失败!');
+		}
+	}
+
+	//ajax请求，判断车编号是否存在
+	public function check(){
+
+		$carNum = $_GET['carNum'];
+
+		$serverCar = M('server_car');
+		$serverCars = $serverCar -> where("carNum='$carNum'") -> select();
+
+		if($serverCars){
+			echo 1;
+		}else{
+			echo 2;
+		}
+	}
+
+
+}
+?>

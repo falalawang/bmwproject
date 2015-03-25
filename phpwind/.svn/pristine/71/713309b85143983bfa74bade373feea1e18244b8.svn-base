@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" />
+		<title>宇瑞安|4s到家汽车保养|选择车型</title>
+		<meta name="keywords" content="汽车保养上门服务，4s店上门保养，宝马4s点保养" />
+		<meta name="description" content="4s店汽车保养上门服务" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />		
+		<link href="__PUBLIC__/home/css/bootstrap.min.css" rel="stylesheet" />
+		<link href="__PUBLIC__/home/css/bwm.css" rel="stylesheet" />
+		<script src="__PUBLIC__/home/js/jquery.js"></script>
+	</head>
+	<body>			
+		<div class="container">
+			<div class="center">
+				<h1>
+					<span class="red">4s</span>
+					<span class="white">到家汽车保养</span>
+				</h1>
+				<h4 class="blue">&copy; 宇瑞安</h4>
+			</div>
+			<div class="content">						
+				<div class="top">
+					<h4 class="center blue msg">请选择您的汽车品牌</h4>				
+					<foreach name="brands" item="brand">
+						<div class="brand"><button type="button" class="btn btn-sm btn-block" style="margin-bottom:10px;" onclick="getBrand(this)">{$brand}</button><foreach name="serieses" item="series">
+								<div class="series">						
+									<if condition=" $series[0] eq $brand">
+										<button type="button" class="btn btn-sm btn-block" style="margin-bottom:10px;" onclick="getSeries(this)">{$series[1]}</button>
+										<div class="type">
+											<foreach name="types" item="type">
+												<if condition="($series[1] eq $type[1]) and ($brand eq $type[0])">
+													<button type="button" class="btn btn-sm btn-block" style="margin-bottom:10px;" onclick="getType(this)">{$type[2]}</button>
+												</if>
+											</foreach>
+										</div>
+									</if>
+								</div>  
+							</foreach> 
+						</div> 
+					</foreach>									                   
+				</div>
+				<div class="bottom"></div>
+			</div>
+		</div>		
+	</body>
+<script type="text/javascript">
+	$(".series").hide();
+	$(".type").hide();
+	$(".brand").click(function(e){
+		$(".brand").hide();
+		$(this).show();
+		$(this).children().show();
+		$(".type").hide();			
+		$(".msg").html("请选择您的汽车系列");
+		e.stopPropagation();
+	});
+	$(".series").click(function(e){		
+		$(".series").hide();
+		$(this).show();
+		$(this).children().show();
+		$(".msg").html("请选择您的汽车型号");
+		e.stopPropagation();
+	});
+	$(".type").click(function(){
+		var data={brand:brand,series:series,type:type};
+		$.get("addCarType",data,function(d){
+			if(d=="1"){
+				location.href="../Appointment/inputInfo";
+			}				
+			});
+	})
+
+	function getBrand(obj){
+		brand=obj.innerHTML;
+	}
+	function getSeries(obj){
+		series=obj.innerHTML;
+	}
+	function getType(obj){
+		type=obj.innerHTML;
+	}
+
+	function stopBubble(e){
+		if(e && e.stopPropagation){
+			e.stopPropagation();
+		}else{
+			window.event.cancelBubble=true;
+		}
+		return false;
+	}
+				
+
+</script>
+</html>

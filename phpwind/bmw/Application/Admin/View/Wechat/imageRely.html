@@ -1,0 +1,65 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+
+        
+        	<!-- Inner Container Start -->
+            <div class="container">
+    
+                
+                <!-- Panels Start -->
+                
+            	<div class="mws-panel grid_8">
+                	<div class="mws-panel-header">
+                    	<span style="float:left">图文自动回复设置</span><span style="float:right"><a href="__CONTROLLER__/relyList"><button class="btn" id="auto" >查看图文自动回复</button></a></span>
+                    </div>
+                    <div class="mws-panel-body no-padding">
+                    	<form class="mws-form" action="__CONTROLLER__/add" method="post">
+                    		<div class="mws-form-inline">
+                                <div class="mws-form-row">
+                                    <label class="mws-form-label">关键字：</label>
+                                    <div class="mws-form-item">
+                                        <input type="text" class="mws-form-item-1-8" class="small" name="keyword" required>
+                                    </div>
+                                </div>
+                    			<div class="mws-form-row">
+                    				<label class="mws-form-label">图文主题：</label>
+                    				<div class="mws-form-item">
+                    					<input type="text" class="small" name="title" required>
+                    				</div>
+                    			</div>
+                                <div class="mws-form-row">
+                                    <label class="mws-form-label">图片链接地址：</label>
+                                    <div class="mws-form-item">
+                                        <input type="text" class="small" name="imageurl" required>
+                                    </div>
+                                </div>
+                                <div class="mws-form-row">
+                                    <label class="mws-form-label">网站地址：</label>
+                                    <div class="mws-form-item">
+                                        <input type="text" class="small" name="url" required>
+                                    </div>
+                                </div>
+
+                    			<div class="mws-form-row">
+                    				<label class="mws-form-label">文字介绍内容：</label>
+                    				<div class="mws-form-item">
+                    					<textarea rows="" cols="" class="large" name="description" required></textarea>
+                    				</div>
+                    			</div>
+
+                    		</div>
+                    		<div class="mws-button-row">
+                    			<input type="submit" value="添加" class="btn btn-danger">
+                    			<input type="reset" value="重置" class="btn ">
+                    		</div>
+                    	</form>
+                    </div>    	
+                </div>
+                
+
+            </div>
+            <!-- Inner Container End -->
+                       
+            
+        <!-- Main Container End -->
+</block>

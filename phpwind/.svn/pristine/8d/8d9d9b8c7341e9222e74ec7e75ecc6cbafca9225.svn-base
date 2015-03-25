@@ -1,0 +1,86 @@
+<?php
+namespace Admin\Controller;
+use Think\Controller;
+class ServerCarController extends CommonController{
+
+	//显示服务车列表
+	public function carList(){
+
+		$serverCar = M('server_car');
+		$serverCars = $serverCar -> select();
+	//	dump($serverCars);
+		$this -> assign('data',$serverCars);
+		$this -> display();
+	}
+
+	//显示修改服务车的页面
+	public function mod(){
+
+		$id = $_GET['id'];
+		$serverCar = M('server_car');
+		$serverCars = $serverCar -> where("id={$id}") -> select();
+		$this -> assign('data',$serverCars);
+		$this -> display();
+	}
+
+	//修改服务车信息
+	public function update(){
+
+		$data = $_POST;
+		$serverCar = M('server_car');
+		if($serverCar -> create($data)){
+			if($serverCar -> save()){
+				echo 11;
+			}else{
+				echo 22;
+			}
+		}else{
+			$this -> error('修改失败');
+		}
+	}
+
+	//添加服务车信息
+	public function addServerCar(){
+
+		$manager = M('manager');
+		$managers = $manager -> where("auth='3'") -> select();
+		$this -> assign('manager',$managers);
+		$this -> display();
+
+	}
+
+	//添加的信息插入数据库
+	public function insert(){
+
+		$data = $_POST;
+		$data['techId'] = implode(',',$data['techId']);
+		$serverCar = M('server_car');
+		if($serverCar -> create($data)){
+			if($serverCar -> add()){
+
+				$this -> success('添加成功','carList');
+			}else{
+				$this -> error('添加失败','addServerCar');
+			}
+		}else{
+			$this -> error('添加失败','addServerCar');
+		}
+
+	}
+
+	//删除服务车
+	public function del(){
+
+		$id = $_GET['id'];
+		$serverCar = M('server_car');
+		if($serverCar -> where("id={$id}") -> delete()){
+			$this -> success('删除成功');
+		}else{
+			$this -> error('删除失败!');
+		}
+	}
+
+
+
+}
+?>

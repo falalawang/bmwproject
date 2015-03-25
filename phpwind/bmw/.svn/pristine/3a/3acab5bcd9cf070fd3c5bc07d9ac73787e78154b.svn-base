@@ -1,0 +1,65 @@
+<extend name='Layout:layout' />
+<block name='main-content'>
+	<div class='content'>
+		<form action='__CONTROLLER__/add' method='post'>
+			<table class='tab' width='100%' cellspacing='0'>
+				<tr style='border-bottom:1px solid #ccc;line-height:40px'>
+					<td bgcolor='#4392a4' style='text-align:center'>名称</td>
+					<td bgcolor='#28accd' style='text-align:center'>详情</td>
+				</tr>
+				<tr style='border-bottom:1px solid #ccc'>
+					<td bgcolor='#aec6cb' style='text-align:center'>品牌</td>
+					<td bgcolor='#b7d6db'><input readonly class='inpb' type='text' name='brand' value="{$value['brand']}" readonly /></td>
+				</tr>
+				<tr style='border-bottom:1px solid #ccc'>
+					<td bgcolor='#aec6cb' style='text-align:center'>车型</td>
+					<td bgcolor='#b7d6db'><input readonly class='inpb' type='text' name='series' value="{$value['series']}"/></td>
+				</tr>
+				<tr style='border-bottom:1px solid #ccc'>
+					<td bgcolor='#aec6cb' style='text-align:center'>车系</td>
+					<td bgcolor='#b7d6db'><input readonly class='inpb' type='text' name='models' value="{$value['models']}"/></td>
+				</tr>
+				<tr style='border-bottom:1px solid #ccc'>
+					<td bgcolor='#aec6cb' style='text-align:center'>保养日期</td>
+					<td bgcolor='#b7d6db'><input readonly class='inpb' type='text' name='date' value="{$value['date']}"/></td>
+				</tr>
+				<tr style='border-bottom:1px solid #ccc'>
+					<td bgcolor='#aec6cb' style='text-align:center'>保养时间</td>
+					<td bgcolor='#b7d6db'><input readonly class='inpb' type='text' name='keep_time' value="{$value['keep_time']}"/></td>
+				</tr>
+				<tr style='border-bottom:1px solid #ccc'>
+					<td bgcolor='#aec6cb' style='text-align:center'>保养项目</td>
+					<td bgcolor='#b7d6db'><input readonly class='inpb' type='text' name='combo' value="{$value['combo']}" readonly /></td>
+				</tr>
+				<tr style='border-bottom:1px solid #ccc'>
+					<td bgcolor='#aec6cb' style='text-align:center'>保养总价</td>
+					<td bgcolor='#b7d6db'><input readonly class='inpb' type='text' name='price' value="{$value['price']}"/></td>
+				</tr>
+				<tr style='border-bottom:1px solid #ccc'>
+					<td bgcolor='#aec6cb' style='text-align:center'>手机号</td>
+					<td bgcolor='#b7d6db'><input readonly class='inpb' type='text' name='phone' value="{$value['phone']}"/></td>
+				</tr>
+				<tr style='border-bottom:1px solid #ccc'>
+					<td bgcolor='#aec6cb' style='text-align:center'>车牌号</td>
+					<td bgcolor='#b7d6db'><input readonly class='inpb' type='text' name='LPN' value="{$value['LPN']}"/></td>
+				</tr>
+				<tr style='border-bottom:1px solid #ccc'>
+					<td bgcolor='#aec6cb' style='text-align:center'>VIN码</td>
+					<td bgcolor='#b7d6db'><input readonly class='inpb' type='text' name='vin' value="{$value['vin']}"/></td>
+				</tr>
+				<tr style='border-bottom:1px solid #ccc'>
+					<td bgcolor='#aec6cb' style='text-align:center'>保养地址</td>
+					<td bgcolor='#b7d6db'><input readonly class='inpb' type='text' value="{$value['city']}{$value['county']}{$value['address']}"/><input readonly class='inpc' type='hidden' name='city' value="{$value['city']}"/><input readonly type='hidden' name='county' value="{$value['county']}"/><br /><input readonly type='hidden' name='address' value="{$value['address']}"/></td>
+				</tr>
+				<tr style='border-bottom:1px solid #ccc'>
+					<td bgcolor='#aec6cb' style='text-align:center'>留言</td>
+					<td bgcolor='#b7d6db'><input readonly class='inpb' type='text' name='texts' value="{$value['texts']}"/></td>
+				</tr>
+				<tr>
+					<td colspan='2' style='text-align:center'><input class='inp' type='submit' name='sub' value='确认订单' /></td>
+				</tr>
+			</table>
+			
+		</form>
+	</div>
+</block>

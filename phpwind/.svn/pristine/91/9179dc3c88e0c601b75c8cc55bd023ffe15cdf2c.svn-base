@@ -1,0 +1,41 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+<script src="__PUBLIC__/admin/js/jquery.js"></script>
+    <div class="wrapper">
+        <div class="row">
+            <div class="col-sm-12">
+                <section class="panel">
+                    <header class="panel-heading">
+                        车系列表&nbsp;&nbsp;&nbsp;&nbsp;<a href="__CONTROLLER__/addSeries" title="添加车系" alt="添加车系"><i class="fa fa-plus" style="color:#000;"></i></a>
+                    </header>
+                    <div class="panel-body">
+                        <div class="adv-table">
+                            <table  class="display table table-bordered table-striped" id="dynamic-table">
+                                <thead>
+                                <tr>
+                                    <th class="hidden-sm">编号</th>
+                                    <th>车系</th>
+                                    <if condition="$Think.session.auth neq '2'">
+                                        <th class="hidden-sm">操作</th>
+                                    </if>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <foreach name="series" item="serie">
+                                        <tr class="gradeX">
+                                            <td class="hidden-sm">{$serie['count']}</td>
+                                            <td>{$serie['series']}</td>
+                                            <if condition="$Think.session.auth neq '2'">
+                                                <td class="center hidden-sm"><a href="__CONTROLLER__/modSeries/id/{$serie['id']}">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="__CONTROLLER__/delSeries/id/{$serie['id']}" onclick=" return confirm('你确定要删除此车系么？')">删除</a></td>
+                                            </if>
+                                        </tr>
+                                    </foreach>
+                                </tbody>
+                            </table>
+                        </div>  
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</block>

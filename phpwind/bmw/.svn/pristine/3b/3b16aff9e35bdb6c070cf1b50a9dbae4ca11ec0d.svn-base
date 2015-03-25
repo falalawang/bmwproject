@@ -1,0 +1,14 @@
+
+<foreach name="result" item="res">
+
+	{//$res['ctime']} {//订单得时间}
+	{//$res['id']}{//订单号（id）}
+	{//$res['ctime']} {//订单得时间}
+	{//$res['id']}{//订单号（id）}
+	{//$res['ctime']} {//订单得时间}
+	{//$res['id']}{//订单号（id）}
+	
+
+
+
+</foreach>

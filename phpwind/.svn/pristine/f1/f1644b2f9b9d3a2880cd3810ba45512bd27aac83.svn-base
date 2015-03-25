@@ -1,0 +1,149 @@
+<extend name="Layout:layout" />
+<block name="layoutBack">
+  <if condition="$_GET['id'] egt 1">
+    <a class="navbar-brand visible-xs glyphicon glyphicon-chevron-left" style="padding-right:0;" href="__CONTROLLER__/order"></a>
+    <span class="navbar-brand ">订单详情</span>
+  <else />
+    <a class="navbar-brand visible-xs glyphicon glyphicon-chevron-left" style="padding-right:0;" href="__CONTROLLER__/index"></a>
+    <span class="navbar-brand ">我的订单</span>
+  </if>
+</block>
+<block name="layoutMain">
+<div class="container">
+<if condition="$_GET['id'] egt 1">
+  <div class="orderInfo text-muted">
+    <br />
+      <div class="row">
+        <strong class="col-xs-3 text-right" style="padding-right:0px">下单时间</strong>
+        <span class="col-xs-9" style="padding-right:0px">{$order['createTime']|date = "Y-m-d H:i:s",###}</span>
+      </div>
+      <div class="row">
+        <strong class="col-xs-3 text-right" style="padding-right:0px">订单状态</strong>
+        <span class="col-xs-9" style="padding-right:0px">
+          <switch name="order.orderStatus">
+            <case value="0">已提交</case>
+            <case value="1">已确认</case>
+            <case value="2">已出发</case>
+            <case value="3">已付款</case>
+            <case value="4">已完成</case>
+            <case value="5">已取消</case>
+            <case value="6">已评价</case>
+          </switch>
+        </span>
+      </div>
+      <div class="row">
+        <strong class="col-xs-3 text-right" style="padding-right:0px">应付总额</strong>
+        <span class="col-xs-9" style="padding-right:0px">{$order['lastPrice']}元</span>
+      </div>
+    <hr>
+      <div class="row">
+        <strong class="col-xs-3 text-right" style="padding-right:0px">保养时间</strong>
+        <span class="col-xs-9" style="padding-right:0px">{$order['orderDate']|date="Y-m-d",###} {$order['orderTime']|date="H:i:s",###}</span>
+      </div>
+      <div class="row">
+        <strong class="col-xs-3 text-right" style="padding-right:0px">保养爱车</strong>
+        <span class="col-xs-9" style="padding-right:0px">{$order['carType']}</span>
+      </div>
+      <div class="row">
+        <strong class="col-xs-3 text-right" style="padding-right:0px">保养车牌</strong>
+        <span class="col-xs-9" style="padding-right:0px">{$order['carNumber']}</span>
+      </div>
+      <div class="row">
+        <strong class="col-xs-3 text-right" style="padding-right:0px">Vin码值</strong>
+        <span class="col-xs-9" style="padding-right:0px">{$order['vin']}</span>
+      </div>
+      <div class="row">
+        <strong class="col-xs-3 text-right" style="padding-right:0px">保养项目</strong>
+        <span class="col-xs-9" style="padding-right:0px">{$order['combo']}</span>
+      </div>
+    <hr>
+      <div class="row">
+        <strong class="col-xs-3 text-right" style="padding-right:0px">联系人</strong>
+        <span class="col-xs-9" style="padding-right:0px">{$order['user']}</span>
+      </div>
+      <div class="row">
+        <strong class="col-xs-3 text-right" style="padding-right:0px">联系电话</strong>
+        <span class="col-xs-9" style="padding-right:0px">{$order['telephone']}</span>
+      </div>
+      <div class="row">
+        <strong class="col-xs-3 text-right" style="padding-right:0px">联系地址</strong>
+        <span class="col-xs-9" style="padding-right:0px">{$order['address']}</span>
+      </div>
+    <hr>
+      <div class="row">
+        <strong class="col-xs-3 text-right" style="padding-right:0px">订单留言</strong>
+        <span class="col-xs-9" style="padding-right:0px">{$order['remark']}</span>
+      </div>
+    <hr>
+      <div class="row">
+        <if condition="($evaluate NEQ NUll) and ($order['orderStatus'] EQ 4)">
+          <div class="col-xs-3 text-right" style="padding-right:0px"><strong>我的评价</strong></div>
+          <div class="col-xs-9">
+            <div>{$evaluate["vtime"]|date = "Y-m-d H:i:s",###}</div>
+            <div class="grade" grade="{$evaluate['grade']}">
+              <span class="glyphicon glyphicon-star"></span>
+              <span class="glyphicon glyphicon-star"></span>
+              <span class="glyphicon glyphicon-star"></span>
+              <span class="glyphicon glyphicon-star"></span>
+              <span class="glyphicon glyphicon-star"></span>
+            </div>
+            <div>{$evaluate['content']}</div>
+          </div>
+        <elseif condition="$order['orderStatus'] EQ 4"/>
+          <div class="col-xs-3 text-right" style="padding-right:0px"><strong>我的评价</strong></div>
+          <div class="col-xs-9">尚未评价，<a href="__CONTROLLER__/evaluate/id/{$order['id']}" class="text-danger">点击这里评价~</a></div>
+      </if>
+    </div>
+    <div class="row">
+      <div class="col-xs-3"></div>
+      <div class="col-xs-9">
+        <if condition="$evaluate['rtime'] GT 0">
+          <div style="background:#F5F5F5; padding:10px; margin-top:10px;">
+            <span class="text-danger">客服回复:</span>
+            <br>{$evaluate['reply']}
+            <br>{$evaluate["rtime"]|date = "Y-m-d H:i:s",###}
+          </div>
+        </if>
+      </div>
+    </div>
+  </div>
+</if>
+
+
+<if condition="$_GET['id'] LT 1">
+  <div class="orderList text-muted">
+    <br>
+<foreach name="orders" item="order">
+    <div class="orderLi">
+      <div class="row">
+        <a href="__CONTROLLER__/order/id/{$order['id']}" class="text-muted">
+        <div class="col-xs-10">
+          <div class="row"><strong class="text-right col-xs-4" style="padding-right:0;">下单时间</strong><span class="col-xs-8">{$order['createTime']|date = "Y-m-d H:i:s",###}</span></div>
+          <div class="row"><strong class="text-right col-xs-4" style="padding-right:0;">车型</strong><span  class="col-xs-8">{$order['carType']}</span></div>
+          <div class="row"><strong class="text-right col-xs-4" style="padding-right:0;">订单状态</strong>
+          <span  class="col-xs-8">
+            <switch name="order.orderStatus">
+              <case value="0">已提交</case>
+              <case value="1">已确认</case>
+              <case value="2">已出发</case>
+              <case value="3">已付款</case>
+              <case value="4">已完成</case>
+              <case value="5">已取消</case>
+              <case value="6">已评价</case>
+            </switch>
+          </span>
+          </div>
+        </div>
+        <div class="col-xs-2">
+            <span class="glyphicon glyphicon-chevron-right" style="line-height:60px;" aria-hidden="true"></span>
+        </div>
+        </a>
+      </div>
+      <hr>
+    </div>
+</foreach>
+  </div>
+</if>
+
+</div>
+</block>

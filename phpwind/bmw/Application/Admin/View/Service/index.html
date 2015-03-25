@@ -1,0 +1,34 @@
+<extend name="Layout:layout"/>
+<block name="main-content">
+	         	<div class="mws-panel grid_8">
+                	<div class="mws-panel-header">
+                    	<span><i class="icon-table"></i> 服务管理->品牌列表</span>
+                    </div>
+                    <div class="mws-panel-body no-padding">
+                        <table class="mws-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>品牌</th>
+									<th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+							<foreach name='brand' item="brands">
+								<tr>
+									<td align='center'>
+										{$brand['0']['id']}
+									</td>
+									<td align='center'>
+										{$brand['0']['brands']}
+									</td>
+									<td>
+										<a href='__APP__/admin/addBrand'></a>
+									</td>
+								</tr>
+							</foreach>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+</blo

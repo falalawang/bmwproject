@@ -1,0 +1,98 @@
+<html>
+	<head>
+		<meta charset='utf-8' />
+		<link rel="stylesheet" type="text/css" href="__PUBLIC__/home/css/pho.css" />
+		<link rel="stylesheet" type="text/css" media="all" href="__PUBLIC__/home/css/style.css">
+		<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no">
+		<script src='__PUBLIC__/home/js/jquery.js'></script>
+		<script src='__PUBLIC__/home/js/ajax.js'></script>
+		<script language="javascript" type="text/javascript" src="__PUBLIC__/home/My97DatePicker/WdatePicker.js"></script>
+		<script language="javascript" type="text/javascript" src="__PUBLIC__/home/js/area.js"></script>
+		<link rel="stylesheet" type="text/css" href="__PUBLIC__/home/css/lanrenzhijia.css" />
+		<script type="text/javascript" src="__PUBLIC__/home/js/jquery-1.8.2.min.js"></script>
+		
+  		<script type="text/javascript" src="__PUBLIC__/home/js/jquery-1.9.1.min.js"></script>
+  		<script type="text/javascript" charset="utf-8" src="__PUBLIC__/home/js/jquery.leanModal.min.js"></script>
+	</head>
+<body>
+<div id="loginmodal" style="display:none;">
+    <form id="loginform" name="loginform" method="post" action="__APP__/admin/Sms/check">
+      <label for="username">手机号:</label>
+      <input type="text" name="phone" id="username" maxlength="11" class="txtfield" value="" ><span id="sp" style="font-size:12px;color:red"></span>
+      
+      <label for="password">验证码:</label>
+      <input type="text" name="code" class="txtfiel" id="code" maxlength="4" value="" ><input type="button" id="getcode" class="flatbtn-w" value="获取验证码" >
+      
+      <div class="center"><input type="submit" name="loginbtn" id="loginbtn" class="flatbtn-blu hidemodal" value="确定" tabindex="3"></div>
+    </form>
+  </div>
+<!-- 代码 begin -->
+	<block name='head'></block>
+	<block name='main-content'></block>
+	<div class='bottom'>
+			<a href='#'>品牌介绍</a>|<a href="#loginmodal" class="flatbtn" id="modaltrigger">我要预订</a>丨<a href="{:U('Make/index')}">立即预约</a>丨<a href='#'>个人中心</a>
+	</div>
+
+	<script type="text/javascript">
+
+	$(function(){
+  	$('#loginform').submit(function(e){
+  		var p = $("#username").val();
+  		var c = $("#code").val();
+  		if(p !="" && c !=""){
+  			return true;
+  		}else{
+  			return false;
+  		}
+
+    
+  	});
+  
+  	$('#modaltrigger').leanModal({ top: 110, overlay: 0.45, closeButton: ".hidemodal" });
+	});
+	
+	//p ==""?$("#getcode").attr("disabled", "true"):$("#getcode").removeAttr("disabled");
+
+	$('#getcode').click(function(){
+		var p = $("#username").val();
+		var curCount=60;
+		var len = $("#username").val().length
+		if(p !="" && len == 11){
+			$.get("__APP__/admin/Sms/sendMessage",{"phone":p},function(data){
+
+			});
+		$("#sp").html("");
+
+			function SetRemainTime() {
+		        if (curCount == 0) {                  
+		            window.clearInterval(InterValObj);//停止计时器  
+		            $("#getcode").removeAttr("disabled");//启用按钮  
+		            $("#getcode").val("重新获取验证码");  
+		           // code = ""; //清除验证码。如果不清除，过时间后，输入收到的验证码依然有效      
+		        }else {  
+
+		            curCount--;  
+		            $("#getcode").val(curCount + "秒后重新获取");
+		        }  
+	    	}
+		
+
+			
+			$("#getcode").val(curCount + "秒后重新获取");
+			$("#getcode").attr("disabled", "true");
+			InterValObj = window.setInterval(SetRemainTime, 1000); //启动计时器，1秒执行一次  
+	        //向后台发送处理数据
+	        
+		}else{
+			//$("#getcode").attr("disabled", "true");
+			$("#sp").html("请输入手机号");
+		}
+
+	});
+</script>
+	<!-- 代码 end -->
+</body>
+</html>

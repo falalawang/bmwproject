@@ -1,0 +1,34 @@
+<?php
+namespace Admin\Controller;
+use Think\Controller;
+class SmsController extends Controller{
+
+	public function sendMessage(){
+		$phone = I("get.phone");
+		$Vcode = Vcode();
+		//dump(session('Vcode'));exit;
+
+		$curl = new \Org\Util\Curl();//curl扩展 功能就是在脚本中发送http请求
+		//拼接短信接口接口url
+		$prefix = C('message.MessageUrl');//读取接口地址
+		$url = C('message.MessageUrl')."?action=send&account=".C('message.username')."&password=".C('message.password')."&mobile=".$phone."&content="."您的验证码是".$Vcode."&AddSign=Y";
+		//发送请求
+		$res = $curl->get($url);
+
+		
+	}
+	public function check(){
+
+		$phone = I("post.phone");
+		session('phone',$phone);
+		$code = I("post.code");
+		if($code == session('Vcode')){
+			$this->success("登录成功！",U("home/index/index"));
+
+		}else{
+			$this->error("登录失败！");
+		}
+	}
+
+
+}

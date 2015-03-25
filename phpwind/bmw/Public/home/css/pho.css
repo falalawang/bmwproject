@@ -1,0 +1,66 @@
+body{font-weight:800;background:#28abcc}
+
+ul,li{list-style:none;}
+
+.maine{width:100%;height:90%;margin:0 auto;position:absolute;}
+
+.bottom{height:35px;width:100%;position:fixed; bottom:0px;text-align:center;background:#000;z-index:2000}
+
+.bottom img{float:left;position:relative;top:-25px;left:5px;width:50px}
+
+.bottom a{color:#fff;line-height:35px}
+
+.contentb{width:100%;height:100%;text-align:center;margin-top:20px;}
+
+#one{margin-top:50px}
+
+.map{width:100%;height:auto;}
+
+.map img{float:left;width:22%;height:auto;margin:auto 4px}
+
+.service{width:100%;height:auto;text-align:center;}
+
+.service h1{font-size:2em;color:#28ABCD}
+
+.service span{font-size:1em}
+
+.ab{width:100%;height:auto}
+
+.ab img{width:30%;height:auto;margin:auto 2px}
+
+.ac{width:100%;height:auto}
+
+.ac img{width:47%;height:auto;margin:auto 2px}
+
+.bnav{width:100%;height:auto}
+
+.bnav img{width:100%;height:auto}
+
+.banner{width:100%;height:auto}
+.banner img{width:100%;height:auto}
+
+.sel{border:none;border-radius:5px;width:50%;margin:10px auto;height:2em;color:#28ABCD;display:block;}
+
+.inp{border:none;border-radius:5px;width:50%;background:#fff;height:2em;color:#28ABCD;margin:5 auto;}
+
+.tab{margin:0 auto;}
+
+.ta td{line-height:30px}
+
+.sela{border:none;border-radius:5px;width:25%;margin:10px auto;height:2em;color:#28ABCD;}
+.inpa{border:none;border-radius:5px;width:25%;background:#fff;height:2em;color:#28ABCD;}
+.inpb{border:none;width:100%;background:none;height:2em;color:#333;text-align:center}
+.inpc{border:none;width:auto;background:none;height:2em;color:#333;}
+
+.xmap{text-align:left;line-height:30px;color:#fff}
+
+#pre{margin-left:5px;}
+
+
+.btu{background:none;border-radius:5px;border:1px solid #28abcc;font-size:13px}
+.btu:hover{background:#28abcc}
+
+.box{width:100%; height:20px; background:#000; overflow:hidden; position:fixed;top:0px;z-index:1001;}
+.t_news{ height:19px; color:#fff; padding-left:10px; overflow:hidden;}
+.t_news b{ line-height:19px; display:inline-block;color:#28abcc}
+marquee{line-height:19px;}

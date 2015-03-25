@@ -1,0 +1,81 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+        
+        	<!-- Inner Container Start -->
+            <div class="container">
+            
+            	<!-- Statistics Button Container -->
+            	<div class="mws-stat-container clearfix">
+                	
+                    <!-- Statistic Item -->
+                	<a class="mws-stat" href="#" style="width:300px;height:150px;">
+                    	<!-- Statistic Icon (edit to change icon) -->
+                    	<span class="mws-stat-icon icol32-application-cascade" style="width:100px"></span>
+                        
+                        <!-- Statistic Content -->
+                        <span class="mws-stat-content" style="width:200px;height:150px;text-align:center">
+                        	<div class="mws-stat-value">订&nbsp;单总&nbsp;量</div>
+                            <div class="mws-stat-value">(324)</div>
+                        </span>
+                    </a>
+
+                	<a class="mws-stat" href="#" style="width:300px;height:150px;">
+                    	<!-- Statistic Icon (edit to change icon) -->
+                    	<span class="mws-stat-icon icol32-application" style="width:100px"></span>
+                        
+                        <!-- Statistic Content -->
+                        <span class="mws-stat-content" style="width:200px;height:150px;text-align:center">
+                        	<div class="mws-stat-value" >已付款订单</div>
+                            <div class="mws-stat-value ">(200)</div>
+                        </span>
+                    </a>
+
+                	<a class="mws-stat" href="#" style="width:300px;height:150px;">
+                    	<!-- Statistic Icon (edit to change icon) -->
+                    	<span class="mws-stat-icon icol32-application-edit" style="width:100px"></span>
+                        
+                        <!-- Statistic Content -->
+                        <span class="mws-stat-content" style="width:200px;height:150px;text-align:center">
+                        	<div class="mws-stat-value">未付款订单</div>
+                            <div class="mws-stat-value">(124)</div>
+                        </span>
+                    </a>
+                    
+                	<a class="mws-stat" href="#" style="width:300px;height:150px;">
+                    	<!-- Statistic Icon (edit to change icon) -->
+                    	<span class="mws-stat-icon icol32-premium-support" style="width:100px"></span>
+                        
+                        <!-- Statistic Content -->
+                        <span class="mws-stat-content" style="width:200px;height:150px;text-align:center">
+                        	<div class="mws-stat-value "> 客&nbsp;服人&nbsp;员 </div>
+                            <div class="mws-stat-value ">({$count})</div>
+                        </span>
+                    </a>
+                    
+                	<a class="mws-stat" href="#" style="width:300px;height:150px;">
+                    	<!-- Statistic Icon (edit to change icon) -->
+                    	<span class="mws-stat-icon icol32-car" style="width:100px"></span>
+
+                        <!-- Statistic Content -->
+                        <span class="mws-stat-content" style="width:200px;height:150px;text-align:center">
+                        	<div class="mws-stat-value">服务车数量</div>
+                            <div class="mws-stat-value">(2)</div>
+                        </span>
+                    </a>
+                </div>
+                
+                <!-- Panels Start -->
+                
+			 </div>
+                
+                <!-- Panels End -->
+            </div>
+            <!-- Inner Container End -->
+                       
+            <!-- Footer -->
+            <div id="mws-footer">
+            	Copyright Your Website 2012. All Rights Reserved.
+            </div>
+            
+
+</block>

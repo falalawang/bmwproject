@@ -1,0 +1,62 @@
+.finish{
+    float: left;
+    padding: 5px;
+}
+.modal-footer{
+	clear: both;
+}
+.gray{		
+	color: #A9A9A9;
+}
+.white{
+	color:#fff;
+}
+.finish>div:last-child{
+	margin-bottom: 60px;
+}
+#one li{
+	width:32%;
+	 font-size:13px;
+}
+
+#left,#left>div,#left>div>div{
+	background: #D9EDF7;
+ 	float:left;
+   padding:2px;
+	
+}
+#left>div>div:first-child{
+	color: #337AB7;
+}
+#left>div>div:last-child{
+	font-size:13.2px;
+}
+body{
+	 padding-top:60px;
+	 background:url("../image/web/BG.jpg") repeat;
+}
+.pcolor{
+	color: #CF8242;
+}
+.z ul{
+	list-style:none;
+
+	margin-left:34%;
+	margin-top: 20px
+}
+.sub{
+
+	margin-left: 42px;
+}
+.button{
+	margin-left: 85%;
+	margin-top: 15%;
+	font-size: 12px;
+}
+.blue{
+	color:#428BCA;
+}
+.navbar {
+min-height: 50px;
+font-weight:500;
+}

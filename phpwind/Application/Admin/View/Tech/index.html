@@ -1,0 +1,148 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+<!--external css-->
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/admin/js/fuelux/css/tree-style.css" />
+<style>
+	h4{
+		cursor:pointer;
+		height: 30px;
+		padding-left: 5px;
+		line-height: 30px;
+	}
+	h4:hover{
+		background-color: #F1F2F7;
+		border-radius: 4px;
+		height: 30px;
+		padding-left: 5px;
+	}
+	.aa{
+		list-style: none;
+		cursor:pointer;
+		height: 24px;
+		font-size: 14px;
+		padding-left: 5px;
+		font-family: "微软雅黑";
+		line-height: 24px;
+	}
+	.aa:hover{
+		background-color: #F1F2F7;
+		border-radius: 4px;
+		height: 24px;
+		padding-left: 5px;
+	}
+	.myLi{
+		list-style: none;
+		margin-left: 38px;
+		padding:5px;
+		display: inline;
+	}
+	.selectH4,.selectLi{
+		background-color:#65CEA7;
+		border-radius:4px;
+		color:#fff;
+	}
+</style>
+<div class="wrapper">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel">
+                        <div class="panel-heading">
+                        <a href="__APP__/Order/index">订单列表</a>>>
+                            技师排班
+                        </div>
+                        <div class="panel-body">
+                        	<php>$count = 1;</php>
+                        	<foreach name="all" item="Date" key="d">
+                        		<if condition="$d eq $orderDate">
+                            		<h4 onclick="show({$count})" class="selectH4">{$d}</h4>
+                            	<else />
+                            		<h4 onclick="show({$count})">{$d}</h4>
+                            	</if>
+								<ul id="aa{$count}" style='display:none;'>
+									<foreach name="Date" item="num" key="n">
+										<form action="__CONTROLLER__/updateTime" method="post">
+											<!--订单id-->
+											<input type="hidden" name="orderId" value="{$orderId}" />
+											<!--$d为对应的日期-->
+                            				<input type="hidden" name="myDate" value="{$d}" />
+                            				<!--$n为对应的车-->
+                            				<input type="hidden" name="myCar" value="{$n}" />
+
+                            				<p>
+											<span class="aa"><i class="fa fa-truck"></i>&nbsp;&nbsp;{$n}号车</span>
+											<div class="row">
+												<foreach name="num" item="sv" key="sk">
+													<if condition="$sk heq $orderTime">
+														<li class="myLi col-md-2 col-xs-12 selectLi">
+															<if condition="$sv eq '1'">
+																<if condition="$sk eq 0">
+																	<input type="checkbox" name="time[]" checked disabled="disabled" value="0" />08:00-10:00
+																<elseif condition="$sk eq 1" />
+																	<input type="checkbox" name="time[]" checked disabled="disabled" value="1" />10:00-12:00
+																<elseif condition="$sk eq 2" />
+																	<input type="checkbox" name="time[]" checked disabled="disabled" value="2" />12:00-14:00
+																<elseif condition="$sk eq 3" />
+																	<input type="checkbox" name="time[]" checked disabled="disabled" value="3" />14:00-16:00
+																</if>
+															<else />
+																<if condition="$sk eq 0">
+																	<input type="checkbox" name="time[]" value="0" />08:00-10:00
+																<elseif condition="$sk eq 1" />
+																	<input type="checkbox" name="time[]" value="1" />10:00-12:00
+																<elseif condition="$sk eq 2" />
+																	<input type="checkbox" name="time[]" value="2" />12:00-14:00
+																<elseif condition="$sk eq 3" />
+																	<input type="checkbox" name="time[]" value="3" />14:00-16:00
+																</if>
+															</if>
+														</li>
+													<else />
+														<li class="myLi col-md-2 col-xs-12">
+															<if condition="$sv eq '1'">
+																<if condition="$sk eq 0">
+																	<input type="checkbox" name="time[]" checked disabled="disabled" value="0" />08:00-10:00
+																<elseif condition="$sk eq 1" />
+																	<input type="checkbox" name="time[]" checked disabled="disabled" value="1" />10:00-12:00
+																<elseif condition="$sk eq 2" />
+																	<input type="checkbox" name="time[]" checked disabled="disabled" value="2" />12:00-14:00
+																<elseif condition="$sk eq 3" />
+																	<input type="checkbox" name="time[]" checked disabled="disabled" value="3" />14:00-16:00
+																</if>
+															<else />
+																<if condition="$sk eq 0">
+																	<input type="checkbox" name="time[]" disabled="disabled" value="0" />08:00-10:00
+																<elseif condition="$sk eq 1" />
+																	<input type="checkbox" name="time[]" disabled="disabled" value="1" />10:00-12:00
+																<elseif condition="$sk eq 2" />
+																	<input type="checkbox" name="time[]" disabled="disabled" value="2" />12:00-14:00
+																<elseif condition="$sk eq 3" />
+																	<input type="checkbox" name="time[]" disabled="disabled" value="3" />14:00-16:00
+																</if>
+															</if>
+														</li>
+													</if>
+												</foreach>
+											</div>
+											</p>
+											<input style="margin-left:26px;" type="submit" value="确定" />
+										</form>
+									</foreach>
+								</ul>
+								<php>$count++;</php>			
+							</foreach>
+                        </div>
+                    </div>
+                </div>
+            </div>
+         </div>
+	<script>
+		function show(num){
+			var ul = document.getElementById('aa'+num);
+			if(ul.style.display == 'none'){
+				ul.style.display = 'block';
+			}else{
+				ul.style.display = 'none';
+			}
+		}
+	</script>
+</block>

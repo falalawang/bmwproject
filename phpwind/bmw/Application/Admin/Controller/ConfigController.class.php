@@ -1,0 +1,193 @@
+<?php
+
+namespace Admin\Controller;
+
+use Think\Controller;
+
+class ConfigController extends CommonController{
+
+	public function configRoutine(){
+
+		$config = M('config');
+
+		$map['id'] = 1;
+
+		$content = $config -> where($map) -> select();
+
+		$this -> assign('configs',$content);
+
+		$this -> display();
+
+
+	}
+	public function doconfig(){
+
+		if($_POST['title']=='' && $_POST['keywords']=='' && $_POST['description'] =='' &&$_POST['copyright']==''){
+
+			$this -> error('至少修改一项才可以提交');
+
+
+		}
+
+		$config = M('config');
+
+		if($config -> create()){
+
+
+			if($config -> save()){
+
+				$this -> success('配置文件添加成功');
+
+			}else{
+
+				$this -> error('配置文件添加失败');
+
+			}
+
+		}else{
+
+			$this -> error('创建数据对象失败');
+
+
+		}
+
+
+
+
+
+	}
+
+	public function configLinks(){
+
+		$this -> display();
+
+	}
+	public function dolinks(){
+
+		if($_POST['links_id']==''||$_POST['links']==''){
+
+			$this -> error('不能有空填项');
+
+		}
+
+		$links = M('links');
+
+		if($links -> create()){
+
+			if($links -> add()){
+
+				$this -> success('添加成功',U('LinksList/index'));
+
+			}else{
+
+			    $this -> error('添加失败');
+
+			}
+
+
+		}else{
+
+			$this -> error('创建数据对象失败');
+
+
+		}
+
+
+	}
+
+	public function configLogo(){
+
+		$logo = M('config');
+
+		$map[id] = 1;
+
+		$logos = $logo -> where($map) -> select();
+
+		$this -> assign('logos',$logos);
+
+		$this -> display();
+
+	}
+
+	public function dologo(){
+
+		 $upload = new \Think\Upload();// 实例化上传类
+		     
+		     $upload->maxSize  = 3145728 ;// 设置附件上传大小
+		     
+		     $upload->exts =  array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型  
+
+		     $upload->rootPath = "./Public";
+		     
+		     $upload->savePath =  './Uploads/'; // 设置附件上传目录  // 上传文件 
+		     
+		     $info  = $upload->upload(); 
+
+		      if(!$info) {// 上传错误提示错误信息  
+		     
+		     	$this->error($upload->getError());   
+
+		      }else{
+
+		       $this->success('上传成功！'); 
+
+		          }
+
+		     $_POST['logo'] = $info['logo']['savepath'].$info['logo']['savename'];
+
+
+			$link = M('config');
+
+		   
+			$map['id'] =1;
+
+			$msp['logo'] = $_POST['logo'];
+
+		    $links = $link -> where($map)->save($msp);
+
+
+	}
+
+
+	public function configStatus(){
+
+		$this -> display();
+
+
+	}
+	public function dostatus(){
+
+			$result = $_POST;
+
+			if($result['status']==''){
+
+				$this -> error('请选择开关');
+
+
+			}
+
+			$status = M('config');
+			
+			$map['status'] = $_POST['status'];
+
+			$msp['id'] = $_POST['id'];
+
+
+			if($status -> where($msp) -> save($map)){
+
+
+					$this -> success('提交成功');
+					
+				}else{
+
+					$this -> error('添加失败');
+
+				}
+
+		
+
+
+	}
+
+
+}

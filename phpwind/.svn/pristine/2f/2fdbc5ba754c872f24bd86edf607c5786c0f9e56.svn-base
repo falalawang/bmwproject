@@ -1,0 +1,356 @@
+<?php
+namespace Admin\Controller;
+use Think\Controller;
+class ModelsController extends CommonController{
+	//显示品牌列表
+	public function brandList(){
+		$brands = M('brand');
+		$brand = $brands -> select();
+		$count = 1;
+		foreach($brand as $key => $value){
+			$brand[$key]['count'] = $count;
+			$count++;
+		}
+
+		$this -> assign('brands',$brand);
+		$this -> display();
+	}
+	//显示添加品牌页面
+	public function addBrand(){
+		$this -> display();
+	}
+
+	//验证品牌是否已存在
+	public function checkBrand(){
+		//得到ajax请求的数据
+		$newBrand = $_GET['brandName'];
+		//查询品牌数据表
+		$brands = M('brand');
+		$brand = $brands -> where("brand='$newBrand'") -> select();		
+		if($brand){
+			echo 2;
+		}else{
+			echo 1;
+		}
+	}
+
+	//添加品牌
+	public function insertBrand(){
+		$brands = M('brand');
+		if($brands -> create($_POST)){
+			if($brands -> add()){
+				$this -> success('添加成功',U('Models/brandList'));
+			}else{
+				$this -> error('添加失败',U('Models/addBrand'));
+			}
+		}else{
+			$this -> error('失败',U('Models/addBrand'));
+		}
+	}
+
+	//删除品牌及该品牌下的所有的车系和车型
+	public function delBrand(){
+		//获得品牌的id
+		$brandId = $_GET['id'];
+		
+		$brands = M('brand');
+		//根据品牌的id查询出品牌名
+		$brand = $brands -> where("id=$brandId") -> select();
+		//品牌名称
+		$brandName = $brand[0]['brand'];
+
+		//根据品牌的id查询出该品牌下的所有车系，然后删除车系下的所有车型
+		$series = M('series');
+		$serie = $series -> where("brandId=$brandId") -> select();
+		foreach($serie as $key => $value){
+			//查询该品牌下的所有车系
+			$serieName = $value['series'];
+			//删除该车系下的所有车型
+			$models = M('models');
+			$model = $models -> where("brand='$brandName' and series='$serieName'")
+							 -> select();
+			//若该车系下有车型,则删除车型,若没有,则删除车系
+			if($model){
+				$type = $models -> where("brand='$brandName' and series='$serieName'")
+								-> delete();
+				//若车型删除成功,删除车系
+				if($type){
+					$ss = $series -> where("brandId=$brandId") -> delete();
+				}else{
+					$this -> error('车型删除失败',U('Models/brandList'));
+				}
+					
+			}else{
+				$s = $series -> where("brandId=$brandId") -> delete();
+			}
+		}
+		//直接删除品牌
+		if($brands -> delete($brandId)){
+			$this -> success('删除成功',U('Models/brandList'));	
+		}else{
+			$this -> error('品牌删除失败',U('Models/brandList'));
+		}
+	}
+
+	//修改品牌
+	public function modBrand(){
+		$brandId = $_GET['id'];
+		$brands = M('brand');
+		$brand = $brands ->where("id=$brandId") -> select();
+
+		$this -> assign('brand',$brand);
+		$this -> display();
+	}
+	//更新品牌
+	public function updateBrand(){
+		$brandId = $_POST['id'];
+		$brands = M('brand');
+
+		if($brands -> create($_POST)){
+			if($brands -> save()){
+				$this -> success('修改成功',U('Models/brandList'));
+			}else{
+				$this -> error('无修改值',U('Models/brandList'));
+			}
+		}else{
+			$this -> error('失败',U("Models/modBrand/id/$brandId"));
+		}
+	}
+
+	//显示车系列表
+	public function seriesList(){
+		$series = M('series');
+		$serie = $series -> select();
+		$count = 1;
+		foreach($serie as $key => $value){
+			$serie[$key]['count'] = $count;
+			$count++;
+		}
+
+		$this -> assign('series',$serie);
+		$this -> display();
+	}
+
+	//显示添加车系页面
+	public function addSeries(){
+		//查询所有的品牌
+		$brands = M('brand');
+		$brand = $brands -> select();
+
+		$this -> assign('brands',$brand);
+		$this -> display();
+	}
+
+	//添加车系
+	public function insertSeries(){
+		$series = M('series');
+		if($series -> create($_POST)){
+			if($series -> add()){
+				$this -> success('添加成功',U('Models/seriesList'));
+			}else{
+				$this -> error('添加失败',U('Models/addSeries'));
+			}
+		}else{
+			$this -> error('失败',U('Models/addSeries'));
+		}
+	}
+
+	//修改车系
+	public function modSeries(){
+		//得到车系的id
+		$sId = $_GET['id'];
+
+		$model = M();
+		//查询出次车系的品牌
+		$series = $model -> table("xdl_brand as b,xdl_series as s")
+						 -> where("s.id=$sId and b.id=s.brandId")
+						 -> select();
+
+		$this -> assign('series',$series);
+		$this -> display();
+	}
+
+	//更新车系
+	public function updateSeries(){
+		$series = M('series');
+		if($series -> create($_POST)){
+			if($series -> save()){
+				$this -> success('更新成功',U('Models/seriesList'));
+			}else{
+				$this -> error('无修改值',U('Models/modSeries'));
+			}
+		}else{
+			$this -> error('修改失败',U('Models/modSeries'));
+		}
+	}
+
+	//验证车系是否已经存在
+	public function seriesCheck(){
+		//得到车系的名称
+		$sName = $_GET['sName'];
+		//查询车系表，是否存在此车系
+		$series = M('series');
+		$serie = $series -> where("series='$sName'")
+						 -> select();
+		if($serie){
+			echo json_encode(2);
+		}else{
+			echo json_encode(1);
+		}
+	}
+
+	//删除车系
+	public function delSeries(){
+		//得到车系的id
+		$sId = $_GET['id'];
+		//根据车系的id查询出车系名及品牌id
+		$series = M('series');
+		$serie = $series -> where("id=$sId")
+						 -> select();
+		//车系名称
+		$sName = $serie[0]['series'];
+		
+		//删除车系
+		if($series -> where("id=$sId") -> delete()){
+			$models = M('models');
+			//根据品牌名称及车系名称,删除车型
+			if($models -> where("series='$sName'") -> delete()){
+				$this -> success('删除成功',U('Models/seriesList'));
+			}else{
+				$this -> success('删除成功',U('Models/seriesList'));
+			}
+		}else{
+			$this -> error('车系删除失败',U('Models/seriesList'));
+		}
+	}
+
+	//显示车型列表
+	public function typesList(){
+		$models = M('models');
+		$model = $models -> select();
+		$count = 1;
+		foreach ($model as $key => $value) {
+			$model[$key]['count'] = $count;
+			$count++;
+		}
+
+		$this -> assign('models',$model);
+		$this -> display();
+	}
+	//显示添加车型页面
+	public function addTypes(){
+		//查出所有的品牌
+		$brands = M('brand');
+		$brand = $brands -> select();
+		
+		$this -> assign('brands',$brand);
+		$this -> display();
+	}
+	//根据品牌的id,来获取该品牌下的所有车系
+	public function getSeries(){
+		$brandId = $_GET['brandId'];
+		//根据品牌的id,查询品牌id为它的所有车系
+		$series = M('series');
+		$serie = $series -> where("brandId=$brandId")
+						 -> select();
+		
+		$str = "<option value='-1'>--请选择车系--</option>";
+		foreach($serie as $key => $value){
+			$sId = $value['id'];
+			$str .= "<option value=".$sId.">".$value['series']."</option>";
+		}
+		echo $str;
+	}
+	//添加车型
+	public function insertType(){
+		//品牌id
+		$bId = $_POST['brand'];
+		//车系id
+		$sId = $_POST['series'];
+		//车型名称
+		$data['types'] = $_POST['types'];
+		//根据品牌的id,查询出品牌名称
+		$brands = M('brand');
+		$brand = $brands -> where("id=$bId")
+						 -> select();
+		$data['brand'] = $brand[0]['brand'];
+		//根据车系id,查询出车系名称
+		$series = M('series');
+		$serie = $series -> where("id=$sId")
+						 -> select();
+		$data['series'] = $serie[0]['series'];
+		// dump($data);
+		// die;
+		//添加车型
+		$types = M('models');
+		if($types -> create($data)){
+			if($types -> add()){
+				$this -> success('添加成功',U('Models/typesList'));
+			}else{
+				$this -> error('添加失败',U('Models/addTypes'));
+			}
+		}else{
+			$this -> error('失败',U('Models/addTypes'));
+		}
+	}
+	//验证车型是否已经存在(不同车系下可有相同车型,相同车系下不可有相同车型)
+	public function checkTypes(){
+		//得到车系的id
+		$sId = $_GET['sId'];
+		//根据车系的id,查询出车系名称
+		$series = M('series');
+		$serie = $series -> field("series") -> where("id=$sId") -> select();
+		$sName = $serie[0]['series'];
+		//得到车型的名称
+		$tName = $_GET['typeName'];
+		//查询车型表，是否存在此车型
+		$models = M('models');
+		$model = $models -> where("series = '$sName' and types='$tName'")
+						 -> select();
+		if($model){
+			echo json_encode(2);
+		}else{
+			echo json_encode(1);
+		}
+	}
+
+	//修改车型信息
+	public function modTypes(){
+		$id = $_GET['id'];
+		$model = M('models');
+		$models = $model -> where("id=$id") -> select();
+		// dump($models);
+		// die;
+		$this -> assign('model',$models);
+		$this -> display();
+	}
+	//更新车型
+	public function updateType(){
+		$models = M('models');
+		if($models -> create($_POST)){
+			if($models -> save()){
+				$this -> success('修改成功',U('Models/typesList'));
+			}else{
+				$this -> error('无修改值',U('Models/typesList'));
+			}
+		}else{
+			$this -> error('修改失败',U('Models/modTypes'));
+		}
+	}
+
+	//删除车型
+	public function delType(){
+		//获得车型的id
+		$id = $_GET['id'];
+		$models = M('models');
+		if($models -> delete($id)){
+			$this -> success('删除成功！');
+		}else{
+			$this -> error('删除失败！');
+		}
+	}
+	
+
+
+}
+?>

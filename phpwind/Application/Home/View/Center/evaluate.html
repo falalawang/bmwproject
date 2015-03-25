@@ -1,0 +1,28 @@
+<extend name="Layout:layout" />
+<block name="layoutBack">
+  <a class="navbar-brand" href="__CONTROLLER__/order/id/{$_GET['id']}">
+  <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span> 订单评价</a>
+</block>
+<block name="layoutMain">
+<div class="container">
+    <br>
+    <form action="__CONTROLLER__/insertEva" method="post">
+      <div class="form-group">
+        <div id="evaluate" class="grade text-muted">
+            <span>点击星星评分：</span>
+            <span class="glyphicon glyphicon-star" num="0"></span>
+            <span class="glyphicon glyphicon-star" num="1"></span>
+            <span class="glyphicon glyphicon-star" num="2"></span>
+            <span class="glyphicon glyphicon-star" num="3"></span>
+            <span class="glyphicon glyphicon-star" num="4"></span>
+            <input type="hidden" id="gradeNum" name="grade" value="-1" />
+            <input type="hidden" name="orderId" value="{$_GET['id']}" />
+        </div>
+      </div>
+      <div class="form-group">
+        <textarea class="form-control" id="evaluateCon" name="content" rows="5"></textarea>
+      </div>
+      <button type="submit" id="evaluateBtn" class="btn btn-block btn-primary">提交评论</button>
+    </form>
+</div>
+</block>

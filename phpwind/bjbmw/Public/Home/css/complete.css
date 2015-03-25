@@ -1,0 +1,166 @@
+ ol, ul, li{
+    border: 0 none;
+    font-family: inherit;
+    font-feature-settings: inherit;
+    font-kerning: inherit;
+    font-language-override: inherit;
+    font-size: 100%;
+    font-size-adjust: inherit;
+    font-stretch: inherit;
+    font-style: inherit;
+    font-synthesis: inherit;
+    font-variant: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    margin: 0;
+    padding: 0;
+    vertical-align: baseline;
+}
+
+ol, ul {
+    list-style: outside none none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+caption, th, td {
+    font-weight: normal;
+    text-align: left;
+    vertical-align: middle;
+}
+q, blockquote {
+    quotes: none;
+}
+q::before, q::after, blockquote::before, blockquote::after {
+    content: none;
+}
+a img {
+    border: medium none;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
+    display: block;
+}
+.picker {
+    -moz-user-select: none;
+    color: #000;
+    font-size: 16px;
+    line-height: 1.2;
+    position: absolute;
+    text-align: left;
+    z-index: 10000;
+}
+.picker__input {
+    cursor: default;
+}
+.picker__input.picker__input--active {
+    border-color: #0089ec;
+}
+.picker__holder {
+    overflow-y: auto;
+    width: 100%;
+}
+.picker {
+    width: 100%;
+}
+
+
+.container {
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.container::before, .container::after {
+    content: " ";
+    display: table;
+}
+.container::after {
+    clear: both;
+}
+@media (min-width: 768px) {
+.container {
+    width: 750px;
+}
+}
+@media (min-width: 992px) {
+.container {
+    width: 970px;
+}
+}
+@media (min-width: 1200px) {
+.container {
+    width: 1170px;
+}
+}
+.container-fluid {
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.container-fluid::before, .container-fluid::after {
+    content: " ";
+    display: table;
+}
+.container-fluid::after {
+    clear: both;
+}
+.row {
+    margin-left: -15px;
+    margin-right: -15px;
+}
+.row::before, .row::after {
+    content: " ";
+    display: table;
+}
+.row::after {
+    clear: both;
+}
+
+
+
+.success-page .success-con, .success-page-phone .success-con {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+.success-page .success-con .title, .success-page-phone .success-con .title {
+    color: #f37920;
+    font-size: 20px;
+}
+.success-page .success-con .title::before, .success-page-phone .success-con .title::before {
+    content: url("./complete.png");
+    display: block;
+    margin: 10px 0;
+}
+.success-page .success-con .next, .success-page-phone .success-con .next {
+    color: #999999;
+    font-size: 16px;
+    margin: 10px 50px;
+}
+.success-page .success-con .bac, .success-page-phone .success-con .bac {
+    font-size: 16px;
+    margin: 0 auto;
+    overflow: hidden;
+    width: 170px;
+}
+.success-page .success-con .bac li, .success-page-phone .success-con .bac li {
+    float: left;
+    margin: 10px;
+}
+.success-page .success-con .bac li a, .success-page-phone .success-con .bac li a {
+    color: #ffae20;
+}
+.success-page-phone .success-con {
+    margin: 100px 0;
+}
+
+
+body {
+    background: #fef9f5 none repeat scroll 0 0;
+    font: 14px/1.5 arial,"Microsoft Yahei","Hiragino Sans GB",sans-serif !important;
+}
+* {
+    font-family: "Microsoft Yahei","Hiragino Sans GB",sans-serif,"Glyphicons Halflings" !important;
+}

@@ -1,0 +1,55 @@
+<extend name='Layout:layout'/>
+<block name='mws-container'>
+	<div id="mws-container" class="clearfix">
+        
+        	<!-- Inner Container Start -->
+            <div class="container">
+            
+            	
+                
+            	<div class="mws-panel grid_8">
+                	<div class="mws-panel-header">
+                    	<span><i class="icon-table">城市列表</i><b style='float:right'><a href="__CONTROLLER__/add" class="btn"><i class="icol-accept" ></i>&nbsp;&nbsp;添加城市</a></b></span>
+                    </div>
+                    <div class="mws-panel-body no-padding">
+                        <table class="mws-table">
+                            <thead>
+                                <tr>
+                                    <th>编号</th>
+                                    <th>账号</th>
+                                    <th>权限</th>
+                                    <th>昵称</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+	                            <foreach name='user' item='user'>
+	                                <tr>
+	                                    <td>{$user['id']}</td>
+	                                    <td>{$user['userid']}</td>
+	                                    <td>{$user['status']}</td>
+	                                    <td>{$user['username']}</td>
+                                        <td>
+	                                    <a href="__CONTROLLER__/mod/id/{$city.id}/city/{$city.city}" class="btn"><i class="icol-arrow-refresh"></i></a>
+	                                    	<a href="__CONTROLLER__/del/id/{$city.id}" onclick="return confirm('你确定要删除吗？')" class="btn"><i class="icol-cross"></i></a>
+	                                    </td>
+	                                </tr>
+	                            </foreach>
+                                <tr>
+                                    
+                                    <td >
+                                        <div class="right">{$show}</div>
+                                    </td>
+                                
+                                </tr>   
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+
+                
+                
+            </div>
+    </div>
+</block>

@@ -1,0 +1,61 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+    <div class="row">
+        <div class="col-sm-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    订单列表
+                    <span class="tools pull-right">
+                        <a href="javascript:;" class="fa fa-chevron-down"></a>
+                    </span>
+                </header>
+                <div class="panel-body">
+                    <div class="adv-table">
+                        <table  class="display table table-bordered table-striped" id="dynamic-table">
+                            <thead>
+                                <tr>
+                                    <th>编号</th>
+                                    <th>地址</th>
+                                    <th>车型</th>
+                                    <th>服务</th>
+                                    <th>价格</th>
+                                    <th>预约时间</th>
+                                    <th>服务车</th>
+                                    <th>vin码</th>
+                                    <th>状态</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="gradeX">
+                                    <td>Trident</td>
+                                    <td><a href="__APP__/Address/index/id/1">地址</a></td>
+                                    <td>Win 95+</td>
+                                    <td>Trident</td>
+                                    <td>Internet
+                                        Explorer 4.0</td>
+                                    <td>Win 95+</td>
+                                    <td>Trident</td>
+                                    <td>Internet
+                                        Explorer 4.0</td>
+                                    <td>Win 95+</td>
+                                    <td>Trident</td>
+                                    <td>Internet
+                                        Explorer 4.0</td>
+                                    <td>Win 95+</td>
+                                </tr>
+                            </tbody>      
+                            <tfoot>
+                                <tr>
+                                    <th></th>
+                                    <th>Browser</th>
+                                    <th>Platform(s)</th>
+                                </tr>
+                            </tfoot>        
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</block>

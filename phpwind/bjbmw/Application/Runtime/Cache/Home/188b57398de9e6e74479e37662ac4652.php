@@ -1,0 +1,76 @@
+<?php if (!defined('THINK_PATH')) exit();?><style>
+	header{
+		width:100%;
+		height:30px;
+		background:#fef;
+	}
+	.hdiv{
+		float:right;
+		font-size:14px;
+		
+		line-height:30px;
+		margin-right:3%;
+	}
+	
+	a{
+		text-decoration:none;
+		color:pink;
+	}
+	span{
+		display:block;
+		width:90%;
+	}
+	.spanf{
+		margin:auto;
+		margin-top:15px;
+		letter-spacing:1px;
+		color:#f33;
+	}
+	.spans{
+
+		margin:15px auto;
+		font-size:14px;
+		color:#777;
+	}
+	.content{
+		font-size:14px;
+		color:#555;
+		line-height:26px;
+		margin:0 auto;
+		width:90%;
+	}
+	.hrdiv{
+		margin:auto;
+		border-top:1px solid #ccc;
+		width:90%;
+		height:20px;
+
+	}
+	.rule{
+		width:100%;
+		height:5px;
+		background:#fef;
+		margin:20px  auto;
+	}
+	.foot{
+		width:100%;
+		height:50px;
+		margin-top:20px;
+		background:#fef;
+	}
+</style>
+<header>
+	<div class='hdiv'><a href='/project/index.php'>返回</a></div>
+</header>
+<section>
+	<span class='spanf'>188****5311</span>
+	<span class='spans'>2015-03-15 16:06:60</span>
+	<div class='hrdiv'></div>
+	<div class='content'>客服预约环节流畅, 技师提前联系, 准时到达服务现场, 耐心等候, 着装整洁, 操作技术熟练, 主动讲解沟通, 机油、配件品质无误, 准确完成全部检测, 按时完成, 会向朋友推荐 </div>
+	<div class='rule'></div>
+	<span class='spanf'>185****5361</span>
+	<span class='spans'>2015-03-22 11:26:50</span>
+	<div class='hrdiv'></div>
+	<div class='content'>客服预约环节流畅, 技师提前联系, 操作技术熟练, 准确完成全部检测, 按时完成, 会向朋友推荐</div>
+	<div class='foot'></div>
+</section>

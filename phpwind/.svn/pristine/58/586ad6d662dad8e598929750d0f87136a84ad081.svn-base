@@ -1,0 +1,58 @@
+$(".msg:eq(1)").hide();
+			$(".msg:eq(2)").hide();
+			$(".msg:eq(3)").hide();
+			$(".city").hide();
+			$(".county").hide();
+			$(".province").click(function(e){
+				$(".province").hide();
+				$(this).show();
+				$(this).children().show();
+				$(".county").hide();
+				$(".msg:eq(0)").html("请选择您所在的城市");
+				e.stopPropagation();
+			});
+			$(".city").click(function(e){
+				$(".city").hide();
+				$(this).show();
+				$(this).children().show();
+				$(".msg:eq(0)").html("请选择您所在的区域");
+				e.stopPropagation();
+				$(".msg:eq(1)").show();
+				$(".msg:eq(2)").show();
+				$(".msg:eq(3)").show();
+			});
+			$(".county").click(function(e){
+				$(".county").hide();
+				$(this).show();
+				e.stopPropagation();
+			});
+
+			function getProvince(obj){
+				province=obj.innerHTML;
+			}
+			function getCity(obj){
+				city=obj.innerHTML;
+			}
+			function getCounty(obj){
+				county=obj.innerHTML;
+			}
+
+			function send(){
+				var street=$("#street").val();
+				var telephone=$("#telephone").val();
+				var data={province:province,city:city,county:county,street:street};
+				if($("#street").val()){
+					$.get("addAddress",data,function(){
+						location.href="../Order/inputInfo";
+					});
+				}
+			}
+
+			function stopBubble(e){
+				if(e && e.stopPropagation){
+					e.stopPropagation();
+				}else{
+					window.event.cancelBubble=true;
+				}
+				return false;
+			}

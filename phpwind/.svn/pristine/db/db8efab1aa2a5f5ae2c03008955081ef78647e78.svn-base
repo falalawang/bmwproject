@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="renderer" content="webkit">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>宇瑞安</title>
+  <meta type="keywords" content="宇瑞安,汽车保养">
+  <meta type="description" content="宇瑞安汽车保养服务">
+  <!-- 新 Bootstrap 核心 CSS 文件 -->
+  <link rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css">
+  <link rel="stylesheet" href="__PUBLIC__/home/css/center.css">
+</head>
+<body>
+  <!-- 顶部导航 -->
+<div class="navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+<block name="layoutBack"></block>
+    </div>
+      <div class="navbar-collapse collapse" role="navigation">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="__APP__/Login/logout">退出</a></li>
+          </ul>
+      </div>
+  </div>
+</div>
+
+<block name="layoutJum"></block>
+<block name="layoutBanner"></block>
+<block name="layoutMain"></block>
+<!-- 底部导航 -->
+<block name="layoutFoot"></block>
+<br>
+<br>
+<br>
+</body>
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="__PUBLIC__/home/js/jquery.js"></script>
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/home/js/city.js"></script>
+<script src="__PUBLIC__/home/js/carType.js"></script>
+<script src="__PUBLIC__/home/js/common.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=83db567683e3c103b671ce11951d2987"></script>
+<script src="__PUBLIC__/home/js/mapKey.js"></script>
+</html>

@@ -1,0 +1,8 @@
+<extend name="Layout:layout" />
+<block name="layoutBack">
+  <a class="navbar-brand visible-xs" href="__CONTROLLER__/index"><</a>
+  <a class="navbar-brand " href="">管理订单</a>
+</block>
+<block name="layoutMain">
+dfg
+</block>

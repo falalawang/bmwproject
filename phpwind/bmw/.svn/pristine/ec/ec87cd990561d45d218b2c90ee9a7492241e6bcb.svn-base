@@ -1,0 +1,26 @@
+<extend name='Layout:layout' />
+<block name='main-content'>
+	<div class='content'>
+		<form action='__CONTROLLER__/look' method='post'>
+			<input class='inpa' name='date' type="text" id="d221" placeholder='点击选择日期' onFocus="WdatePicker({startDate:'1980-05-01'})"/>
+			<select class='sela' name='keep_time'>
+				<option value='08:00-10:00'>08:00-10:00</option>
+				<option value='10:00-12:00'>10:00-12:00</option>
+				<option value='12:00-14:00'>12:00-14:00</option>
+				<option value='14:00-16:00'>14:00-16:00</option>
+				<option value='16:00-18:00'>16:00-18:00</option>
+            </select><br />
+			<input type='hidden' value="{$zhi['brand']}" name='brand'/>
+			<input type='hidden' value="{$zhi['series']}" name='series'/>
+			<input type='hidden' value="{$zhi['models']}" name='models'/>
+			<input type='hidden' value="{$zhi['price']}" name='price'/>
+			<input class='inp' type='text' name='phone' placeholder='*您的号码' />
+			<input class='inp' type='text' name='LPN' placeholder='*您的车牌号' />
+			<input class='inp' type='text' name='vin' placeholder='*您的VIN码' />
+			{$city}
+			<input type='text' name='address' placeholder='*街道' class='inp' /><br />
+			<input type='text' name='texts' placeholder='*备注' class='inp' /><br />
+			<input type='submit' value='提交' class='inp' />
+		</form>
+	</div>
+</block>

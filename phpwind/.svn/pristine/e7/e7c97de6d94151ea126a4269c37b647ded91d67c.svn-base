@@ -1,0 +1,39 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+	<div class="row">
+                        <div class="col-md-12">
+                            <!--modal start-->
+                            <section class="panel">
+                                <header class="panel-heading">
+                                    15670691243&nbsp;&nbsp;&nbsp;&nbsp;2015-03-05 19:32
+                                </header>
+                                <div class="panel-body">
+                                    
+                                        这个东西不错，赞一个！
+
+                                </div>
+                            </section>
+                            <!--section end-->
+                            <div class="row">
+							    <div class="col-lg-12">
+							       	<section class="panel">
+							            <div class="panel-body">
+							                <form method="post" class="form-horizontal bucket-form">
+							                    <div class="form-group">
+
+							                        <div class="col-sm-12">
+							                            <textarea rows="6" class="form-control"></textarea>
+							                        </div>
+							                    </div>
+							                    <button class="btn btn-success" type="button">回复</button>
+							                </form>
+							            </div>
+
+							        </section>
+							    </div>
+							</div>
+
+                        </div>
+                    </div>
+                    
+</block>

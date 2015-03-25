@@ -1,0 +1,4 @@
+<extend name="Layout:layout"/>
+<block name="main-content">
+	22222
+</block>

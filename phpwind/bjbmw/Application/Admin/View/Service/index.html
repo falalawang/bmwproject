@@ -1,0 +1,70 @@
+<extend name='Layout:layout'/>
+<block name='mws-container'>
+    <div id="mws-container" class="clearfix">
+        
+            <!-- Inner Container Start -->
+            <div class="container">
+            
+                
+                
+                <div class="mws-panel grid_8">
+                    
+                    <div class="mws-panel-header">
+                        
+                        <span><i class="icon-table"> 服务项目管理</i>
+                        <b style='float:right'>
+
+                        <form action='__CONTROLLER__/index' method='get'>
+                            <label>搜 索: <input aria-controls="DataTables_Table_0" name='service' type="text" placeholder='请输入服务名' size='20'></label>
+                            <input type="submit" class="btn" value='搜索'>
+                        </form>
+                        
+                        </b>
+                        &nbsp;&nbsp;<a href="__CONTROLLER__/add" class="btn">添加服务</a>
+
+                        </span>
+                    </div>
+                    <div class="mws-panel-body no-padding">
+                        <table class="mws-table">
+                            <thead>
+                               
+                            <thead>
+                                <tr>
+                                    <th>编号</th>
+                                    <th>服务名</th>
+                                    <th>服务代码</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody style='text-align:center;'>
+                                <foreach name='sercode' item='sercode'>
+                                    <tr>
+                                        <td>{$sercode['id']}</td>
+                                        <td>{$sercode['service']}</td>
+                                        <td>{$sercode['sercode']}</td>
+                                        <td>
+                                            <a href="__APP__/Service/edit/id/{$sercode.id}" class="btn">修改</a>
+                                            <a href="__APP__/Service/del/id/{$sercode.id}" onclick="return confirm('你确定要删除吗？')" class="btn">删除</a>
+                                        </td>
+                                    </tr>
+                                </foreach>
+                                <tr>
+                                    
+                                    <td colspan='5'>
+                                        <div class="right">{$show}</div>
+                                    </td>
+                                
+                                </tr> 
+                                {$trs}  
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+
+                
+                
+            </div>
+    </div>
+</block>
+                                       

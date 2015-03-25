@@ -1,0 +1,199 @@
+<?php
+namespace Admin\Controller;
+use Think\Controller;
+class OrderController extends CommonController{
+	//订单列表
+	public function index(){
+		$model = M();
+		$order = $model -> table('xdl_order as o,xdl_address as a,xdl_city as c')
+						->field('o.id,o.brand,o.series,o.types,o.combo,o.lastPrice,o.vin,o.orderTime,o.orderDate,o.orderStatus,a.name,a.address,a.telephone,c.province,c.city,c.county')
+						-> where("o.orderStatus!='0' and o.addressId=a.id and a.cityId=c.id")
+						-> order('o.orderStatus asc')
+						-> select();
+		$count = 1;
+		foreach($order as $k=>$v){	
+			$arr = explode(',',$v['combo']);
+
+			//车的品牌
+			$brand = $v['brand'];
+			//车系
+			$series = $v['series'];
+			//车型
+			$types = $v['types'];
+			//将查询出的所有套餐放到下标为combo的数组中
+			$order[$k]["combo"] = $arr;
+
+			$Ty = M('types');
+			$type = $Ty -> field('id')
+						-> where("brand='$brand' and series='$series' and types='$types'")
+						-> select();
+			//获取用户车型对应车型表中的id
+			$typeId = $type[0]['id'];
+			$num = 0;
+			//遍历，查找出套餐对应的价格对应
+			foreach($arr as $value){
+				$combos = M('combo');
+				$combo = $combos -> field('lowPrice,highPrice')
+								 -> where("typeId=$typeId and comboName='$value'")
+								 -> select();
+				//将价格与套餐连接在一起
+				foreach($combo as $c){
+					if(!empty($c['highPrice'])){
+						$order[$k]["combo"][$num] = $value.":".$c['lowPrice'].'-'.$c['highPrice'];
+					}else{
+						$order[$k]["combo"][$num] = $value.":".$c['lowPrice'];
+					}
+				}
+				
+				$num++;
+			}
+			$order[$k]['count']=$count;			
+			$count++;		
+		}
+		$this -> assign('orders',$order);
+		$this -> display();
+	}
+	//已取消的订单列表
+	public function cancel(){
+		$model = M();
+		$order = $model -> table('xdl_order as o,xdl_address as a,xdl_city as c')
+						->field('o.id,o.brand,o.series,o.types,o.combo,o.lastPrice,o.vin,o.orderTime,o.orderDate,o.orderStatus,a.name,a.address,a.telephone,c.province,c.city,c.county')
+						-> where("o.orderStatus='0' and o.addressId=a.id and a.cityId=c.id")
+						-> order('o.orderStatus asc')
+						-> select();
+		$count = 1;
+		foreach($order as $k=>$v){	
+			$arr = explode(',',$v['combo']);
+
+			//车的品牌
+			$brand = $v['brand'];
+			//车系
+			$series = $v['series'];
+			//车型
+			$types = $v['types'];
+			//将查询出的所有套餐放到下标为combo的数组中
+			$order[$k]["combo"] = $arr;
+
+			$Ty = M('types');
+			$type = $Ty -> field('id')
+						-> where("brand='$brand' and series='$series' and types='$types'")
+						-> select();
+			//获取用户车型对应车型表中的id
+			$typeId = $type[0]['id'];
+			$num = 0;
+			//遍历，查找出套餐对应的价格对应
+			foreach($arr as $value){
+				$combos = M('combo');
+				$combo = $combos -> field('lowPrice,highPrice')
+								 -> where("typeId=$typeId and comboName='$value'")
+								 -> select();
+				//将价格与套餐连接在一起
+				foreach($combo as $c){
+					if(!empty($c['highPrice'])){
+						$order[$k]["combo"][$num] = $value.":".$c['lowPrice'].'-'.$c['highPrice'];
+					}else{
+						$order[$k]["combo"][$num] = $value.":".$c['lowPrice'];
+					}
+				}
+				
+				$num++;
+			}
+			$order[$k]['count']=$count;			
+			$count++;		
+		}
+		$this -> assign('orders',$order);
+		$this -> display();
+	}
+	//审核订单
+	/*public function pass(){
+		$id = I('get.id');
+		$data['id'] = $id;
+		$data['orderStatus'] = '2';
+		$order = M('order');
+		if($order -> create($data)){
+			if($order -> save()){
+				$this -> success('审核成功',U('Order/index'));
+			}else{
+				$this -> error('审核失败',U('Order/index'));
+			}
+		}else{
+			$this -> error('失败',U('Order/index'));
+		}
+
+	}*/
+	//编辑订单状态
+	public function modStatus(){
+		$order = M('order');
+		if($order -> create($_POST)){
+			if($order -> save()){
+				$this -> success('更新成功',U('Order/index'));
+			}else{
+				$this -> error('更新失败',U('Order/index'));
+			}
+		}else{
+			$this -> error('失败',U('Order/index'));
+		}
+	}
+	//修改订单
+	public function mod(){
+		//得到要修改订单的id
+		$id = I('get.id');
+		$model = M();
+		$order = $model -> table('xdl_order as o,xdl_address as a')
+						->field('o.id,o.brand,o.series,o.types,o.combo,o.orderDate,o.orderTime,a.name,a.telephone,a.address')
+						-> where("o.id=$id and o.addressId=a.id")
+						-> select();
+		$brands = M('brand');
+		$brand = $brands -> field('brand') -> select();
+
+		$this -> assign('brands',$brand);
+		$this -> assign('order',$order);
+		$this -> display();
+	}
+	//更新订单
+	public function updateOrder(){
+		dump($_POST);
+	}
+	//取消订单
+	public function cancelOrder(){
+		$id = I('get.id');
+		$order = M('order');
+		$data['id'] = $id;
+		$data['orderStatus'] = '0';
+		if($order -> create($data)){
+			if($order -> save()){
+				$this -> success('取消成功',U('Order/index'));
+			}else{
+				$this -> error('取消失败',U('Order/index'));
+			}
+		}else{
+			$this -> error('失败',U('Order/index'));
+		}
+	}
+	//删除订单
+	public function del(){
+		$id = I('get.id');
+		$order = M('order');
+		if($order -> delete($id)){
+			$this -> success('删除成功',U('Order/cancel'));
+		}else{
+			$this -> error('删除失败',U('Order/cancel'));
+		}
+	}
+	//更新订单状态
+	public function updateStatus(){
+		$data['orderStatus'] = (string)$_GET['orderStatus'];
+		$data['id'] = $_GET['orderId'];
+		$orders = M('order');
+		if($orders -> create($data)){
+			if($orders -> save()){
+				echo 'success';
+			}else{
+				echo 'error1';
+			}
+		}else{
+			echo 'error2';
+		}
+	}
+}
+?>

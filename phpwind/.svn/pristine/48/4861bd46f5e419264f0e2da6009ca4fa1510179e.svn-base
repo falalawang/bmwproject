@@ -1,0 +1,54 @@
+<?php
+namespace Admin\Controller;
+use Think\Controller;
+
+class EvaluateController extends CommonController{
+	
+	//显示评价列表
+	public function evaluate(){
+
+
+		$evaluate = M();
+		$evaluates = $evaluate -> table('xdl_evaluate,xdl_customer') -> where("xdl_evaluate.uid=xdl_customer.id") -> select();
+		$this -> assign('evaluate',$evaluates);
+		$this -> display();
+	}
+
+	//回复列表
+	public function reply(){
+
+		//接收需要回复的那条评价的id
+		$id = $_GET['id'];
+		$eva = M('evaluate');
+		$evas = $eva -> where("id={$id}") -> select();
+		$user = M('user');
+		$data = $user -> where("id={$evas[0]['uid']}") -> select();
+		$this -> assign('user',$data);
+		$this -> assign('eva',$evas);
+		$this -> display();
+	}
+
+	//客服回复
+	public function insert(){
+		//把接收的数据赋值给data
+		$data = $_POST;
+		//创建回复时间
+		$data['rtime'] = time();
+
+		$eva = M('evaluate');
+		if($eva -> create($data)){
+			if($eva -> save()){
+				$this -> success('回复成功！','evaluate');
+			}else{
+				$this -> error('回复失败！');
+			}
+		}else{
+			$this -> error('回复失败！');
+		}
+
+		$this -> display();
+	}
+
+
+}
+?>

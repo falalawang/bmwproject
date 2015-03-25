@@ -1,0 +1,81 @@
+<extend name='Layout:layout'/> 
+<block name='kog'>
+	<div id="loginmodal" style="display:none;">
+    <!--<form id="loginform" name="loginform" method="post" action="__APP__/Sms/check">-->
+	  <p>请登录</p>
+      <input placeholder='*手机号' type="text" name="phone" id="username" maxlength="11" class="txtfield" value="" ><span id="sp" style="font-size:12px;color:red"></span>
+      <br />
+      <input placeholder='*验证码' type="text" name="code" class="txtfiel" id="code" maxlength="4" value="" ><input type="button" id="getcode" class="flatbtn-w" value="获取验证码" >
+      <br />
+      <input type="submit" name="loginbtn" id="loginbtn" class="flatbtn-blu hidemodal" value="确定" tabindex="3">
+    <!--</form>-->
+  </div>
+</block>
+<block name='main-content'>
+	<form action='__CONTROLLER__/two' method='post' onsubmit='return fun()'>
+	<div class='contentb'>
+		<div id='one'>
+			<select name='brand' id='brand' class='sel'>
+				<option>请选择品牌</option>
+				<foreach name='brands' item='brand'>
+				<option value="{$brand['id']}">{$brand['brands']}</option>
+				</foreach>
+			</select>
+			<select name='series' id='series' class='sel'>
+				<option>请选择车型</option>
+			</select>
+			<select name='models' id='models' class='sel'>
+				<option>请选择车系</option>
+			</select>
+			<input type='submit' name='sub' value='下一步' class='inp' />
+		</div>
+		
+	</div>
+	</form>
+	
+	<script>
+		$('#brand').get(0).onchange = function(){
+			var brand = $('#brand').val();
+			$.get("__CONTROLLER__/serie?id="+brand,function(data){
+			  $('#series').get(0).innerHTML = data;
+			  
+			})
+		};
+		$('#series').get(0).onchange = function(){
+			var serie = $('#series').val();
+			$.get("__CONTROLLER__/model?id="+serie,function(data){
+			  $('#models').get(0).innerHTML = data;
+			})
+		};
+		function fun(){
+			if($('#models').val() == '请选择车系'){
+				alert('请您正确操作');
+				return false;
+			}			
+		}
+	</script>
+	<script type="text/javascript">
+	$('#modaltrigger').leanModal({ top: 110, overlay: 0.45, closeButton: ".hidemodal" });
+		//});
+	$('#loginbtn').click(function(){
+			var p = $("#username").val();
+			var c = $("#code").val();
+
+			if(p !="" && c !=""){
+				$.get('__APP__/Sms/checka',{'phone':p,'code':c},function(data){
+					//alert(data)；
+					//if(eval(data)){
+						//alert('验证失败');
+					//	window.location.reload();
+					//}
+					window.location.reload();
+				})
+			}
+	});
+</script>
+</block>
+<block name='mycss'>
+	 <link rel="stylesheet" href="__PUBLIC__/home/css/buttons.css">
+</block>
+
+

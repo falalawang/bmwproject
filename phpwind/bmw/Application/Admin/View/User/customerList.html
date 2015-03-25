@@ -1,0 +1,35 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+
+	<div class="mws-panel grid_8">
+                	<div class="mws-panel-header">
+                    	<span><i class="icon-table"></i> 客服列表 </span>
+                    </div>
+                    <div class="mws-panel-body no-padding">
+						
+                        <table class="mws-datatable-fn mws-table">
+                            <thead>
+                                <tr>
+                                    <th>姓名</th>
+                                    <th>电话</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <foreach name="admins" item="admin">
+                                    <tr>
+                                        <td>{$admin['username']}</td>
+                                        <td>{$admin['phone']}</td>
+                                        <td style="text-align:center"><a href="__CONTROLLER__/mod/id/{$user['id']}"><button><i class="icol-pencil"></i></button></a> | <a href="__CONTROLLER__/del/id/{$user['id']}"><button><i class="icol-cross"></i></button></a></td>
+                                    </tr>
+                                </foreach>
+
+								<tr><td colspan="5">{$show}</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+				
+
+                
+</block>

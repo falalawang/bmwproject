@@ -1,0 +1,45 @@
+<?php
+namespace Admin\Controller;
+use Think\Controller;
+class IndexController extends Controller{
+	
+	//登陆页面显示
+	public function index(){
+		$backstage = M('backstage');
+		$res = $backstage -> select();
+        $this -> display();
+    }
+	
+	public function login(){
+		$verify = new \Think\Verify();
+		$code = $_POST['code'];
+		if(!$verify -> check($code)){
+			$this -> error('验证码错误!');
+			exit();
+		}
+		$_POST['password'] = md5($_POST['password']);
+		$info = M('backstage');
+		$infos = $info -> where("name = '{$_POST['name']}' and password = '{$_POST['password']}'") -> select();
+		if($infos){
+			session('name',$infos[0]['name']);	
+			$this -> success('登陆成功!','main');
+			
+		}else{
+			$this -> error('登陆失败!');
+		}
+		$this -> display();
+	}
+	
+	public function logout(){
+		session('[destroy]');
+		session_destroy();
+		$this -> redirect('index');
+	}
+	
+	//后台主页
+	public function main(){
+		$this -> display();
+	}
+	
+	
+}

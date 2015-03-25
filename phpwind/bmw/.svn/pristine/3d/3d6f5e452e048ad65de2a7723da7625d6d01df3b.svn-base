@@ -1,0 +1,144 @@
+<extend name="Layout:layout" />
+<block name='main-content'>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>个人中心</title>
+    <link rel="stylesheet" href="__PUBLIC__/home/css/gerenzhongxin.css">
+
+    <link rel="stylesheet" href="__PUBLIC__/home/bootstrap/css/bootstrap.min.css" media="screen" >
+   
+   	<script src="__PUBLIC__/home/js/jquery.js"></script>
+    <script src="__PUBLIC__/home/js/area.js"></script>
+  </head>
+
+
+<body>
+
+
+
+<div class="container user-info i">
+
+  <div class="row">
+          <div class="col-md-12 title">
+            个人信息
+          </div>
+  </div>
+
+  <div class="row">
+        <div class="col-md-3" >
+            <ul class="menu">
+                  <li class="" style="background-color:#28abcc;">
+                    <a href="__APP__/order/order">我的订单</a>
+                  </li>
+             
+                  <li class="" style="background-color:#28abcc;">
+                    <a href="__APP__/settings/setting">个人信息</a>
+                  </li>
+            </ul>
+        </div>
+
+
+
+    <div class="col-md-9 content">
+      <div class="info" style="background-color:#28abcc;">
+        <form accept-charset="UTF-8" action="__CONTROLLER__/add" class="form-horizontal" id="edit_user_18989" method="post">
+        <div style="display:none">
+            <input name="utf8" value="✓" type="hidden">
+            <input name="_method" value="patch" type="hidden">
+            <input name="authenticity_token" value="q588laSmQQNSEgRESgNgjSV/xsAAic0QjGM/ek7W4co=" type="hidden">
+
+        </div>
+
+          <div class="address">
+            <div class="header">
+              常用服务地址
+            </div>
+
+            <div class="form-group addresses">
+              <label id="content" class="addr col-sm-2 control-label">
+                选择常用地址:<br/>
+              </label>
+             
+
+        <div class="col-sm-6">
+          <div class="current_addresses">
+         
+
+
+          <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+ 添加
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        选择地址：{$city}<br/><br/><br/>
+        详细地址<input type="text" name="details">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="submit" class="btn btn-primary">提交</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+      </div>
+
+
+
+        <foreach name="rest" item="v">
+                {$v['city']}{$v['county']}{$v['address']}{$v['details']}&nbsp;&nbsp;&nbsp;<a style="color:#fff;font-size:14px;font-weight:800"href="__CONTROLLER__/delete/id/{$v['id']}">删除</a><br/>
+
+       </foreach>
+
+  </div>
+</div>
+
+          </div>
+
+          <div class="settings">
+            <div class="header">
+              个人信息
+            </div>
+            <div class="form-group">
+              <label for="username" class="col-sm-2 control-label">姓名</label>
+              <div class="col-sm-4">
+                <input class="form-control" id="user_username" name="user[username]" type="text" value="{$result[0]['username']}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="phonenum" class="col-sm-2 control-label">手机号码</label>
+              <div class="col-sm-4">
+                <input class="form-control" disabled="disabled" id="user_phone_number" name="user[phone_number]" value="{$result[0]['phone']}" type="text">
+              </div>
+            </div>
+          </div>
+
+          
+
+        
+  </form>      
+
+  </div>
+    </div>
+  </div>
+</div>
+
+
+  
+</body>
+ <script src="__PUBLIC__/home/bootstrap/js/bootstrap.min.js"></script>
+ </block>
+</html>

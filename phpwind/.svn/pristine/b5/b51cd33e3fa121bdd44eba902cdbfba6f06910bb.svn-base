@@ -1,0 +1,42 @@
+$(".series").hide();
+	$(".type").hide();
+	$(".brand").click(function(e){
+		$(".brand").hide();
+		$(this).show();
+		$(this).children().show();
+		$(".type").hide();			
+		$(".msg").html("请选择您的汽车系列");
+		e.stopPropagation();
+	});
+	$(".series").click(function(e){		
+		$(".series").hide();
+		$(this).show();
+		$(this).children().show();
+		$(".msg").html("请选择您的汽车型号");
+		e.stopPropagation();
+	});
+	$(".type").click(function(){
+		var data={brand:brand,series:series,type:type};
+		$.get("addCarType",data,function(){			
+			location.href="../Order/inputInfo";							
+			});
+	})
+
+	function getBrand(obj){
+		brand=obj.innerHTML;
+	}
+	function getSeries(obj){
+		series=obj.innerHTML;
+	}
+	function getType(obj){
+		type=obj.innerHTML;
+	}
+
+	function stopBubble(e){
+		if(e && e.stopPropagation){
+			e.stopPropagation();
+		}else{
+			window.event.cancelBubble=true;
+		}
+		return false;
+	}

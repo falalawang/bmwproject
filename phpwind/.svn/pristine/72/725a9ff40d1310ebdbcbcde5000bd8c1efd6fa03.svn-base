@@ -1,0 +1,56 @@
+<extend name="Layout:layout" />
+<block name="main-content">
+  <div class="row">
+        <div class="col-sm-12">
+        <section class="panel">
+        <header class="panel-heading">
+            修改套餐价格
+        </header>
+        <div class="panel-body">
+			<form action="__CONTROLLER__/mod">
+				<div class="form-group">
+	                <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">品牌</label>
+	                <div class="col-lg-10">
+	                    <select class="form-control m-bot15">
+	                        <option>--请选择品牌--</option>
+	                        <foreach name="brands" item="brands">
+	                        	<option>{$brands['brand']}</option>
+	                        </foreach>
+	                    </select>
+	                </div>
+	            </div>
+	            <div class="form-group">
+	                <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">车系</label>
+	                <div class="col-lg-10">
+	                    <select class="form-control m-bot15">
+	                        <option>--请选择车系--</option>
+	                        <foreach name="series" item="series">
+	                        	<option>{$series['series']}</option>
+	                        </foreach>
+	                    </select>
+	                </div>
+	            </div>
+	            <div class="form-group">
+	                <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">车型</label>
+	                <div class="col-lg-10">
+	                    <select class="form-control m-bot15">
+	                        <option>--请选择车型--</option>
+	                        <foreach name="types" item="types">
+	                        	<option>{$types['types']}</option>
+	                        </foreach>
+	                    </select>
+	                </div>
+	            </div>
+	            <div class="form-group">
+	                <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">价格</label>
+	                <div class="col-lg-10">
+	                	<input class="form-control" type="text" />
+	                </div>
+	            </div>
+	            <button type="submit" class="btn btn-primary">修改</button>
+			</form>
+        </div>
+        </section>
+        </div>
+        </div>
+</block>

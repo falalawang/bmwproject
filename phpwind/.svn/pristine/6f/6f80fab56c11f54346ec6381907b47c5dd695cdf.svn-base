@@ -1,0 +1,28 @@
+<?php
+namespace Admin\Controller;
+use Think\Controller;
+class ComboController extends CommonController{
+    
+    //修改套餐列表
+	public function comboList(){
+
+		//查询出品牌,车系,车型
+		$combo = M('combo');
+		$brands = $combo -> group('brand') -> select();
+		$series = $combo -> group('series') -> select();
+		$types = $combo -> group('types') -> select();
+		$this -> assign('brands',$brands);
+		$this -> assign('series',$series);
+		$this -> assign('types',$types);
+		$this -> display();                                 
+	}
+
+	//修改操作
+	public function mod(){
+
+
+	}
+
+
+}
+?>

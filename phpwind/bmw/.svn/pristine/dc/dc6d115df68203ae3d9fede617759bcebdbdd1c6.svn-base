@@ -1,0 +1,113 @@
+<extend name='Layout:layout' />
+<block name='main-content'>
+	<div class="mws-panel grid_8">
+                	<div class="mws-panel-header">
+                    	<span>订单管理&nbsp;-->&nbsp;订单修改</span>
+                    </div>
+                    <div class="mws-panel-body no-padding">
+                    	<form action="__CONTROLLER__/updatec" method='post' class="mws-form">
+                    		<div class="mws-form-inline">
+							<foreach name='orders' item='order'>
+                    			<div class="mws-form-row">
+                    				<label class="mws-form-label">车牌号</label>
+                    				<div class="mws-form-item">
+                    					<input name='LPN' type="text" class="small" value="{$order['LPN']}">
+                    				</div>
+                    			</div>
+								<div class="mws-form-row">
+                    				<label class="mws-form-label">日历</label>
+                    				<div class="mws-form-item">
+                    					<select id='myyear'>
+											<option>{$date['year']}</option>
+                    					</select>
+										<select id='mymonth'>
+											<option>{$date['month']}</option>
+                    					</select>
+										<select id='myday'>
+											<for start="$date['day']" end="$date['endday']" step='86400' >
+												<option>
+													{$i|date='d',###}
+												</option>
+											</for>
+                    					</select>
+										<select id='myti'>
+											<option value='08:00-10:00'>08:00-10:00</option>
+											<option value='10:00-12:00'>10:00-12:00</option>
+											<option value='12:00-14:00'>12:00-14:00</option>
+											<option value='14:00-16:00'>14:00-16:00</option>
+											<option value='16:00-18:00'>16:00-18:00</option>
+                     					</select>&nbsp;&nbsp;
+										<span id='my' style='cursor:pointer;display:inline-block;background:none;border:none' onclick='change()' onmouseover='chan()'><i class="icon-ok"></i></span>
+									</div>
+                    			</div>
+								<div class="mws-form-row">
+                    				<label class="mws-form-label">保养日期</label>
+                    				<div class="mws-form-item">
+                    					<input name='date' type="text" class="medium" id='date' value='{$order["date"]}'>
+                    					<input name='id' type="hidden" class="medium" value='{$order["id"]}'>
+                    				</div>
+                    			</div>
+								<div class="mws-form-row">
+                    				<label class="mws-form-label">保养时间</label>
+                    				<div class="mws-form-item">
+                    					<input name='keep_time' type="text" class="medium" id='keep_time' value='{$order["keep_time"]}'>
+                    				</div>
+                    			</div>
+								<div class="mws-form-row">
+                    				<label class="mws-form-label">服务车</label>
+                    				<div class="mws-form-item">
+										<select name='service_id'>
+											<option value='1'>1</option>
+											<option value='2'>2</option>
+											<option value='3'>3</option>
+											<option value='4'>4</option>
+                     					</select>
+									</div>
+                    			</div>
+                    			<div class="mws-form-row">
+                    				<label class="mws-form-label">总价</label>
+                    				<div class="mws-form-item">
+                    					<input name='price' type="text" class="medium" id='price' value='{$order["price"]}'>
+                    				</div>
+                    			</div>
+                    			<div class="mws-form-row">
+                    				<label class="mws-form-label">订单状态</label>
+                    				<div class="mws-form-item clearfix">
+                    					<ul class="mws-form-list inline">
+											<p>当前状态是：{$order['status']}</p>
+											<li><input type="radio" value='已评价' name='status' checked> <label>已评价</label></li>
+                    						<li><input type="radio" value='已取消' name='status'> <label>已取消</label></li>
+                    						<li><input type="radio" value='已付款' name='status'> <label>已付款</label></li>
+                    						<li><input type="radio" value='已完成' name='status'> <label>已完成</label></li>
+                    						<li><input type="radio" value='已出发' name='status'> <label>已出发</label></li>
+                    						<li><input type="radio" value='已确认' name='status'> <label>已确认</label></li>
+                    						<li><input type="radio" value='已提交' name='status'> <label>已提交</label></li>
+										</ul>
+                    				</div>
+                    			</div>
+							</foreach>
+                    		</div>
+                    		<div class="mws-button-row">
+								
+                    			<input type="submit" name='sub' class="btn btn-danger" value="修改">
+                    			<input type="reset" class="btn " value="重置">
+                    		</div>
+                    	</form>
+                    </div>    	
+                </div>
+</block>
+<block name='myjs'>
+	<script>
+	var myyear = document.getElementById('myyear');
+	var mymonth = document.getElementById('mymonth');
+	var myday = document.getElementById('myday');
+	var keep_time = document.getElementById('keep_time');
+	var myti = document.getElementById('myti');
+	var my = document.getElementById('my');
+	var date = document.getElementById('date');
+	function change(){
+		date.value= myyear.value+'-'+mymonth.value+'-'+myday.value;
+		keep_time.value =myti.value;
+	}
+	</script>
+</block>

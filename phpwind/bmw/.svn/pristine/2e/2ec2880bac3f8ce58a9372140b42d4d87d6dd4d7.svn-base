@@ -1,0 +1,61 @@
+<extend name='Layout:layout' />
+<block name='main-content'>
+	<div class='content'>
+		<form action='__CONTROLLER__/add' method='post'>
+			<table class='tab'>
+				<tr>
+					<td>名称</td>
+					<td>详情</td>
+				</tr>
+				<tr>
+					<td>品牌</td>
+					<td><input class='inpb' type='text' name='brand' value="{$value['brand']}"/></td>
+				</tr>
+				<tr>
+					<td>车型</td>
+					<td><input class='inpb' type='text' name='series' value="{$value['series']}"/></td>
+				</tr>
+				<tr>
+					<td>车系</td>
+					<td><input class='inpb' type='text' name='models' value="{$value['models']}"/></td>
+				</tr>
+				<tr>
+					<td>保养日期</td>
+					<td><input class='inpb' type='text' name='date' value="{$value['date']}"/></td>
+				</tr>
+				<tr>
+					<td>保养时间</td>
+					<td><input class='inpb' type='text' name='keep_time' value="{$value['keep_time']}"/></td>
+				</tr>
+				<tr>
+					<td>保养总价</td>
+					<td><input class='inpb' type='text' name='price' value="{$value['price']}"/></td>
+				</tr>
+				<tr>
+					<td>手机号</td>
+					<td><input class='inpb' type='text' name='phone' value="{$value['phone']}"/></td>
+				</tr>
+				<tr>
+					<td>车牌号</td>
+					<td><input class='inpb' type='text' name='LPN' value="{$value['LPN']}"/></td>
+				</tr>
+				<tr>
+					<td>VIN码</td>
+					<td><input class='inpb' type='text' name='vin' value="{$value['vin']}"/></td>
+				</tr>
+				<tr>
+					<td>保养地址</td>
+					<td><input class='inpb' type='text' value="{$value['city']}{$value['county']}{$value['address']}"/><input class='inpc' type='hidden' name='city' value="{$value['city']}"/><input type='hidden' name='county' value="{$value['county']}"/><br /><input type='hidden' name='address' value="{$value['address']}"/></td>
+				</tr>
+				<tr>
+					<td>留言</td>
+					<td><input class='inpb' type='text' name='texts' value="{$value['texts']}"/></td>
+				</tr>
+				<tr>
+					<td colspan='2'><input class='inp' type='submit' name='sub' value='确认订单' /></td>
+				</tr>
+			</table>
+			
+		</form>
+	</div>
+</block>

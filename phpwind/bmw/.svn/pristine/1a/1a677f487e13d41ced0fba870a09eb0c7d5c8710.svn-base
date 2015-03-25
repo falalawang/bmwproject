@@ -1,0 +1,45 @@
+<extend name='Layout:layout' />
+<block name='main-content'>
+<div class="mws-panel grid_8">
+                	<div class="mws-panel-header" style='text-align:right'>
+                    	<span style='float:left'><i class="icon-table"></i>订单管理&nbsp;-->&nbsp;订单列表</span>
+                        <form action='__CONTROLLER__/orderList' method='post'>
+                        <input style='width:150px;height:25px' type='text' name='search' placeholder='搜索' />
+                        </form>
+                    </div>
+					<div class="mws-panel-body no-padding">
+                        <table class="mws-table">
+                            <thead>
+                                <tr>
+                                    <th>订单编号</th>
+                                    <th>电话</th>
+                                    <th>保养时间</th>
+                                    <th>保养总价</th>
+                                    <th>车牌号</th>
+                                    <th>评价</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+								<foreach name='orders' item='order'>
+									<tr>
+										<td>{$order['id']}</td>
+										<td>{$order['phone']}</td>
+										<td>{$order['keep_time']}</td>
+										<td>{$order['price']}</td>
+										<td>{$order['LPN']}</td>
+										<td>{$order['text']}</td>
+										<td><a class='btn btn-small' href='__CONTROLLER__/updatea/id/{$order["id"]}'><i class="icon-pencil"></i></a><a class='btn btn-small' href='__CONTROLLER__/deletea/id/{$order["id"]}'><i class="icon-share"></i></a></td>
+									</tr>
+								</foreach>
+								<if condition="($pag LT 2)">
+								<else />
+								<tr>
+									<td style='background:#35353a;text-align:center' colspan='7'>{$show}</td>
+								</tr>
+								</if>
+                            </tbody>
+                        </table>
+                    </div>
+</div>		
+</block>

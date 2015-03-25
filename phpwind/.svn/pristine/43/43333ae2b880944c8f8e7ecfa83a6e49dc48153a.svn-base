@@ -1,0 +1,33 @@
+<extend name="Layout:layout" />
+<block name="layoutBack">
+  <a class="navbar-brand visible-xs" style="padding-right:0;" href="__CONTROLLER__/index"><</a>
+  <a class="navbar-brand " href="">管理订单</a>
+</block>
+<block name="layoutMain">
+<div class="container-fluid">
+<br>
+  <a class="text-muted" href="/two/index.php/Center/editAddress/id/1">
+  <div class="row">
+    <div class="col-xs-10">
+      <strong>下单时间：</strong>2015-03-12 12:12:      <br>
+      <strong>保养项目：</strong>小保养      <br>
+      <strong>保养车型：</strong>宝马120i</div>
+    <div class="col-xs-2">
+      <span class="glyphicon glyphicon-chevron-right" style="line-height:60px;" aria-hidden="true"></span>
+    </div>
+  </div>
+  </a>
+    <hr><a class="text-muted" href="/two/index.php/Center/editAddress/id/2">
+  <div class="row">
+    <div class="col-xs-10">
+      <strong>下单时间：</strong>2015-03-12 12:12:      <br>
+      <strong>保养项目：</strong>小保养      <br>
+      <strong>保养车型：</strong>宝马120i</div>
+    <div class="col-xs-2">
+      <span class="glyphicon glyphicon-chevron-right" style="line-height:60px;" aria-hidden="true"></span>
+    </div>
+  </div>
+  </a>
+    <hr>
+</div>
+</block>

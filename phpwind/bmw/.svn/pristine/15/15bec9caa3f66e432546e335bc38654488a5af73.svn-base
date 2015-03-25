@@ -1,0 +1,98 @@
+<?php
+
+namespace Admin\Controller;
+
+use Think\Controller;
+
+class WechatController extends CommonController{
+	public function Wechat(){
+		$wechat = M("wechat");
+		$wechats = $wechat->select();
+		$this->assign("wechats",$wechats);
+		//dump($wechats);exit;
+
+		$this->display();
+	}
+	public function insert(){
+		$wechat = M("wechat");
+		if($wechat ->create()){
+			$res = $wechat->add();
+			if($res){
+				$this->success("添加成功！");
+			}else{
+				$this->error("添加失败！");
+
+			}
+
+		}else{
+			$this->error("添加失败！");
+		}
+
+
+	}
+	public function mod(){
+		$wechat = M("wechat");
+		//dump($_POST);exit;
+		if($wechat->create()){
+			$res = $wechat->save();
+			if($res){
+				$this->success("修改成功！","Wechat");
+
+			}else{
+				$this->error("修改失败！");
+			}
+		}else{
+			$this->error("修改失败！");
+		}
+
+
+	}
+	public function add(){
+		$imagerely = M("imagerely");
+		if($imagerely ->create()){
+			$res = $imagerely->add();
+			if($res){
+				$this->success("添加成功！");
+			}else{
+				$this->error(" 添加失败！");
+			}
+		}else{
+			$this->error(" 添加失败！");
+		}
+
+	}
+	public function imageRely(){
+		$this->display();
+	}
+	public function relyLIst(){
+		$imagerely = M("imagerely");
+		$images = $imagerely->select();
+		$this->assign("images",$images);
+		$this->display();
+
+	}
+	public function update(){
+		$imagerely = M("imagerely");
+		if($imagerely->create()){
+			$res = $imagerely->save();
+			if($res){
+				$this->success("修改成功！");
+			}else{
+				$this->error("修改失败！");
+			}
+		}else{
+			$this->error("修改失败！");
+		}
+	}
+	public function del(){
+		$imagerely = M("imagerely");
+		$id = I("get.id");
+		$res = $imagerely ->delete($id);
+		if($res){
+			$this->success("删除成功");
+		}else{
+			$this ->error("删除失败！");
+		}
+	}
+	
+}
